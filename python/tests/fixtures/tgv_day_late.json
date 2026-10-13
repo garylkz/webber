@@ -1,0 +1,68 @@
+{
+ "businessday": {
+  "businessday": "2026-10-18",
+  "cinemas": [
+   {
+    "cinemaid": "BU0",
+    "name": "1 UTAMA",
+    "movies": [
+     {
+      "movieid": "sf-id",
+      "experiences": [
+       {
+        "experience": "deluxe",
+        "sessions": [
+         {
+          "sessionid": "a1",
+          "movieid": "sf-id",
+          "cinemaid": "BU0",
+          "businessdate": "2026-10-18",
+          "showtimemy": "2026-10-18T13:35:00",
+          "screenname": "Cinema 3",
+          "experience": "deluxe",
+          "seattypes": "SINGLE",
+          "status": 1
+         },
+         {
+          "sessionid": "a2",
+          "movieid": "sf-id",
+          "cinemaid": "BU0",
+          "businessdate": "2026-10-18",
+          "showtimemy": "2026-10-18T19:00:00",
+          "screenname": "Cinema 3",
+          "experience": "deluxe",
+          "seattypes": "SINGLE",
+          "status": 1
+         },
+         {
+          "sessionid": "a3",
+          "movieid": "sf-id",
+          "cinemaid": "BU0",
+          "businessdate": "2026-10-18",
+          "showtimemy": "2026-10-19T00:30:00",
+          "screenname": "Cinema 3",
+          "experience": "deluxe",
+          "seattypes": "SINGLE",
+          "status": 1
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ "movies": [
+  {
+   "recid": "sf-id",
+   "name": "Street Fighter",
+   "itemkey": "street-fighter",
+   "extdata": {
+    "movieinfo": {
+     "runtimemins": 120
+    }
+   }
+  }
+ ]
+}

@@ -1,0 +1,2775 @@
+{
+ "cinemaid": "BU0",
+ "sessionid": "326689",
+ "seatlayout": {
+  "areas": [
+   {
+    "number": 1,
+    "areaCategoryCode": "0000000002",
+    "description": "TWIN",
+    "descriptionAlt": "",
+    "numberOfSeats": 24,
+    "isAllocatedSeating": true,
+    "hasSofaSeatingEnabled": false,
+    "left": 0.6,
+    "top": 87.67,
+    "height": 12,
+    "width": 22,
+    "rows": [
+     {
+      "rowIndexZeroBased": 0,
+      "physicalName": "M",
+      "seats": [
+       {
+        "position": {
+         "areaNumber": 1,
+         "rowIndex": 0,
+         "columnIndex": 0
+        },
+        "priority": 1,
+        "id": "12",
+        "status": 0,
+        "seatStyle": 3,
+        "seatsInGroup": [
+         {
+          "areaNumber": 1,
+          "rowIndex": 0,
+          "columnIndex": 0
+         },
+         {
+          "areaNumber": 1,
+          "rowIndex": 0,
+          "columnIndex": 1
+         }
+        ],
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 1,
+         "rowIndex": 0,
+         "columnIndex": 1
+        },
+        "priority": 1,
+        "id": "11",
+        "status": 0,
+        "seatStyle": 1,
+        "seatsInGroup": [
+         {
+          "areaNumber": 1,
+          "rowIndex": 0,
+          "columnIndex": 0
+         },
+         {
+          "areaNumber": 1,
+          "rowIndex": 0,
+          "columnIndex": 1
+         }
+        ],
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 1,
+         "rowIndex": 0,
+         "columnIndex": 5
+        },
+        "priority": 1,
+        "id": "10",
+        "status": 0,
+        "seatStyle": 3,
+        "seatsInGroup": [
+         {
+          "areaNumber": 1,
+          "rowIndex": 0,
+          "columnIndex": 5
+         },
+         {
+          "areaNumber": 1,
+          "rowIndex": 0,
+          "columnIndex": 6
+         }
+        ],
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 1,
+         "rowIndex": 0,
+         "columnIndex": 6
+        },
+        "priority": 1,
+        "id": "9",
+        "status": 0,
+        "seatStyle": 1,
+        "seatsInGroup": [
+         {
+          "areaNumber": 1,
+          "rowIndex": 0,
+          "columnIndex": 5
+         },
+         {
+          "areaNumber": 1,
+          "rowIndex": 0,
+          "columnIndex": 6
+         }
+        ],
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 1,
+         "rowIndex": 0,
+         "columnIndex": 7
+        },
+        "priority": 5,
+        "id": "8",
+        "status": 0,
+        "seatStyle": 3,
+        "seatsInGroup": [
+         {
+          "areaNumber": 1,
+          "rowIndex": 0,
+          "columnIndex": 7
+         },
+         {
+          "areaNumber": 1,
+          "rowIndex": 0,
+          "columnIndex": 8
+         }
+        ],
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 1,
+         "rowIndex": 0,
+         "columnIndex": 8
+        },
+        "priority": 5,
+        "id": "7",
+        "status": 0,
+        "seatStyle": 1,
+        "seatsInGroup": [
+         {
+          "areaNumber": 1,
+          "rowIndex": 0,
+          "columnIndex": 7
+         },
+         {
+          "areaNumber": 1,
+          "rowIndex": 0,
+          "columnIndex": 8
+         }
+        ],
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 1,
+         "rowIndex": 0,
+         "columnIndex": 9
+        },
+        "priority": 1,
+        "id": "6",
+        "status": 0,
+        "seatStyle": 3,
+        "seatsInGroup": [
+         {
+          "areaNumber": 1,
+          "rowIndex": 0,
+          "columnIndex": 9
+         },
+         {
+          "areaNumber": 1,
+          "rowIndex": 0,
+          "columnIndex": 10
+         }
+        ],
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 1,
+         "rowIndex": 0,
+         "columnIndex": 10
+        },
+        "priority": 1,
+        "id": "5",
+        "status": 0,
+        "seatStyle": 1,
+        "seatsInGroup": [
+         {
+          "areaNumber": 1,
+          "rowIndex": 0,
+          "columnIndex": 9
+         },
+         {
+          "areaNumber": 1,
+          "rowIndex": 0,
+          "columnIndex": 10
+         }
+        ],
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 1,
+         "rowIndex": 0,
+         "columnIndex": 11
+        },
+        "priority": 5,
+        "id": "4",
+        "status": 0,
+        "seatStyle": 3,
+        "seatsInGroup": [
+         {
+          "areaNumber": 1,
+          "rowIndex": 0,
+          "columnIndex": 11
+         },
+         {
+          "areaNumber": 1,
+          "rowIndex": 0,
+          "columnIndex": 12
+         }
+        ],
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 1,
+         "rowIndex": 0,
+         "columnIndex": 12
+        },
+        "priority": 5,
+        "id": "3",
+        "status": 0,
+        "seatStyle": 1,
+        "seatsInGroup": [
+         {
+          "areaNumber": 1,
+          "rowIndex": 0,
+          "columnIndex": 11
+         },
+         {
+          "areaNumber": 1,
+          "rowIndex": 0,
+          "columnIndex": 12
+         }
+        ],
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 1,
+         "rowIndex": 0,
+         "columnIndex": 16
+        },
+        "priority": 5,
+        "id": "2",
+        "status": 0,
+        "seatStyle": 3,
+        "seatsInGroup": [
+         {
+          "areaNumber": 1,
+          "rowIndex": 0,
+          "columnIndex": 16
+         },
+         {
+          "areaNumber": 1,
+          "rowIndex": 0,
+          "columnIndex": 17
+         }
+        ],
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 1,
+         "rowIndex": 0,
+         "columnIndex": 17
+        },
+        "priority": 5,
+        "id": "1",
+        "status": 0,
+        "seatStyle": 1,
+        "seatsInGroup": [
+         {
+          "areaNumber": 1,
+          "rowIndex": 0,
+          "columnIndex": 16
+         },
+         {
+          "areaNumber": 1,
+          "rowIndex": 0,
+          "columnIndex": 17
+         }
+        ],
+        "originalStatus": 0
+       }
+      ]
+     },
+     {
+      "rowIndexZeroBased": 1,
+      "physicalName": "L",
+      "seats": [
+       {
+        "position": {
+         "areaNumber": 1,
+         "rowIndex": 1,
+         "columnIndex": 0
+        },
+        "priority": 5,
+        "id": "12",
+        "status": 0,
+        "seatStyle": 3,
+        "seatsInGroup": [
+         {
+          "areaNumber": 1,
+          "rowIndex": 1,
+          "columnIndex": 0
+         },
+         {
+          "areaNumber": 1,
+          "rowIndex": 1,
+          "columnIndex": 1
+         }
+        ],
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 1,
+         "rowIndex": 1,
+         "columnIndex": 1
+        },
+        "priority": 5,
+        "id": "11",
+        "status": 0,
+        "seatStyle": 1,
+        "seatsInGroup": [
+         {
+          "areaNumber": 1,
+          "rowIndex": 1,
+          "columnIndex": 0
+         },
+         {
+          "areaNumber": 1,
+          "rowIndex": 1,
+          "columnIndex": 1
+         }
+        ],
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 1,
+         "rowIndex": 1,
+         "columnIndex": 5
+        },
+        "priority": 5,
+        "id": "10",
+        "status": 0,
+        "seatStyle": 3,
+        "seatsInGroup": [
+         {
+          "areaNumber": 1,
+          "rowIndex": 1,
+          "columnIndex": 5
+         },
+         {
+          "areaNumber": 1,
+          "rowIndex": 1,
+          "columnIndex": 6
+         }
+        ],
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 1,
+         "rowIndex": 1,
+         "columnIndex": 6
+        },
+        "priority": 5,
+        "id": "9",
+        "status": 0,
+        "seatStyle": 1,
+        "seatsInGroup": [
+         {
+          "areaNumber": 1,
+          "rowIndex": 1,
+          "columnIndex": 5
+         },
+         {
+          "areaNumber": 1,
+          "rowIndex": 1,
+          "columnIndex": 6
+         }
+        ],
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 1,
+         "rowIndex": 1,
+         "columnIndex": 7
+        },
+        "priority": 1,
+        "id": "8",
+        "status": 0,
+        "seatStyle": 3,
+        "seatsInGroup": [
+         {
+          "areaNumber": 1,
+          "rowIndex": 1,
+          "columnIndex": 7
+         },
+         {
+          "areaNumber": 1,
+          "rowIndex": 1,
+          "columnIndex": 8
+         }
+        ],
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 1,
+         "rowIndex": 1,
+         "columnIndex": 8
+        },
+        "priority": 1,
+        "id": "7",
+        "status": 0,
+        "seatStyle": 1,
+        "seatsInGroup": [
+         {
+          "areaNumber": 1,
+          "rowIndex": 1,
+          "columnIndex": 7
+         },
+         {
+          "areaNumber": 1,
+          "rowIndex": 1,
+          "columnIndex": 8
+         }
+        ],
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 1,
+         "rowIndex": 1,
+         "columnIndex": 9
+        },
+        "priority": 5,
+        "id": "6",
+        "status": 0,
+        "seatStyle": 3,
+        "seatsInGroup": [
+         {
+          "areaNumber": 1,
+          "rowIndex": 1,
+          "columnIndex": 9
+         },
+         {
+          "areaNumber": 1,
+          "rowIndex": 1,
+          "columnIndex": 10
+         }
+        ],
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 1,
+         "rowIndex": 1,
+         "columnIndex": 10
+        },
+        "priority": 5,
+        "id": "5",
+        "status": 0,
+        "seatStyle": 1,
+        "seatsInGroup": [
+         {
+          "areaNumber": 1,
+          "rowIndex": 1,
+          "columnIndex": 9
+         },
+         {
+          "areaNumber": 1,
+          "rowIndex": 1,
+          "columnIndex": 10
+         }
+        ],
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 1,
+         "rowIndex": 1,
+         "columnIndex": 11
+        },
+        "priority": 1,
+        "id": "4",
+        "status": 0,
+        "seatStyle": 3,
+        "seatsInGroup": [
+         {
+          "areaNumber": 1,
+          "rowIndex": 1,
+          "columnIndex": 11
+         },
+         {
+          "areaNumber": 1,
+          "rowIndex": 1,
+          "columnIndex": 12
+         }
+        ],
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 1,
+         "rowIndex": 1,
+         "columnIndex": 12
+        },
+        "priority": 1,
+        "id": "3",
+        "status": 0,
+        "seatStyle": 1,
+        "seatsInGroup": [
+         {
+          "areaNumber": 1,
+          "rowIndex": 1,
+          "columnIndex": 11
+         },
+         {
+          "areaNumber": 1,
+          "rowIndex": 1,
+          "columnIndex": 12
+         }
+        ],
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 1,
+         "rowIndex": 1,
+         "columnIndex": 16
+        },
+        "priority": 1,
+        "id": "2",
+        "status": 0,
+        "seatStyle": 3,
+        "seatsInGroup": [
+         {
+          "areaNumber": 1,
+          "rowIndex": 1,
+          "columnIndex": 16
+         },
+         {
+          "areaNumber": 1,
+          "rowIndex": 1,
+          "columnIndex": 17
+         }
+        ],
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 1,
+         "rowIndex": 1,
+         "columnIndex": 17
+        },
+        "priority": 1,
+        "id": "1",
+        "status": 0,
+        "seatStyle": 1,
+        "seatsInGroup": [
+         {
+          "areaNumber": 1,
+          "rowIndex": 1,
+          "columnIndex": 16
+         },
+         {
+          "areaNumber": 1,
+          "rowIndex": 1,
+          "columnIndex": 17
+         }
+        ],
+        "originalStatus": 0
+       }
+      ]
+     },
+     {
+      "rowIndexZeroBased": 2,
+      "physicalName": null,
+      "seats": []
+     },
+     {
+      "rowIndexZeroBased": 3,
+      "physicalName": null,
+      "seats": []
+     },
+     {
+      "rowIndexZeroBased": 4,
+      "physicalName": null,
+      "seats": []
+     },
+     {
+      "rowIndexZeroBased": 5,
+      "physicalName": null,
+      "seats": []
+     },
+     {
+      "rowIndexZeroBased": 6,
+      "physicalName": null,
+      "seats": []
+     },
+     {
+      "rowIndexZeroBased": 7,
+      "physicalName": null,
+      "seats": []
+     },
+     {
+      "rowIndexZeroBased": 8,
+      "physicalName": null,
+      "seats": []
+     },
+     {
+      "rowIndexZeroBased": 9,
+      "physicalName": null,
+      "seats": []
+     },
+     {
+      "rowIndexZeroBased": 10,
+      "physicalName": null,
+      "seats": []
+     },
+     {
+      "rowIndexZeroBased": 11,
+      "physicalName": null,
+      "seats": []
+     }
+    ],
+    "rowCount": 12,
+    "columnCount": 18
+   },
+   {
+    "number": 2,
+    "areaCategoryCode": "0000000010",
+    "description": "SINGLE",
+    "descriptionAlt": "",
+    "numberOfSeats": 154,
+    "isAllocatedSeating": true,
+    "hasSofaSeatingEnabled": false,
+    "left": 0.6,
+    "top": 87.67,
+    "height": 12,
+    "width": 22,
+    "rows": [
+     {
+      "rowIndexZeroBased": 0,
+      "physicalName": null,
+      "seats": []
+     },
+     {
+      "rowIndexZeroBased": 1,
+      "physicalName": null,
+      "seats": []
+     },
+     {
+      "rowIndexZeroBased": 2,
+      "physicalName": "K",
+      "seats": [
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 2,
+         "columnIndex": 0
+        },
+        "priority": 3,
+        "id": "15",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 2,
+         "columnIndex": 1
+        },
+        "priority": 3,
+        "id": "14",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 2,
+         "columnIndex": 4
+        },
+        "priority": 1,
+        "id": "13",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 2,
+         "columnIndex": 5
+        },
+        "priority": 1,
+        "id": "12",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 2,
+         "columnIndex": 6
+        },
+        "priority": 1,
+        "id": "11",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 2,
+         "columnIndex": 7
+        },
+        "priority": 1,
+        "id": "10",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 2,
+         "columnIndex": 8
+        },
+        "priority": 1,
+        "id": "9",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 2,
+         "columnIndex": 9
+        },
+        "priority": 1,
+        "id": "8",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 2,
+         "columnIndex": 10
+        },
+        "priority": 1,
+        "id": "7",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 2,
+         "columnIndex": 11
+        },
+        "priority": 1,
+        "id": "6",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 2,
+         "columnIndex": 12
+        },
+        "priority": 1,
+        "id": "5",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 2,
+         "columnIndex": 13
+        },
+        "priority": 1,
+        "id": "4",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 2,
+         "columnIndex": 14
+        },
+        "priority": 1,
+        "id": "3",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 2,
+         "columnIndex": 16
+        },
+        "priority": 2,
+        "id": "2",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 2,
+         "columnIndex": 17
+        },
+        "priority": 2,
+        "id": "1",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       }
+      ]
+     },
+     {
+      "rowIndexZeroBased": 3,
+      "physicalName": "J",
+      "seats": [
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 3,
+         "columnIndex": 0
+        },
+        "priority": 3,
+        "id": "15",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 3,
+         "columnIndex": 1
+        },
+        "priority": 3,
+        "id": "14",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 3,
+         "columnIndex": 4
+        },
+        "priority": 1,
+        "id": "13",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 3,
+         "columnIndex": 5
+        },
+        "priority": 1,
+        "id": "12",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 3,
+         "columnIndex": 6
+        },
+        "priority": 1,
+        "id": "11",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 3,
+         "columnIndex": 7
+        },
+        "priority": 1,
+        "id": "10",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 3,
+         "columnIndex": 8
+        },
+        "priority": 1,
+        "id": "9",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 3,
+         "columnIndex": 9
+        },
+        "priority": 1,
+        "id": "8",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 3,
+         "columnIndex": 10
+        },
+        "priority": 1,
+        "id": "7",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 3,
+         "columnIndex": 11
+        },
+        "priority": 1,
+        "id": "6",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 3,
+         "columnIndex": 12
+        },
+        "priority": 1,
+        "id": "5",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 3,
+         "columnIndex": 13
+        },
+        "priority": 1,
+        "id": "4",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 3,
+         "columnIndex": 14
+        },
+        "priority": 1,
+        "id": "3",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 3,
+         "columnIndex": 16
+        },
+        "priority": 2,
+        "id": "2",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 3,
+         "columnIndex": 17
+        },
+        "priority": 2,
+        "id": "1",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       }
+      ]
+     },
+     {
+      "rowIndexZeroBased": 4,
+      "physicalName": "H",
+      "seats": [
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 4,
+         "columnIndex": 0
+        },
+        "priority": 2,
+        "id": "16",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 4,
+         "columnIndex": 1
+        },
+        "priority": 2,
+        "id": "15",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 4,
+         "columnIndex": 3
+        },
+        "priority": 1,
+        "id": "14",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 4,
+         "columnIndex": 4
+        },
+        "priority": 1,
+        "id": "13",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 4,
+         "columnIndex": 5
+        },
+        "priority": 1,
+        "id": "12",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 4,
+         "columnIndex": 6
+        },
+        "priority": 1,
+        "id": "11",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 4,
+         "columnIndex": 7
+        },
+        "priority": 1,
+        "id": "10",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 4,
+         "columnIndex": 8
+        },
+        "priority": 1,
+        "id": "9",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 4,
+         "columnIndex": 9
+        },
+        "priority": 1,
+        "id": "8",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 4,
+         "columnIndex": 10
+        },
+        "priority": 1,
+        "id": "7",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 4,
+         "columnIndex": 11
+        },
+        "priority": 1,
+        "id": "6",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 4,
+         "columnIndex": 12
+        },
+        "priority": 1,
+        "id": "5",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 4,
+         "columnIndex": 13
+        },
+        "priority": 1,
+        "id": "4",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 4,
+         "columnIndex": 14
+        },
+        "priority": 1,
+        "id": "3",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 4,
+         "columnIndex": 16
+        },
+        "priority": 2,
+        "id": "2",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 4,
+         "columnIndex": 17
+        },
+        "priority": 2,
+        "id": "1",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       }
+      ]
+     },
+     {
+      "rowIndexZeroBased": 5,
+      "physicalName": "G",
+      "seats": [
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 5,
+         "columnIndex": 0
+        },
+        "priority": 2,
+        "id": "16",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 5,
+         "columnIndex": 1
+        },
+        "priority": 2,
+        "id": "15",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 5,
+         "columnIndex": 3
+        },
+        "priority": 1,
+        "id": "14",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 5,
+         "columnIndex": 4
+        },
+        "priority": 1,
+        "id": "13",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 5,
+         "columnIndex": 5
+        },
+        "priority": 1,
+        "id": "12",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 5,
+         "columnIndex": 6
+        },
+        "priority": 1,
+        "id": "11",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 5,
+         "columnIndex": 7
+        },
+        "priority": 1,
+        "id": "10",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 5,
+         "columnIndex": 8
+        },
+        "priority": 1,
+        "id": "9",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 5,
+         "columnIndex": 9
+        },
+        "priority": 1,
+        "id": "8",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 5,
+         "columnIndex": 10
+        },
+        "priority": 1,
+        "id": "7",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 5,
+         "columnIndex": 11
+        },
+        "priority": 1,
+        "id": "6",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 5,
+         "columnIndex": 12
+        },
+        "priority": 1,
+        "id": "5",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 5,
+         "columnIndex": 13
+        },
+        "priority": 1,
+        "id": "4",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 5,
+         "columnIndex": 14
+        },
+        "priority": 1,
+        "id": "3",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 5,
+         "columnIndex": 16
+        },
+        "priority": 2,
+        "id": "2",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 5,
+         "columnIndex": 17
+        },
+        "priority": 2,
+        "id": "1",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       }
+      ]
+     },
+     {
+      "rowIndexZeroBased": 6,
+      "physicalName": "F",
+      "seats": [
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 6,
+         "columnIndex": 0
+        },
+        "priority": 2,
+        "id": "16",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 6,
+         "columnIndex": 1
+        },
+        "priority": 2,
+        "id": "15",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 6,
+         "columnIndex": 3
+        },
+        "priority": 1,
+        "id": "14",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 6,
+         "columnIndex": 4
+        },
+        "priority": 1,
+        "id": "13",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 6,
+         "columnIndex": 5
+        },
+        "priority": 1,
+        "id": "12",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 6,
+         "columnIndex": 6
+        },
+        "priority": 1,
+        "id": "11",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 6,
+         "columnIndex": 7
+        },
+        "priority": 1,
+        "id": "10",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 6,
+         "columnIndex": 8
+        },
+        "priority": 1,
+        "id": "9",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 6,
+         "columnIndex": 9
+        },
+        "priority": 1,
+        "id": "8",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 6,
+         "columnIndex": 10
+        },
+        "priority": 1,
+        "id": "7",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 6,
+         "columnIndex": 11
+        },
+        "priority": 1,
+        "id": "6",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 6,
+         "columnIndex": 12
+        },
+        "priority": 1,
+        "id": "5",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 6,
+         "columnIndex": 13
+        },
+        "priority": 1,
+        "id": "4",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 6,
+         "columnIndex": 14
+        },
+        "priority": 1,
+        "id": "3",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 6,
+         "columnIndex": 16
+        },
+        "priority": 2,
+        "id": "2",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 6,
+         "columnIndex": 17
+        },
+        "priority": 2,
+        "id": "1",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       }
+      ]
+     },
+     {
+      "rowIndexZeroBased": 7,
+      "physicalName": "E",
+      "seats": [
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 7,
+         "columnIndex": 0
+        },
+        "priority": 2,
+        "id": "16",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 7,
+         "columnIndex": 1
+        },
+        "priority": 2,
+        "id": "15",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 7,
+         "columnIndex": 3
+        },
+        "priority": 1,
+        "id": "14",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 7,
+         "columnIndex": 4
+        },
+        "priority": 1,
+        "id": "13",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 7,
+         "columnIndex": 5
+        },
+        "priority": 1,
+        "id": "12",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 7,
+         "columnIndex": 6
+        },
+        "priority": 1,
+        "id": "11",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 7,
+         "columnIndex": 7
+        },
+        "priority": 1,
+        "id": "10",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 7,
+         "columnIndex": 8
+        },
+        "priority": 1,
+        "id": "9",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 7,
+         "columnIndex": 9
+        },
+        "priority": 1,
+        "id": "8",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 7,
+         "columnIndex": 10
+        },
+        "priority": 1,
+        "id": "7",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 7,
+         "columnIndex": 11
+        },
+        "priority": 1,
+        "id": "6",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 7,
+         "columnIndex": 12
+        },
+        "priority": 1,
+        "id": "5",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 7,
+         "columnIndex": 13
+        },
+        "priority": 1,
+        "id": "4",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 7,
+         "columnIndex": 14
+        },
+        "priority": 1,
+        "id": "3",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 7,
+         "columnIndex": 16
+        },
+        "priority": 2,
+        "id": "2",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 7,
+         "columnIndex": 17
+        },
+        "priority": 2,
+        "id": "1",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       }
+      ]
+     },
+     {
+      "rowIndexZeroBased": 8,
+      "physicalName": "D",
+      "seats": [
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 8,
+         "columnIndex": 0
+        },
+        "priority": 2,
+        "id": "16",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 8,
+         "columnIndex": 1
+        },
+        "priority": 2,
+        "id": "15",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 8,
+         "columnIndex": 3
+        },
+        "priority": 1,
+        "id": "14",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 8,
+         "columnIndex": 4
+        },
+        "priority": 1,
+        "id": "13",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 8,
+         "columnIndex": 5
+        },
+        "priority": 1,
+        "id": "12",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 8,
+         "columnIndex": 6
+        },
+        "priority": 1,
+        "id": "11",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 8,
+         "columnIndex": 7
+        },
+        "priority": 1,
+        "id": "10",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 8,
+         "columnIndex": 8
+        },
+        "priority": 1,
+        "id": "9",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 8,
+         "columnIndex": 9
+        },
+        "priority": 1,
+        "id": "8",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 8,
+         "columnIndex": 10
+        },
+        "priority": 1,
+        "id": "7",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 8,
+         "columnIndex": 11
+        },
+        "priority": 1,
+        "id": "6",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 8,
+         "columnIndex": 12
+        },
+        "priority": 1,
+        "id": "5",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 8,
+         "columnIndex": 13
+        },
+        "priority": 1,
+        "id": "4",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 8,
+         "columnIndex": 14
+        },
+        "priority": 1,
+        "id": "3",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 8,
+         "columnIndex": 16
+        },
+        "priority": 2,
+        "id": "2",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 8,
+         "columnIndex": 17
+        },
+        "priority": 2,
+        "id": "1",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       }
+      ]
+     },
+     {
+      "rowIndexZeroBased": 9,
+      "physicalName": "C",
+      "seats": [
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 9,
+         "columnIndex": 0
+        },
+        "priority": 2,
+        "id": "16",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 9,
+         "columnIndex": 1
+        },
+        "priority": 2,
+        "id": "15",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 9,
+         "columnIndex": 3
+        },
+        "priority": 1,
+        "id": "14",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 9,
+         "columnIndex": 4
+        },
+        "priority": 1,
+        "id": "13",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 9,
+         "columnIndex": 5
+        },
+        "priority": 1,
+        "id": "12",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 9,
+         "columnIndex": 6
+        },
+        "priority": 1,
+        "id": "11",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 9,
+         "columnIndex": 7
+        },
+        "priority": 1,
+        "id": "10",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 9,
+         "columnIndex": 8
+        },
+        "priority": 1,
+        "id": "9",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 9,
+         "columnIndex": 9
+        },
+        "priority": 1,
+        "id": "8",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 9,
+         "columnIndex": 10
+        },
+        "priority": 1,
+        "id": "7",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 9,
+         "columnIndex": 11
+        },
+        "priority": 1,
+        "id": "6",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 9,
+         "columnIndex": 12
+        },
+        "priority": 1,
+        "id": "5",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 9,
+         "columnIndex": 13
+        },
+        "priority": 1,
+        "id": "4",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 9,
+         "columnIndex": 14
+        },
+        "priority": 1,
+        "id": "3",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 9,
+         "columnIndex": 16
+        },
+        "priority": 2,
+        "id": "2",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 9,
+         "columnIndex": 17
+        },
+        "priority": 2,
+        "id": "1",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       }
+      ]
+     },
+     {
+      "rowIndexZeroBased": 10,
+      "physicalName": "B",
+      "seats": [
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 10,
+         "columnIndex": 0
+        },
+        "priority": 2,
+        "id": "16",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 10,
+         "columnIndex": 1
+        },
+        "priority": 2,
+        "id": "15",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 10,
+         "columnIndex": 3
+        },
+        "priority": 1,
+        "id": "14",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 10,
+         "columnIndex": 4
+        },
+        "priority": 1,
+        "id": "13",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 10,
+         "columnIndex": 5
+        },
+        "priority": 1,
+        "id": "12",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 10,
+         "columnIndex": 6
+        },
+        "priority": 1,
+        "id": "11",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 10,
+         "columnIndex": 7
+        },
+        "priority": 1,
+        "id": "10",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 10,
+         "columnIndex": 8
+        },
+        "priority": 1,
+        "id": "9",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 10,
+         "columnIndex": 9
+        },
+        "priority": 1,
+        "id": "8",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 10,
+         "columnIndex": 10
+        },
+        "priority": 1,
+        "id": "7",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 10,
+         "columnIndex": 11
+        },
+        "priority": 1,
+        "id": "6",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 10,
+         "columnIndex": 12
+        },
+        "priority": 1,
+        "id": "5",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 10,
+         "columnIndex": 13
+        },
+        "priority": 1,
+        "id": "4",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 10,
+         "columnIndex": 14
+        },
+        "priority": 1,
+        "id": "3",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 10,
+         "columnIndex": 16
+        },
+        "priority": 2,
+        "id": "2",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 10,
+         "columnIndex": 17
+        },
+        "priority": 2,
+        "id": "1",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       }
+      ]
+     },
+     {
+      "rowIndexZeroBased": 11,
+      "physicalName": "A",
+      "seats": [
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 11,
+         "columnIndex": 3
+        },
+        "priority": 1,
+        "id": "14",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 11,
+         "columnIndex": 4
+        },
+        "priority": 1,
+        "id": "13",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 11,
+         "columnIndex": 5
+        },
+        "priority": 1,
+        "id": "12",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 11,
+         "columnIndex": 6
+        },
+        "priority": 1,
+        "id": "11",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 11,
+         "columnIndex": 7
+        },
+        "priority": 1,
+        "id": "10",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 11,
+         "columnIndex": 8
+        },
+        "priority": 1,
+        "id": "9",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 11,
+         "columnIndex": 9
+        },
+        "priority": 1,
+        "id": "8",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 11,
+         "columnIndex": 10
+        },
+        "priority": 1,
+        "id": "7",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 11,
+         "columnIndex": 11
+        },
+        "priority": 1,
+        "id": "6",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 11,
+         "columnIndex": 12
+        },
+        "priority": 1,
+        "id": "5",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 11,
+         "columnIndex": 13
+        },
+        "priority": 1,
+        "id": "4",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       },
+       {
+        "position": {
+         "areaNumber": 2,
+         "rowIndex": 11,
+         "columnIndex": 14
+        },
+        "priority": 1,
+        "id": "3",
+        "status": 0,
+        "seatStyle": 0,
+        "seatsInGroup": null,
+        "originalStatus": 0
+       }
+      ]
+     }
+    ],
+    "rowCount": 12,
+    "columnCount": 18
+   }
+  ],
+  "areaCategories": [
+   {
+    "areaCategoryCode": "0000000002",
+    "seatsToAllocate": 0,
+    "seatsAllocatedCount": 0,
+    "seatsNotAllocatedCount": 0,
+    "selectedSeats": [],
+    "isInSeatDeliveryEnabled": false
+   },
+   {
+    "areaCategoryCode": "0000000010",
+    "seatsToAllocate": 0,
+    "seatsAllocatedCount": 0,
+    "seatsNotAllocatedCount": 0,
+    "selectedSeats": [],
+    "isInSeatDeliveryEnabled": false
+   }
+  ],
+  "boundaryRight": 22.6,
+  "boundaryLeft": 0,
+  "boundaryTop": 87.67,
+  "screenStart": 0,
+  "screenWidth": 22.4
+ }
+}

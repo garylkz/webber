@@ -1,0 +1,1850 @@
+{
+ "cinemas": [
+  {
+   "recid": "77c62e0f-70c6-48b4-8a2b-9586785d5c98",
+   "itemkey": "KSL",
+   "parentkey": "",
+   "name": "TGV KSL KLANG (NEW)",
+   "status": 1,
+   "lastupdateutc": "2026-10-01T09:22:45.95104Z",
+   "pubdateutc": "2026-08-24T14:02:49.762484Z",
+   "extdata": {
+    "exp": [
+     "deluxe"
+    ],
+    "folderkey": "ksl",
+    "cinema": {
+     "id": "KSL",
+     "meta": {
+      "name": "TGV Cinemas KSL Esplanade Mall | Latest Movie Showtimes and Tickets",
+      "description": "Book movie tickets at TGV Cinemas KSL Esplanade Mall with the latest showtimes, promos, and merchandise from the latest blockbusters in Malaysia."
+     },
+     "mapurl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3984.500373405277!2d101.46436047497043!3d2.958566397017625!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cdadc6c3341ebb%3A0xdc2c2514dcfba44b!2sKSL%20Esplanade%20Mall!5e0!3m2!1sen!2smy!4v1790256844109!5m2!1sen!2smy\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade",
+     "address": "Lot S001, Second Floor, KSL Esplanade Mall, No. 1, Persiaran Bestari 2/KSO9, Bandar Bestari, 41200 Klang Bandar Diraja, Selangor",
+     "keyword": "ksl-esplanade",
+     "features": [],
+     "latitude": "2.958646756031762",
+     "location": "klangvalley",
+     "longitude": "101.46691393779734",
+     "telephone": "",
+     "description": "TGV Cinemas KSL Esplanade Mall is a family-friendly entertainment space where the residents of Klang can come and enjoy the latest movies with their family and friends.",
+     "parkinginfo": "Level 2 / 2M, Pillar A",
+     "openingHours": [
+      "10:00 - 00:00"
+     ],
+     "addressRegion": "Klang Bandar Diraja, Selangor",
+     "nearbycinemas": [
+      "BBT",
+      "BR0"
+     ],
+     "addressLocality": "Persiaran Bestari 2/KSO9, Bandar Bestari",
+     "addressPostcode": "41200"
+    }
+   },
+   "assets": []
+  },
+  {
+   "recid": "7cf73100-9f74-4f2c-827c-acbf54025f61",
+   "itemkey": "PDH",
+   "parentkey": "",
+   "name": "PAVILION DAMANSARA HEIGHTS (NEW)",
+   "status": 1,
+   "lastupdateutc": "2026-08-26T09:55:06.093628Z",
+   "pubdateutc": "2026-07-02T09:36:05.875037Z",
+   "extdata": {
+    "exp": [
+     "indulge-bed",
+     "indulge",
+     "imaxlaser",
+     "beanie",
+     "deluxe"
+    ],
+    "folderkey": "pdh",
+    "cinema": {
+     "id": "PDH",
+     "meta": {
+      "name": "TGV Cinemas Pavilion Damansara Heights | Latest Movie Showtimes and Tickets",
+      "description": "Book movie tickets at TGV Cinemas Pavilion Damansara Heights for premium halls, INDULGE dining and exclusive celebrity events in Kuala Lumpur."
+     },
+     "mapurl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7967.618316731825!2d101.66063307310057!3d3.1450137531819595!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cc490065c44043%3A0x976facad7ada6095!2sTGV%20Cinemas%20Pavilion%20Damansara%20Heights!5e0!3m2!1sen!2smy!4v1782993026250!5m2!1sen!2smy\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"",
+     "address": "Lot 5.04.00 & 6.01.00, Pavilion Damansara Heights, Jalan Damanlela, Damansara Town Centre, 50490 Kuala Lumpur, Federal Territory of Kuala Lumpur",
+     "keyword": "pavilion-damansara-heights",
+     "features": [],
+     "latitude": "3.145281566949421",
+     "location": "klangvalley",
+     "longitude": "101.66333674386219",
+     "telephone": "",
+     "description": "TGV Cinemas Pavilion Damansara Heights brings a stylish cinema experience to the heart of KL, complete with INDULGE dining, elegant comfort, and exclusive celebrity events.",
+     "parkinginfo": "Car Park Entrance D, B1 - B3 Floor, Pillar A & B",
+     "openingHours": [
+      "10:00 - 00:00"
+     ],
+     "addressRegion": "Federal Territory of Kuala Lumpur",
+     "nearbycinemas": [
+      "KLC",
+      "BU0"
+     ],
+     "addressLocality": "Kuala Lumpur",
+     "addressPostcode": "55100"
+    }
+   },
+   "assets": []
+  },
+  {
+   "recid": "ee213845-c83e-4723-92a1-875a66eeacfb",
+   "itemkey": "PKL",
+   "parentkey": "",
+   "name": "PAVILION KUALA LUMPUR (NEW)",
+   "status": 1,
+   "lastupdateutc": "2026-10-07T04:42:03.740262Z",
+   "pubdateutc": "2026-06-15T04:22:36.009504Z",
+   "extdata": {
+    "exp": [
+     "atmos",
+     "indulge",
+     "deluxe"
+    ],
+    "folderkey": "pkl",
+    "cinema": {
+     "id": "PKL",
+     "meta": {
+      "name": "TGV Cinemas Pavilion KL | Latest Movie Showtimes and Tickets",
+      "description": "Book tickets to a premium cinema experience at the heart of KL and dine with the finest of meals at its INDULGE hall, and meet with celebrities at exclusive events."
+     },
+     "mapurl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3983.7940698777743!2d101.71341249999999!3d3.1489606999999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cc370071664501%3A0x49e069f6f51a1ec9!2sTGV%20Cinemas%20Pavilion%20Kuala%20Lumpur!5e0!3m2!1sen!2smy!4v1781583677154!5m2!1sen!2smy\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"",
+     "address": "Lot C5.02.01 & C6.01.00 Level 5 & Level 6 Pavilion Kuala Lumpur 168, Jalan Bukit Bintang  55100 Kuala Lumpur.",
+     "keyword": "pavilion-kl",
+     "features": [],
+     "latitude": "3.1492835242458255",
+     "location": "klangvalley",
+     "longitude": "101.71296708255169",
+     "telephone": "",
+     "description": "TGV Cinemas Pavilion KL is one of the major entertainment arm of Kuala Lumpur's golden triangle.It offers the finest cinematic experience paired with gourmet-level cuisine to go with the latest blockbusters.TGV Cinemas Pavillion KL halls include:1X INDULGE 9X DELUXE",
+     "parkinginfo": "",
+     "openingHours": [
+      "10:00 - 00:00"
+     ],
+     "addressRegion": "Federal Territory of Kuala Lumpur",
+     "nearbycinemas": [
+      "KLC"
+     ],
+     "addressLocality": "Kuala Lumpur",
+     "addressPostcode": "55100"
+    }
+   },
+   "assets": []
+  },
+  {
+   "recid": "d6e05333-c7f0-469e-9e59-9863aeda8a30",
+   "itemkey": "SWS",
+   "parentkey": "",
+   "name": "SUNWAY SQUARE (NEW)",
+   "status": 1,
+   "lastupdateutc": "2026-06-16T04:01:42.563Z",
+   "pubdateutc": "2026-01-30T07:34:57.409175Z",
+   "extdata": {
+    "exp": [
+     "deluxe",
+     "indulge",
+     "atmos"
+    ],
+    "folderkey": "sws",
+    "cinema": {
+     "id": "SWS",
+     "meta": {
+      "name": "TGV Sunway Square | Latest Movie Showtimes and Tickets",
+      "description": "TGV Sunway Square is a social cinema for students with Deluxe and INDULGE halls near the Sunway education hub. Book your tickets now!"
+     },
+     "mapurl": "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d7968.225840757558!2d101.6012205!3d3.0644736!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cc4d0008e06523%3A0x81c9da4000733711!2sTGV%20Cinema%20Sunway%20Square!5e0!3m2!1sen!2smy!4v1770278386863!5m2!1sen!2smy",
+     "address": "L2-20, Level 2, Sunway SQ Mall, Jalan Lagoon Selatan, Bandar Sunway, 47500 Petaling Jaya, Selangor",
+     "keyword": "sunway-square",
+     "features": [],
+     "latitude": "3.06517253179156",
+     "location": "klangvalley",
+     "longitude": "101.60481076479721",
+     "telephone": "",
+     "description": "TGV Cinemas Sunway Square is a vibrant social cinema made for students, young adults and movie lovers who want an easy, comfortable and value-friendly place to hang out. Located within the Sunway education hub, it is the perfect spot for after-class movie nights, campus outings, group hangouts and weekend catch-ups with friends with affordable cinema student prices. Beyond screenings, the cinema also features a stylish LED foyer and INDULGE lounge, making it a strong venue for private screenings, club gatherings, campus events, brand activations and special celebrations. The TGV Cinemas Sunway Square halls include: 2x Indulge Halls 4x Deluxe Halls ",
+     "parkinginfo": "Level B3 & B4, Zone E (take lift up to L1, then take the escalator to L2)",
+     "openingHours": [],
+     "addressRegion": "",
+     "nearbycinemas": [
+      "SW0"
+     ],
+     "addressLocality": "",
+     "addressPostcode": ""
+    }
+   },
+   "assets": []
+  },
+  {
+   "recid": "bd984965-c98e-4db7-ab75-bdd50a2179d2",
+   "itemkey": "ALM",
+   "parentkey": "",
+   "name": "ALAMANDA",
+   "status": 1,
+   "lastupdateutc": "2026-06-16T03:52:10.998758Z",
+   "pubdateutc": "2025-12-08T10:08:11.217747Z",
+   "extdata": {
+    "exp": [
+     "indulge",
+     "indulge-bed",
+     "junior-hotwheel",
+     "deluxe"
+    ],
+    "folderkey": "alm",
+    "cinema": {
+     "id": "ALM",
+     "meta": {
+      "name": "TGV Cinemas Alamanda Putrajaya | Latest Movie Showtimes and Tickets",
+      "description": "Enjoy movies and get your tickets at TGV Alamanda Putrajaya with Indulge Bed, Junior cinema, halls for family days and premium movie nights. Book your tickets now!"
+     },
+     "mapurl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3984.57058487648!2d101.70984059999999!3d2.9389665999999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cdc9006cd38a91%3A0xaadad42fddae0b12!2sTGV%20Cinema%20%40%20Alamanda!5e0!3m2!1sen!2smy!4v1765192224531!5m2!1sen!2smy",
+     "address": "LG86, Lower Ground Floor, Jalan Alamanda, Presint 1, 62000 Putrajaya, Wilayah Persekutuan Putrajaya, Malaysia",
+     "keyword": "alamanda",
+     "features": [],
+     "latitude": "2.9390783168558277",
+     "location": "klangvalley",
+     "landmarks": null,
+     "longitude": "101.71039593658242",
+     "telephone": "",
+     "description": "TGV Cinemas Alamanda Putrajaya is a convenient, family-friendly cinema easily accessible from Putrajaya and Cyberjaya. Housing the latest movies, it delivers a complete entertainment experience for families, couples and premium moviegoers. \n\nFor a more elevated experience, the Indulge hall offers luxury recliner seating with access to a dedicated Indulge lounge. The standout highlight is the Indulge Bed cinema, a first-of-its-kind experience in the area, designed with bed-style seating for ultimate comfort—ideal for couples and those who want to watch movies differently. \n\nFamilies will love the Junior cinema and its City of Play kids’ play area, turning the movie experience into a full family outing. Located next to the bowling area of the Alamanda Shopping Centre , it’s entertainment beyond just the cinema. \n \nWhether you’re visiting from IOI City Mall, Putrajaya or Cyberjaya, TGV Cinemas Alamanda Putrajaya offers a more relaxed, family-oriented and premium way to enjoy the latest movies—perfect for weekends, family days and memorable movie nights. \n \nTGV Cinemas Alamanda halls include: \n2x Indulge Halls \n1x Junior Halls \n7x Deluxe Halls ",
+     "parkinginfo": "P3, South Parking Zone",
+     "openingHours": [],
+     "addressRegion": "",
+     "nearbycinemas": [
+      "CYB"
+     ],
+     "addressLocality": "",
+     "addressPostcode": ""
+    }
+   },
+   "assets": []
+  },
+  {
+   "recid": "05d5adcb-c7e5-4b34-b256-9c7338b2b735",
+   "itemkey": "AMP",
+   "parentkey": "",
+   "name": "AMPANG POINT",
+   "status": 1,
+   "lastupdateutc": "2025-08-29T08:50:05.925801Z",
+   "pubdateutc": "2024-02-17T05:00:24.92784Z",
+   "extdata": {
+    "exp": [
+     "junior",
+     "deluxe"
+    ],
+    "folderkey": "amp",
+    "cinema": {
+     "id": "AMP",
+     "meta": {
+      "name": "",
+      "description": ""
+     },
+     "mapurl": "https://maps.google.com/maps?q=TGV%20Ampang%20Point&t=&z=13&ie=UTF8&iwloc=&output=embed",
+     "address": "T3, 3rd Floor, Jalan Memanda 3, Ampang Point Shopping Centre, Taman Dato Ahmad Razali, 68000 Ampang, Selangor, Malaysia.",
+     "keyword": "ampang-point",
+     "features": [],
+     "latitude": "3.1574099317",
+     "location": "klangvalley",
+     "longitude": "101.75153017",
+     "telephone": "",
+     "description": "",
+     "parkinginfo": "Level B",
+     "openingHours": [],
+     "addressRegion": "",
+     "nearbycinemas": [
+      "1SM",
+      "KLC",
+      "AU2"
+     ],
+     "addressLocality": "",
+     "addressPostcode": ""
+    }
+   },
+   "assets": []
+  },
+  {
+   "recid": "3efcff3a-7f79-4d74-801c-8e8d450978dc",
+   "itemkey": "PBJ",
+   "parentkey": "",
+   "name": "PAVILION BUKIT JALIL",
+   "status": 1,
+   "lastupdateutc": "2026-08-26T10:24:59.010997Z",
+   "pubdateutc": "2023-09-10T12:47:57.930796Z",
+   "extdata": {
+    "exp": [
+     "indulge",
+     "imaxlaser",
+     "beanie",
+     "junior-hotwheel",
+     "atmos",
+     "deluxe",
+     "indulge-coway-berex"
+    ],
+    "folderkey": "pbj",
+    "cinema": {
+     "id": "PBJ",
+     "meta": {
+      "name": "TGV Pavilion Bukit Jalil | Latest Movie Showtimes and Tickets",
+      "description": "TGV Pavilion Bukit Jalil is home to Malaysia’s first IMAX with Laser, plus INDULGE and JUNIOR halls for premium family fun. Book your tickets now! "
+     },
+     "mapurl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3984.1640287340942!2d101.66815527441028!3d3.050713853751024!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cc4bb8f625f6cb%3A0xe5fdb439c2399f1a!2sTGV%20Pavilion%20Bukit%20Jalil!5e0!3m2!1sen!2smy!4v1695002372559!5m2!1sen!2smy",
+     "address": "2 Persiaran Jalil 8 Bukit Jalil 57000 Kuala Lumpur Wilayah Persekutuan",
+     "keyword": "pavilion-bukit-jalil",
+     "features": [],
+     "latitude": "3.0507481599872763",
+     "location": "klangvalley",
+     "longitude": "101.6707318729003",
+     "telephone": "",
+     "description": "TGV Cinemas Pavilion Bukit Jalil is a cinema that brings trendy moviegoing and first-of-its-kind experiences together in one bold entertainment destination. Home to Malaysia’s first IMAX with Laser, this is where movies feel bigger, sharper and more powerful. Our INDULGE and INDULGE Coway Berex halls also turn cinema into a premium escape. Sink into plush comfort, stretch out and enjoy a more intimate setting made for date nights, special treats and movie moments that deserve extra luxury. Families can also step into the fun with our JUNIOR halls, featuring playful Hot Wheels energy and stylish Barbie-inspired adventures. Bright, colourful and made for kids, it is a movie experience that feels like a mini playground before the movies. From IMAX firsts to INDULGE luxury and family-friendly fun, TGV Cinemas Pavilion Bukit Jalil is built for moviegoers who want their cinema experience to feel fresh, exciting and unforgettable. The Pavilion Bukit Jalil Cinema halls include: 1x IMAX Hall 2x Indulge Halls 1x Indulge Coway Bed 1x Junior Hall 2x Beanie Halls 9x Deluxe Halls",
+     "parkinginfo": "Level 2M, Orange Zone",
+     "openingHours": [],
+     "addressRegion": "",
+     "nearbycinemas": [
+      "MN0",
+      "STW"
+     ],
+     "addressLocality": "",
+     "addressPostcode": ""
+    }
+   },
+   "assets": []
+  },
+  {
+   "recid": "d765871c-62ec-4907-a2ba-63195f346ed1",
+   "itemkey": "TSC",
+   "parentkey": "",
+   "name": "TASEK CENTRAL",
+   "status": 1,
+   "lastupdateutc": "2025-04-04T08:23:48.838645Z",
+   "pubdateutc": "2022-12-09T16:31:59.437277Z",
+   "extdata": {
+    "exp": [
+     "junior",
+     "deluxe"
+    ],
+    "folderkey": "tsc",
+    "cinema": {
+     "id": "TSC",
+     "meta": {
+      "name": "",
+      "description": ""
+     },
+     "mapurl": "https://maps.google.com/maps?q=TGV%20Tasek%20Central&t=&z=13&ie=UTF8&iwloc=&output=embed",
+     "address": "Lot 4-39, Level 4, Tasek Central No.2 Jalan Pendekar 16, Taman Ungku Tun Aminah, 81300 Skudai, Johor Bahru, Johor",
+     "keyword": "tasek-central",
+     "features": [],
+     "latitude": "1.513735535",
+     "location": "johor",
+     "longitude": "103.6551425",
+     "telephone": "",
+     "description": "",
+     "parkinginfo": "Entrance A, Park at B1 (Zone C)",
+     "openingHours": [],
+     "addressRegion": "",
+     "nearbycinemas": [
+      "BI0"
+     ],
+     "addressLocality": "",
+     "addressPostcode": ""
+    }
+   },
+   "assets": []
+  },
+  {
+   "recid": "472db462-bc83-4399-96ec-757095e45e30",
+   "itemkey": "TOP",
+   "parentkey": "",
+   "name": "TOPPEN",
+   "status": 1,
+   "lastupdateutc": "2026-08-26T09:53:56.173668Z",
+   "pubdateutc": "2022-12-09T16:31:59.417867Z",
+   "extdata": {
+    "exp": [
+     "junior-hotwheel",
+     "infinity",
+     "deluxe"
+    ],
+    "folderkey": "top",
+    "cinema": {
+     "id": "TOP",
+     "meta": {
+      "name": "",
+      "description": ""
+     },
+     "mapurl": "https://maps.google.com/maps?q=TGV%20TOPPEN&t=&z=13&ie=UTF8&iwloc=&output=embed",
+     "address": "L3.01, Level 3, Toppen Shopping Centre, Taman Desa Tebrau, 81100 Johor Bahru, Johor, Malaysia",
+     "keyword": "toppen",
+     "features": [],
+     "latitude": "1.55422303",
+     "location": "johor",
+     "longitude": "103.798244",
+     "telephone": "",
+     "description": "",
+     "parkinginfo": "Level P1 & P2, Blue Zone",
+     "openingHours": [],
+     "addressRegion": "",
+     "nearbycinemas": [
+      "TBR"
+     ],
+     "addressLocality": "",
+     "addressPostcode": ""
+    }
+   },
+   "assets": []
+  },
+  {
+   "recid": "b7338cb5-9104-467e-86eb-b05639c1a5fa",
+   "itemkey": "TBR",
+   "parentkey": "",
+   "name": "TEBRAU CITY",
+   "status": 1,
+   "lastupdateutc": "2026-07-19T05:47:28.386439Z",
+   "pubdateutc": "2022-12-09T16:31:59.397979Z",
+   "extdata": {
+    "exp": [
+     "imax",
+     "beanie",
+     "deluxe",
+     "junior-hotwheel"
+    ],
+    "folderkey": "tbr",
+    "cinema": {
+     "id": "TBR",
+     "meta": {
+      "name": "",
+      "description": ""
+     },
+     "mapurl": "https://maps.google.com/maps?q=TGV%20Tebrau%20City&t=&z=13&ie=UTF8&iwloc=&output=embed",
+     "address": "S01, 2nd Floor, AEON Tebrau City Shopping Centre , 1, Jalan Desa Tebrau, Taman Desa Tebrau, 81100 Johor Bahru, Johor, Malaysia",
+     "keyword": "tebrau-city",
+     "features": [],
+     "latitude": "1.54852358",
+     "location": "johor",
+     "longitude": "103.794848",
+     "telephone": "",
+     "description": "",
+     "parkinginfo": "Level 2F, Green Elephant Zone",
+     "openingHours": [],
+     "addressRegion": "",
+     "nearbycinemas": [
+      "TOP"
+     ],
+     "addressLocality": "",
+     "addressPostcode": ""
+    }
+   },
+   "assets": []
+  },
+  {
+   "recid": "aa437375-15cc-4195-b822-6c4169ec494e",
+   "itemkey": "TAI",
+   "parentkey": "",
+   "name": "TAIPING",
+   "status": 1,
+   "lastupdateutc": "2026-09-28T10:35:19.267019Z",
+   "pubdateutc": "2022-12-09T16:31:59.331039Z",
+   "extdata": {
+    "exp": [
+     "beanie",
+     "deluxe"
+    ],
+    "folderkey": "tai",
+    "cinema": {
+     "id": "TAI",
+     "meta": {
+      "name": "",
+      "description": ""
+     },
+     "mapurl": "https://maps.google.com/maps?q=TGV%20Taiping&t=&z=13&ie=UTF8&iwloc=&output=embed",
+     "address": "S01, 2nd Floor AEON Mall Taiping, Lot 8576 & 8577, Jalan Kamunting, 34000 Taiping, Perak, Malaysia",
+     "keyword": "taiping",
+     "features": [],
+     "latitude": "4.87301162",
+     "location": "perak",
+     "longitude": "100.730501",
+     "telephone": "",
+     "description": "",
+     "parkinginfo": "Level 2, Green Zone",
+     "openingHours": [],
+     "addressRegion": "",
+     "nearbycinemas": [],
+     "addressLocality": "",
+     "addressPostcode": ""
+    }
+   },
+   "assets": []
+  },
+  {
+   "recid": "b54eaf87-6471-4098-bcf1-7880b3833e0b",
+   "itemkey": "SWV",
+   "parentkey": "",
+   "name": "SUNWAY VELOCITY",
+   "status": 1,
+   "lastupdateutc": "2026-06-16T04:22:17.023339Z",
+   "pubdateutc": "2022-12-09T16:31:59.294631Z",
+   "extdata": {
+    "exp": [
+     "imaxlaser",
+     "junior-hotwheel",
+     "indulge",
+     "deluxe"
+    ],
+    "folderkey": "swv",
+    "cinema": {
+     "id": "SWV",
+     "meta": {
+      "name": "TGV Sunway Velocity | Latest Movie Showtimes and Tickets",
+      "description": "TGV Sunway Velocity is Malaysia’s largest IMAX, anime screenings, concert screenings and fan events in East KL. Book your tickets now! "
+     },
+     "mapurl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3983.7940698777743!2d101.71341249999999!3d3.1489606999999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cc370071664501%3A0x49e069f6f51a1ec9!2sTGV%20Cinemas%20Pavilion%20Kuala%20Lumpur!5e0!3m2!1sen!2smy!4v1781583677154!5m2!1sen!2smy\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"",
+     "address": "Level 4, Sunway Velocity Mall, 90, Jalan Peel, Maluri, 55100 Kuala Lumpur, Wilayah Persekutuan, Malaysia",
+     "keyword": "sunway-velocity",
+     "features": [],
+     "latitude": "3.1280043927300114",
+     "location": "klangvalley",
+     "longitude": "101.72498074308372",
+     "telephone": "",
+     "description": "TGV Cinemas Sunway Velocity is the ultimate fandom paradise, built for anime lovers, concert screenings and high-energy movie events in the heart of Sunway Velocity Mall. \n\nDirectly connected to MRT Maluri, it is easy to reach from Cheras and across Kuala Lumpur, making it a strong cinema destination for die-hard fans. \n\nWith 1,644 seats across 9 halls, TGV Sunway Velocity is made for big crowds, big titles and big moments. \n\nIts stylish LED foyer adds the right energy for photo moments, crowd hype and unforgettable fan gatherings. From anime energy to concert screams and IMAX-scale blockbusters, TGV Cinemas Sunway Velocity is where pop culture fans come together. \n\nThe TGV Sunway Velocity cinema halls include: \n1x IMAX Hall, powered by IMAX Laser\n2x Indulge Halls\n1x Junior Hall\n5x Deluxe Halls ",
+     "parkinginfo": "Level B2, Red & Yellow Zone",
+     "openingHours": [],
+     "addressRegion": "",
+     "nearbycinemas": [
+      "1SM",
+      "KLC",
+      "AMP"
+     ],
+     "addressLocality": "",
+     "addressPostcode": ""
+    }
+   },
+   "assets": [
+    {
+     "assetkey": "easy-access",
+     "folderkey": "swv",
+     "priority": 0,
+     "status": 1,
+     "description": "",
+     "extdata": {
+      "fileinfo": {
+       "contenttype": "image/jpeg",
+       "filepath": "assets/swv/ce771b4f-a05f-43ee-8343-bb81b4f9f9f5/ce771b4f-a05f-43ee-8343-bb81b4f9f9f5.jpg",
+       "fileurl": "https://d9s3e2ooa0od7.cloudfront.net/assets/swv/ce771b4f-a05f-43ee-8343-bb81b4f9f9f5/ce771b4f-a05f-43ee-8343-bb81b4f9f9f5.jpg"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "recid": "05cbb0cf-df76-48a6-bf17-2b6a7f584bc0",
+   "itemkey": "SWP",
+   "parentkey": "",
+   "name": "SUNWAY PUTRA",
+   "status": 1,
+   "lastupdateutc": "2024-10-21T02:04:42.895825Z",
+   "pubdateutc": "2022-12-09T16:31:59.276617Z",
+   "extdata": {
+    "exp": [
+     "beanie",
+     "deluxe"
+    ],
+    "folderkey": "swp",
+    "cinema": {
+     "id": "SWP",
+     "meta": {
+      "name": "",
+      "description": ""
+     },
+     "mapurl": "https://maps.google.com/maps?q=TGV%20Sunway%20Putra&t=&z=13&ie=UTF8&iwloc=&output=embed",
+     "address": "Lot 6-3, 6th Floor, Sunway Putra Mall, No. 100, Jalan Putra, 50350 Kuala Lumpur, Wilayah Persekutuan, Malaysia",
+     "keyword": "sunway-putra",
+     "features": [],
+     "latitude": "3.1663944",
+     "location": "klangvalley",
+     "longitude": "101.6923863",
+     "telephone": "",
+     "description": "",
+     "parkinginfo": "Level L6",
+     "openingHours": [],
+     "addressRegion": "",
+     "nearbycinemas": [
+      "KLC"
+     ],
+     "addressLocality": "",
+     "addressPostcode": ""
+    }
+   },
+   "assets": []
+  },
+  {
+   "recid": "82cc1935-ede1-4d6c-a63e-cb6ca69f089b",
+   "itemkey": "SW0",
+   "parentkey": "",
+   "name": "SUNWAY PYRAMID",
+   "status": 1,
+   "lastupdateutc": "2026-05-06T07:56:09.989675Z",
+   "pubdateutc": "2022-12-09T16:31:59.25671Z",
+   "extdata": {
+    "exp": [
+     "imaxlaser",
+     "beanie",
+     "deluxe",
+     "atmos",
+     "indulge-coway-berex",
+     "indulge",
+     "junior-hotwheel",
+     "imax-3d"
+    ],
+    "folderkey": "sw0",
+    "cinema": {
+     "id": "SW0",
+     "meta": {
+      "name": "TGV SUNWAY PYRAMID",
+      "description": ""
+     },
+     "mapurl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3984.0811203731982!2d101.60454841532733!3d3.073003954471616!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cc4c877a2a935f%3A0x244858887042c9eb!2sTGV%20Sunway%20Pyramid!5e0!3m2!1sen!2smy!4v1577367702075!5m2!1sen!2smy",
+     "address": "F1.01, Level 1, Sunway Pyramid, 3, Jalan PJS11/15, Bandar Sunway, 46150 Petaling Jaya, Selangor, Malaysia",
+     "keyword": "sunway-pyramid",
+     "features": [],
+     "latitude": "3.073002",
+     "location": "klangvalley",
+     "longitude": "101.606738",
+     "telephone": "",
+     "description": "",
+     "parkinginfo": "Level CP2, CP3 & CP4, Orange Zone",
+     "openingHours": [],
+     "addressRegion": "",
+     "nearbycinemas": [
+      "STW",
+      "JAY",
+      "BU0"
+     ],
+     "addressLocality": "",
+     "addressPostcode": ""
+    }
+   },
+   "assets": []
+  },
+  {
+   "recid": "7784d8f2-cc94-4194-80ee-3a435e7ec151",
+   "itemkey": "STW",
+   "parentkey": "",
+   "name": "SETIAWALK PUCHONG",
+   "status": 1,
+   "lastupdateutc": "2026-09-21T10:06:41.227002Z",
+   "pubdateutc": "2022-12-09T16:31:59.232398Z",
+   "extdata": {
+    "exp": [
+     "beanie",
+     "deluxe"
+    ],
+    "folderkey": "stw",
+    "cinema": {
+     "id": "STW",
+     "meta": {
+      "name": "",
+      "description": ""
+     },
+     "mapurl": "https://maps.google.com/maps?q=TGV%20SetiaWalk&t=&z=13&ie=UTF8&iwloc=&output=embed",
+     "address": "Unit K5, Level 5, Block K, Setia Walk, Persiaran Wawasan, Pusat Bandar Puchong, 47160 Puchong, Selangor, Malaysia",
+     "keyword": "setiawalk-puchong",
+     "features": [],
+     "latitude": "3.02962595",
+     "location": "klangvalley",
+     "longitude": "101.615934",
+     "telephone": "",
+     "description": "",
+     "parkinginfo": "Level B1, Blue Zone",
+     "openingHours": [],
+     "addressRegion": "",
+     "nearbycinemas": [
+      "SW0"
+     ],
+     "addressLocality": "",
+     "addressPostcode": ""
+    }
+   },
+   "assets": []
+  },
+  {
+   "recid": "59879f7e-0127-4749-9d37-e78a8f52200e",
+   "itemkey": "STR",
+   "parentkey": "",
+   "name": "STRAND KOTA DAMANSARA",
+   "status": 1,
+   "lastupdateutc": "2024-11-05T08:42:17.328391Z",
+   "pubdateutc": "2022-12-09T16:31:59.197914Z",
+   "extdata": {
+    "exp": [
+     "deluxe"
+    ],
+    "folderkey": "str",
+    "cinema": {
+     "id": "STR",
+     "meta": {
+      "name": "",
+      "description": ""
+     },
+     "mapurl": "https://maps.google.com/maps?q=TGV%20Encorp%20Strand&t=&z=13&ie=UTF8&iwloc=&output=embed",
+     "address": "Level 2, Jalan PJU 5/22, Encorp Strand Mall, Pusat Perdagangan, Kota Damansara, 47810 Petaling Jaya, Selangor, Malaysia",
+     "keyword": "strand-kota-damansara",
+     "features": [],
+     "latitude": "3.15564453",
+     "location": "klangvalley",
+     "longitude": "101.592947",
+     "telephone": "",
+     "description": "",
+     "parkinginfo": "Level 3",
+     "openingHours": [],
+     "addressRegion": "",
+     "nearbycinemas": [
+      "BU0"
+     ],
+     "addressLocality": "",
+     "addressPostcode": ""
+    }
+   },
+   "assets": []
+  },
+  {
+   "recid": "15e39882-7567-4a41-8960-92828707f6ea",
+   "itemkey": "S20",
+   "parentkey": "",
+   "name": "SEREMBAN 2",
+   "status": 1,
+   "lastupdateutc": "2026-09-29T04:45:19.033903Z",
+   "pubdateutc": "2022-12-09T16:31:59.167911Z",
+   "extdata": {
+    "exp": [
+     "deluxe"
+    ],
+    "folderkey": "s20",
+    "cinema": {
+     "id": "S20",
+     "meta": {
+      "name": "",
+      "description": ""
+     },
+     "mapurl": "https://maps.google.com/maps?q=TGV%20Seremban%202&t=&z=13&ie=UTF8&iwloc=&output=embed",
+     "address": "S02, 2nd Floor, AEON Seremban 2 Shopping Centre, 112, Persiaran S2 B1, Seremban 2, 70300 Seremban, Negeri Sembilan, Malaysia",
+     "keyword": "seremban-2",
+     "features": [],
+     "latitude": "2.70138844",
+     "location": "negerisembilan",
+     "longitude": "101.911945",
+     "telephone": "",
+     "description": "",
+     "parkinginfo": "Level 2, Green Zone",
+     "openingHours": [],
+     "addressRegion": "",
+     "nearbycinemas": [],
+     "addressLocality": "",
+     "addressPostcode": ""
+    }
+   },
+   "assets": []
+  },
+  {
+   "recid": "e73e03a9-61ed-41b3-9eca-4bda0d402cd0",
+   "itemkey": "S18",
+   "parentkey": "",
+   "name": "STATION 18 IPOH",
+   "status": 1,
+   "lastupdateutc": "2025-10-15T09:38:27.363965Z",
+   "pubdateutc": "2022-12-09T16:31:59.136842Z",
+   "extdata": {
+    "exp": [
+     "deluxe"
+    ],
+    "folderkey": "s18",
+    "cinema": {
+     "id": "S18",
+     "meta": {
+      "name": "",
+      "description": ""
+     },
+     "mapurl": "https://maps.google.com/maps?q=TGV%20Station%2018&t=&z=13&ie=UTF8&iwloc=&output=embed",
+     "address": "AEON Station 18, Susuran Stesen 18, Menglembu, 31650 Ipoh, Perak, Malaysia",
+     "keyword": "station-18-ipoh",
+     "features": [],
+     "latitude": "4.54630964",
+     "location": "perak",
+     "longitude": "101.070505",
+     "telephone": "",
+     "description": "",
+     "parkinginfo": "Level 2, Pink Zone",
+     "openingHours": [],
+     "addressRegion": "",
+     "nearbycinemas": [
+      "IP0",
+      "KLE"
+     ],
+     "addressLocality": "",
+     "addressPostcode": ""
+    }
+   },
+   "assets": []
+  },
+  {
+   "recid": "f87c02d2-77bc-45c2-ba7d-6940c148e5d7",
+   "itemkey": "RWK",
+   "parentkey": "",
+   "name": "RAWANG",
+   "status": 1,
+   "lastupdateutc": "2024-05-12T02:23:01.36268Z",
+   "pubdateutc": "2022-12-09T16:31:59.070514Z",
+   "extdata": {
+    "exp": [
+     "deluxe"
+    ],
+    "folderkey": "rwk",
+    "cinema": {
+     "id": "RWK",
+     "meta": {
+      "name": "",
+      "description": ""
+     },
+     "mapurl": "https://maps.google.com/maps?q=TGV%20Rawang&t=&z=13&ie=UTF8&iwloc=&output=embed",
+     "address": "F20, 1st Floor, AEON Shopping Centre, Persiaran Anggun, Taman Anggun, 48000 Rawang, Selangor, Malaysia",
+     "keyword": "rawang",
+     "features": [],
+     "latitude": "3.31615402",
+     "location": "klangvalley",
+     "longitude": "101.535729",
+     "telephone": "",
+     "description": "",
+     "parkinginfo": "Level GROUND, B Zone",
+     "openingHours": [],
+     "addressRegion": "",
+     "nearbycinemas": [],
+     "addressLocality": "",
+     "addressPostcode": ""
+    }
+   },
+   "assets": []
+  },
+  {
+   "recid": "d821e6ff-21e7-44f6-8cdc-3b6ad315f6e6",
+   "itemkey": "MSR",
+   "parentkey": "",
+   "name": "MESRA MALL",
+   "status": 1,
+   "lastupdateutc": "2024-07-10T01:15:25.811429Z",
+   "pubdateutc": "2022-12-09T16:31:59.034656Z",
+   "extdata": {
+    "exp": [
+     "deluxe"
+    ],
+    "folderkey": "msr",
+    "cinema": {
+     "id": "MSR",
+     "meta": {
+      "name": "",
+      "description": ""
+     },
+     "mapurl": "https://maps.google.com/maps?q=TGV%20Mesra%20Mall&t=&z=13&ie=UTF8&iwloc=&output=embed",
+     "address": "MA1, Mesra Mall, 6490, Jalan Kemaman-dungun, Kampung Baru, 24200 Kemasik, Terengganu, Malaysia",
+     "keyword": "mesra-mall",
+     "features": [],
+     "latitude": "4.440544459",
+     "location": "terengganu",
+     "longitude": "103.4479609",
+     "telephone": "",
+     "description": "",
+     "parkinginfo": "Level GROUND, Parking A Zone",
+     "openingHours": [],
+     "addressRegion": "",
+     "nearbycinemas": [],
+     "addressLocality": "",
+     "addressPostcode": ""
+    }
+   },
+   "assets": []
+  },
+  {
+   "recid": "9a5bfbcf-7d81-4369-8f31-5dd57ae4689f",
+   "itemkey": "MN0",
+   "parentkey": "",
+   "name": "MINES",
+   "status": 1,
+   "lastupdateutc": "2025-03-16T01:41:15.273858Z",
+   "pubdateutc": "2022-12-09T16:31:59.013401Z",
+   "extdata": {
+    "exp": [
+     "deluxe"
+    ],
+    "folderkey": "mn0",
+    "cinema": {
+     "id": "MN0",
+     "meta": {
+      "name": "",
+      "description": ""
+     },
+     "mapurl": "https://maps.google.com/maps?q=TGV%20Mines&t=&z=13&ie=UTF8&iwloc=&output=embed",
+     "address": "L3-76, Level 3, The Mines, 1, Jalan Dulang, Mines Resort City, 43300 Seri Kembangan, Selangor, Malaysia",
+     "keyword": "mines",
+     "features": [],
+     "latitude": "3.02827873",
+     "location": "klangvalley",
+     "longitude": "101.7186154",
+     "telephone": "",
+     "description": "",
+     "parkinginfo": "Level L2",
+     "openingHours": [],
+     "addressRegion": "",
+     "nearbycinemas": [
+      "CHR",
+      "PBJ"
+     ],
+     "addressLocality": "",
+     "addressPostcode": ""
+    }
+   },
+   "assets": []
+  },
+  {
+   "recid": "65d90c2e-490c-421b-a440-2b87b406cf27",
+   "itemkey": "MAN",
+   "parentkey": "",
+   "name": "SERI MANJUNG",
+   "status": 1,
+   "lastupdateutc": "2024-05-12T03:10:02.127243Z",
+   "pubdateutc": "2022-12-09T16:31:58.990761Z",
+   "extdata": {
+    "exp": [
+     "deluxe"
+    ],
+    "folderkey": "man",
+    "cinema": {
+     "id": "MAN",
+     "meta": {
+      "name": "",
+      "description": ""
+     },
+     "mapurl": "https://maps.google.com/maps?q=TGV%20Seri%20Manjung&t=&z=13&ie=UTF8&iwloc=&output=embed",
+     "address": "304 Jalan Changkat Jering, Sri Manjung, Kampung Koh, 32000 Sitiawan, Perak, Malaysia",
+     "keyword": "seri-manjung",
+     "features": [],
+     "latitude": "4.22079909",
+     "location": "perak",
+     "longitude": "100.671857",
+     "telephone": "",
+     "description": "",
+     "parkinginfo": "Level G, Orange Zone",
+     "openingHours": [],
+     "addressRegion": "",
+     "nearbycinemas": [],
+     "addressLocality": "",
+     "addressPostcode": ""
+    }
+   },
+   "assets": []
+  },
+  {
+   "recid": "73c37cdf-8395-48f1-97c9-4323e75cb073",
+   "itemkey": "KUL",
+   "parentkey": "",
+   "name": "KULAIJAYA",
+   "status": 1,
+   "lastupdateutc": "2025-03-15T05:05:56.559789Z",
+   "pubdateutc": "2022-12-09T16:31:58.97315Z",
+   "extdata": {
+    "exp": [
+     "deluxe"
+    ],
+    "folderkey": "kul",
+    "cinema": {
+     "id": "KUL",
+     "meta": {
+      "name": "",
+      "description": ""
+     },
+     "mapurl": "https://maps.google.com/maps?q=TGV%20Kulaijaya&t=&z=13&ie=UTF8&iwloc=&output=embed",
+     "address": "Level 2, AEON Kulaijaya, Bandar Indahpura, 81000 Kulai, Johor, Malaysia",
+     "keyword": "kulaijaya",
+     "features": [],
+     "latitude": "1.639445282",
+     "location": "johor",
+     "longitude": "103.6172346",
+     "telephone": "",
+     "description": "",
+     "parkinginfo": "Level 2, Pink Zone",
+     "openingHours": [],
+     "addressRegion": "",
+     "nearbycinemas": [],
+     "addressLocality": "",
+     "addressPostcode": ""
+    }
+   },
+   "assets": []
+  },
+  {
+   "recid": "483a7bda-e856-4984-8c8c-f5c5b4a69651",
+   "itemkey": "KP0",
+   "parentkey": "",
+   "name": "KEPONG",
+   "status": 1,
+   "lastupdateutc": "2025-10-15T09:37:09.068965Z",
+   "pubdateutc": "2022-12-09T16:31:58.956458Z",
+   "extdata": {
+    "exp": [
+     "deluxe"
+    ],
+    "folderkey": "kp0",
+    "cinema": {
+     "id": "KP0",
+     "meta": {
+      "name": "",
+      "description": ""
+     },
+     "mapurl": "https://maps.google.com/maps?q=TGV%20Kepong&t=&z=13&ie=UTF8&iwloc=&output=embed",
+     "address": "Metro Prima Shopping Centre, 1, Jalan Metro Prima, Kepong, 52100 Kuala Lumpur, Wilayah Persekutuan, Malaysia",
+     "keyword": "kepong",
+     "features": [],
+     "location": "klangvalley",
+     "longitude": "101.63911",
+     "telephone": "",
+     "description": "",
+     "parkinginfo": "Level L2 & L3, Blue & Red Zone",
+     "openingHours": [],
+     "addressRegion": "",
+     "nearbycinemas": [
+      "BU0",
+      "SWP",
+      "STR"
+     ],
+     "addressLocality": "",
+     "addressPostcode": ""
+    }
+   },
+   "assets": []
+  },
+  {
+   "recid": "b74c7529-148e-4450-a15b-edbdfbdb7f74",
+   "itemkey": "KLE",
+   "parentkey": "",
+   "name": "SENTRA MALL KLEBANG",
+   "status": 1,
+   "lastupdateutc": "2025-11-19T11:16:26.099168Z",
+   "pubdateutc": "2022-12-09T16:31:58.936936Z",
+   "extdata": {
+    "exp": [
+     "beanie",
+     "deluxe"
+    ],
+    "folderkey": "kle",
+    "cinema": {
+     "id": "KLE",
+     "meta": {
+      "name": "",
+      "description": ""
+     },
+     "mapurl": "https://maps.google.com/maps?q=TGV%20Klebang&t=&z=13&ie=UTF8&iwloc=&output=embed",
+     "address": "TF01, 2nd Floor, Sentra Mall Klebang, Lot 12080, Klebang Perdana, 31200 Chemor, Perak, Malaysia",
+     "keyword": "klebang-ipoh",
+     "features": [],
+     "latitude": "4.67762101",
+     "location": "perak",
+     "longitude": "101.122414",
+     "telephone": "",
+     "description": "",
+     "parkinginfo": "Level 3, Green Zone",
+     "openingHours": [],
+     "addressRegion": "",
+     "nearbycinemas": [
+      "S18",
+      "IP0"
+     ],
+     "addressLocality": "",
+     "addressPostcode": ""
+    }
+   },
+   "assets": []
+  },
+  {
+   "recid": "e4cb4a23-fec4-421a-a50c-c4cc2d8cc186",
+   "itemkey": "KLC",
+   "parentkey": "",
+   "name": "SURIA KLCC",
+   "status": 1,
+   "lastupdateutc": "2026-06-16T03:57:43.031687Z",
+   "pubdateutc": "2022-12-09T16:31:58.917235Z",
+   "extdata": {
+    "exp": [
+     "atmos",
+     "beanie",
+     "deluxe",
+     "indulge",
+     "imaxlaser",
+     "indulge-coway-berex"
+    ],
+    "folderkey": "klc",
+    "cinema": {
+     "id": "KLC",
+     "meta": {
+      "name": "TGV Suria KLCC | Latest Movie Showtimes and Tickets",
+      "description": "Watch movies at TGV Suria KLCC with IMAX with Laser, Dolby Atmos, INDULGE and Beanie halls beneath the iconic Petronas Twin Towers. Book your tickets now! "
+     },
+     "mapurl": "https://maps.google.com/maps?q=TGV%20Suria%20KLCC&t=&z=13&ie=UTF8&iwloc=&output=embed",
+     "address": "Level 3, Suria KLCC, Kuala Lumpur City Centre, 50088 Kuala Lumpur, Wilayah Persekutuan, Malaysia",
+     "keyword": "suria-klcc",
+     "features": [],
+     "latitude": "3.15750735",
+     "location": "klangvalley",
+     "longitude": "101.712187",
+     "telephone": "",
+     "description": "Set within Suria KLCC, beneath the world-famous Petronas Twin Towers, TGV Cinemas Suria KLCC is a premium cinema destination at the heart of Kuala Lumpur.  \n\nMore than just a place to watch movies, it is where Malaysia’s most iconic address meets immersive big-screen entertainment. \n \nExperience movies in spectacular detail with IMAX with Laser, delivering ultra-sharp visuals, brighter images and powerful sound. Halls are also enhanced with Dolby Atmos, surrounding you with rich, multidimensional audio that brings every scene to life. \n\nFor those who want a more elevated movie night, the INDULGE halls, including INDULGE Coway Berex, offer premium comfort with luxurious seating and a more exclusive atmosphere. \n\nBuilt for unforgettable events, its striking LED foyer, premium setting and exclusive INDULGE private lounge, it is an ideal venue for movie premieres, media screenings, brand launches, VIP gatherings and private functions. \n\nFrom blockbuster movies to high-profile events, TGV Cinemas Suria KLCC delivers a premium and iconic entertainment experience in one of Malaysia’s most recognisable landmarks. \n\nThe KLCC TGV Cinema halls include: \n1x IMAX Hall, powered by IMAX Laser \n2x Indulge Halls \n1x Indulge Coway Bed \n6x Dolby Atmos Halls \n2 Beanie Halls \n1x Junior Hall \n7x Deluxe Halls ",
+     "parkinginfo": "Level P1, Green Zone",
+     "openingHours": [],
+     "addressRegion": "",
+     "nearbycinemas": [
+      "SWP",
+      "AMP",
+      "AU2"
+     ],
+     "addressLocality": "",
+     "addressPostcode": ""
+    }
+   },
+   "assets": []
+  },
+  {
+   "recid": "5029cbeb-be0b-43fc-adf5-a20c522579ef",
+   "itemkey": "JAY",
+   "parentkey": "",
+   "name": "JAYA SEKSYEN 14",
+   "status": 1,
+   "lastupdateutc": "2026-06-08T18:14:59.488762Z",
+   "pubdateutc": "2022-12-09T16:31:58.890036Z",
+   "extdata": {
+    "exp": [
+     "deluxe"
+    ],
+    "folderkey": "jay",
+    "cinema": {
+     "id": "JAY",
+     "meta": {
+      "name": "",
+      "description": ""
+     },
+     "mapurl": "https://maps.google.com/maps?q=TGV%20Jaya&t=&z=13&ie=UTF8&iwloc=&output=embed",
+     "address": "L5-07, Jaya Shopping Centre, Jalan Professor Khoo Kay Kim, Seksyen 14, 46100 Petaling Jaya, Selangor, Malaysia",
+     "keyword": "jaya-seksyen-14",
+     "features": [],
+     "latitude": "3.109120953",
+     "location": "klangvalley",
+     "longitude": "101.6370945",
+     "telephone": "",
+     "description": "",
+     "parkinginfo": "Level B1 & B2, Green & Blue Zone",
+     "openingHours": [],
+     "addressRegion": "",
+     "nearbycinemas": [
+      "BU0",
+      "SW0"
+     ],
+     "addressLocality": "",
+     "addressPostcode": ""
+    }
+   },
+   "assets": []
+  },
+  {
+   "recid": "99bff712-fb70-459b-93eb-6afe6eb730c2",
+   "itemkey": "IP0",
+   "parentkey": "",
+   "name": "KINTA CITY",
+   "status": 1,
+   "lastupdateutc": "2026-08-15T03:18:09.467457Z",
+   "pubdateutc": "2022-12-09T16:31:58.864839Z",
+   "extdata": {
+    "exp": [
+     "deluxe"
+    ],
+    "folderkey": "ip0",
+    "cinema": {
+     "id": "IP0",
+     "meta": {
+      "name": "",
+      "description": ""
+     },
+     "mapurl": "https://maps.google.com/maps?q=TGV%20Kinta%20City&t=&z=13&ie=UTF8&iwloc=&output=embed",
+     "address": "2, Jalan Teh Lean Swee, Taman Ipoh Selatan, 31400 Ipoh, Perak, Malaysia",
+     "keyword": "kinta-city",
+     "features": [],
+     "latitude": "4.61389275",
+     "location": "perak",
+     "longitude": "101.118184",
+     "telephone": "",
+     "description": "",
+     "parkinginfo": "Level 2, Blue Zone",
+     "openingHours": [],
+     "addressRegion": "",
+     "nearbycinemas": [
+      "KLE",
+      "S18"
+     ],
+     "addressLocality": "",
+     "addressPostcode": ""
+    }
+   },
+   "assets": []
+  },
+  {
+   "recid": "45e8822c-b68a-4754-a9d3-64ce5cf67b3c",
+   "itemkey": "IMP",
+   "parentkey": "",
+   "name": "MIRI",
+   "status": 1,
+   "lastupdateutc": "2025-09-09T02:55:35.516669Z",
+   "pubdateutc": "2022-12-09T16:31:58.845993Z",
+   "extdata": {
+    "exp": [
+     "deluxe"
+    ],
+    "folderkey": "imp",
+    "cinema": {
+     "id": "IMP",
+     "meta": {
+      "name": "",
+      "description": ""
+     },
+     "mapurl": "https://maps.google.com/maps?q=TGV%20Miri&t=&z=13&ie=UTF8&iwloc=&output=embed",
+     "address": "Lot 1CM - 3rd Floor 01, Permaisuri Imperial City Mall, Jalan Sida, 98000 Miri, Sarawak, Malaysia",
+     "keyword": "miri",
+     "features": [],
+     "latitude": "4.400531829",
+     "location": "sarawak",
+     "longitude": "113.9906599",
+     "telephone": "",
+     "description": "",
+     "parkinginfo": "Level B1, Green Zone",
+     "openingHours": [],
+     "addressRegion": "",
+     "nearbycinemas": [],
+     "addressLocality": "",
+     "addressPostcode": ""
+    }
+   },
+   "assets": []
+  },
+  {
+   "recid": "2041e550-12bb-4e9a-8493-377c6a11295e",
+   "itemkey": "ICT",
+   "parentkey": "",
+   "name": "CENTRAL I-CITY",
+   "status": 1,
+   "lastupdateutc": "2026-06-16T03:55:03.872045Z",
+   "pubdateutc": "2022-12-09T16:31:58.825536Z",
+   "extdata": {
+    "exp": [
+     "imax",
+     "junior-hotwheel",
+     "onyx",
+     "deluxe"
+    ],
+    "folderkey": "ict",
+    "cinema": {
+     "id": "ICT",
+     "meta": {
+      "name": "TGV Central i-City | Latest Movie Showtimes and Tickets",
+      "description": "TGV Central i-City offers IMAX and JUNIOR kids cinema experiences. Book tickets now for a fun, family-friendly movie outing in Shah Alam."
+     },
+     "mapurl": "https://maps.google.com/maps?q=TGV%20Central%20I%20-%20City&t=&z=13&ie=UTF8&iwloc=&output=embed",
+     "address": "Lot 4-01, Level 4, Central i-City, No 1 Persiaran Multimedia, i-City, Seksyen 7, 40000 Shah Alam, Selangor, Malaysia",
+     "keyword": "central-i-city",
+     "features": [],
+     "latitude": "3.062856775",
+     "location": "klangvalley",
+     "longitude": "101.4827181",
+     "telephone": "",
+     "description": "Set within Central i-City, TGV Cinemas Central i-City brings a vibrant moviegoing experience to Shah Alam, with easy access from Klang, Setia Alam, and surrounding neighbourhoods. \n\nHome to 1,606 seats across 9 halls. The IMAX hall delivers larger-than-life visuals and immersive sound, perfect for action-packed spectacles. \n\nFor a more elevated experience, the ONYX and Deluxe halls provide enhanced comfort and premium viewing, ideal for a relaxed and stylish movie outing. \n\nFamilies can also look forward to the cheerful JUNIOR hall, specially designed for younger audiences to enjoy movies in a playful and welcoming setting. \n\nBeyond the screen, the City of Play invites kids to explore, interact, and dive into a colourful world of fun, making every visit more than just a movie trip. \n\nWith a spacious foyer, wheelchair-friendly facilities, and dedicated assistance services, TGV Cinemas Central i-City ensures a smooth and inclusive experience for all guests. \n\nThe TGV Cinemas Central i-City halls include: \n1x IMAX hall \n1x Onyx hall \n1x Junior hall \n6x Deluxe halls ",
+     "parkinginfo": "Level B1 & B2",
+     "openingHours": [],
+     "addressRegion": "",
+     "nearbycinemas": [
+      "BR0"
+     ],
+     "addressLocality": "",
+     "addressPostcode": ""
+    }
+   },
+   "assets": []
+  },
+  {
+   "recid": "f5ff2df2-4ffb-4559-91d6-75016571fa56",
+   "itemkey": "GUR",
+   "parentkey": "",
+   "name": "GURNEY PARAGON",
+   "status": 1,
+   "lastupdateutc": "2026-09-30T11:05:08.733569Z",
+   "pubdateutc": "2022-12-09T16:31:58.808506Z",
+   "extdata": {
+    "exp": [
+     "imaxlaser",
+     "beanie",
+     "deluxe"
+    ],
+    "folderkey": "gur",
+    "cinema": {
+     "id": "GUR",
+     "meta": {
+      "name": "",
+      "description": ""
+     },
+     "mapurl": "https://maps.google.com/maps?q=TGV%20Gurney%20Paragon&t=&z=13&ie=UTF8&iwloc=&output=embed",
+     "address": "Level 8, Gurney Paragon Mall, Lorong Kelawai, 10250 George Town, Pulau Pinang, Malaysia",
+     "keyword": "gurney-paragon",
+     "features": [],
+     "latitude": "5.43571744",
+     "location": "pinang",
+     "longitude": "100.310899",
+     "telephone": "",
+     "description": "",
+     "parkinginfo": "Level 5A, Orange Zone",
+     "openingHours": [],
+     "addressRegion": "",
+     "nearbycinemas": [
+      "1AV"
+     ],
+     "addressLocality": "",
+     "addressPostcode": ""
+    }
+   },
+   "assets": []
+  },
+  {
+   "recid": "52aea552-f962-4cbc-b247-0c64184cb052",
+   "itemkey": "CYB",
+   "parentkey": "",
+   "name": "DPULZE CYBERJAYA",
+   "status": 1,
+   "lastupdateutc": "2025-09-14T09:52:12.606455Z",
+   "pubdateutc": "2022-12-09T16:31:58.790508Z",
+   "extdata": {
+    "exp": [
+     "deluxe"
+    ],
+    "folderkey": "cyb",
+    "cinema": {
+     "id": "CYB",
+     "meta": {
+      "name": "",
+      "description": ""
+     },
+     "mapurl": "https://maps.google.com/maps?q=TGV%20Dpulze&t=&z=13&ie=UTF8&iwloc=&output=embed",
+     "address": "SF09, Dpulze Shopping Centre, Lingkaran Cyber Point Timur, Cyber 12, 63000 Cyberjaya, Selangor, Malaysia",
+     "keyword": "dpulze-cyberjaya",
+     "features": [],
+     "latitude": "2.92206144",
+     "location": "klangvalley",
+     "longitude": "101.650982",
+     "telephone": "",
+     "description": "",
+     "parkinginfo": "Level P1, Orange Zone",
+     "openingHours": [],
+     "addressRegion": "",
+     "nearbycinemas": [],
+     "addressLocality": "",
+     "addressPostcode": ""
+    }
+   },
+   "assets": []
+  },
+  {
+   "recid": "08e79ea0-1262-42ea-b7de-3a8b8ce358f0",
+   "itemkey": "CHR",
+   "parentkey": "",
+   "name": "CHERAS SELATAN",
+   "status": 1,
+   "lastupdateutc": "2025-09-04T08:57:29.625091Z",
+   "pubdateutc": "2022-12-09T16:31:58.753991Z",
+   "extdata": {
+    "exp": [
+     "deluxe"
+    ],
+    "folderkey": "chr",
+    "cinema": {
+     "id": "CHR",
+     "meta": {
+      "name": "",
+      "description": ""
+     },
+     "mapurl": "https://maps.google.com/maps?q=TGV%20Cheras%20Selatan&t=&z=13&ie=UTF8&iwloc=&output=embed",
+     "address": "F01, 1st Floor, AEON Cheras Selatan Shopping Centre, Lebuh Tun Hussein Oon Balakong, 43200 Cheras, Selangor",
+     "keyword": "cheras-selatan",
+     "features": [],
+     "latitude": "3.03358118",
+     "location": "klangvalley",
+     "longitude": "101.765044",
+     "telephone": "",
+     "description": "",
+     "parkinginfo": "Level L2, Red Zone",
+     "openingHours": [],
+     "addressRegion": "",
+     "nearbycinemas": [
+      "MN0"
+     ],
+     "addressLocality": "",
+     "addressPostcode": ""
+    }
+   },
+   "assets": []
+  },
+  {
+   "recid": "56dd6abc-2137-44f5-bf6f-2fd7e1ae8fd8",
+   "itemkey": "BU0",
+   "parentkey": "",
+   "name": "1 UTAMA",
+   "status": 1,
+   "lastupdateutc": "2026-06-16T03:43:00.460105Z",
+   "pubdateutc": "2022-12-09T16:31:58.731957Z",
+   "extdata": {
+    "exp": [
+     "imaxlaser",
+     "indulge",
+     "beanie",
+     "junior-hotwheel",
+     "deluxe"
+    ],
+    "folderkey": "bu0",
+    "cinema": {
+     "id": "BU0",
+     "meta": {
+      "name": "TGV Cinemas 1 Utama | Latest Movie Showtimes and Tickets",
+      "description": "Enjoy the only IMAX Laser in Petaling Jaya, plus Malaysia’s first JUNIOR Hot Wheels kids cinema and INDULGE halls. Book your tickets now!"
+     },
+     "mapurl": "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15935.168515219373!2d101.6156377!3d3.1494681!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xfd81eb3a4d9eb904!2s1%20Utama%20Shopping%20Centre!5e0!3m2!1sen!2smy!4v1576741483669!5m2!1sen!2smy",
+     "address": "Level 3, Old Wing, 1 Utama Shopping Centre, 1, Lebuh Bandar Utama, Bandar Utama, 47800 Petaling Jaya, Selangor, Malaysia",
+     "keyword": "1-utama",
+     "features": [],
+     "latitude": "3.148316",
+     "location": "klangvalley",
+     "longitude": "101.616795",
+     "telephone": "",
+     "description": "Located in 1 Utama Shopping Centre, TGV Cinemas 1 Utama is a go-to movie destination for Petaling Jaya and Damansara. \n\nWith 11 halls and 1,556 seats, it brings together big-screen thrills and family-friendly fun, featuring the area’s only IMAX Laser hall, premium INDULGE halls with lounge access, and comfortable Deluxe halls for every kind of movie outing. \n\nFamilies can also level up the fun at Malaysia’s first JUNIOR Hot Wheels kids’ cinema and explore the colourful City of Play, making every visit feel like an adventure beyond the screen. \n\nThe TGV 1 Utama halls include: \n1x IMAX Hall, powered by IMAX Laser \n2x Indulge Halls \n1x Junior Hall \n7x Deluxe Halls ",
+     "parkinginfo": "Level L3, Old Wing Zone",
+     "openingHours": [],
+     "addressRegion": "",
+     "nearbycinemas": [
+      "KP0",
+      "JAY",
+      "SW0"
+     ],
+     "addressLocality": "",
+     "addressPostcode": ""
+    }
+   },
+   "assets": []
+  },
+  {
+   "recid": "cf2d1240-c23e-4480-8818-87c51583f194",
+   "itemkey": "BR0",
+   "parentkey": "",
+   "name": "BUKIT RAJA",
+   "status": 1,
+   "lastupdateutc": "2026-04-21T22:38:39.249532Z",
+   "pubdateutc": "2022-12-09T16:31:58.709294Z",
+   "extdata": {
+    "exp": [
+     "deluxe"
+    ],
+    "folderkey": "br0",
+    "cinema": {
+     "id": "BR0",
+     "meta": {
+      "name": "",
+      "description": ""
+     },
+     "mapurl": "https://maps.google.com/maps?q=TGV%20Bukit%20Raja&t=&z=13&ie=UTF8&iwloc=&output=embed",
+     "address": "F01, 1st Floor, AEON MALL Bukit Raja, Persiaran Bukit Raja 2, Bandar Baru Klang, 41150 Klang, Selangor, Malaysia",
+     "keyword": "bukit-raja",
+     "features": [],
+     "latitude": "3.06082159",
+     "location": "klangvalley",
+     "longitude": "101.473036",
+     "telephone": "",
+     "description": "",
+     "parkinginfo": "Level L2, Blue & Red Zone",
+     "openingHours": [],
+     "addressRegion": "",
+     "nearbycinemas": [
+      "ICT"
+     ],
+     "addressLocality": "",
+     "addressPostcode": ""
+    }
+   },
+   "assets": []
+  },
+  {
+   "recid": "e8d2c4ee-2166-4deb-9571-fb7a279c73a7",
+   "itemkey": "BKM",
+   "parentkey": "",
+   "name": "BUKIT MERTAJAM",
+   "status": 1,
+   "lastupdateutc": "2026-09-13T06:40:28.604704Z",
+   "pubdateutc": "2022-12-09T16:31:58.682919Z",
+   "extdata": {
+    "exp": [
+     "deluxe"
+    ],
+    "folderkey": "bkm",
+    "cinema": {
+     "id": "BKM",
+     "meta": {
+      "name": "",
+      "description": ""
+     },
+     "mapurl": "https://maps.google.com/maps?q=TGV%20Bukit%20Mertajam&t=&z=13&ie=UTF8&iwloc=&output=embed",
+     "address": "Lot No. 30908, AEON Bukit Mertajam, Jalan Rozhan, 14000 Bukit Mertajam, Pulau Pinang, Malaysia",
+     "keyword": "bukit-mertajam",
+     "features": [],
+     "latitude": "5.32107859",
+     "location": "pinang",
+     "longitude": "100.477534",
+     "telephone": "",
+     "description": "",
+     "parkinginfo": "Level 1, Guardian Entrance Zone",
+     "openingHours": [],
+     "addressRegion": "",
+     "nearbycinemas": [
+      "GUR",
+      "1AV"
+     ],
+     "addressLocality": "",
+     "addressPostcode": ""
+    }
+   },
+   "assets": []
+  },
+  {
+   "recid": "aff6cb86-7a61-4550-94e7-e21a74e572d7",
+   "itemkey": "BIN",
+   "parentkey": "",
+   "name": "BOULEVARD BINTULU",
+   "status": 1,
+   "lastupdateutc": "2026-03-01T05:29:08.10305Z",
+   "pubdateutc": "2022-12-09T16:31:58.666083Z",
+   "extdata": {
+    "exp": [
+     "junior",
+     "infinity",
+     "deluxe"
+    ],
+    "folderkey": "bin",
+    "cinema": {
+     "id": "BIN",
+     "meta": {
+      "name": "",
+      "description": ""
+     },
+     "mapurl": "https://maps.google.com/maps?q=TGV%20Bintulu%20Boulevard&t=&z=13&ie=UTF8&iwloc=&output=embed",
+     "address": "3rd Floor, Boulevard Shopping Mall, 97000 Bintulu, Sarawak",
+     "keyword": "boulevard-bintulu",
+     "features": [],
+     "latitude": "3.200726586",
+     "location": "sarawak",
+     "longitude": "113.0479617",
+     "telephone": "",
+     "description": "",
+     "parkinginfo": "Level B1, Green Zone",
+     "openingHours": [],
+     "addressRegion": "",
+     "nearbycinemas": [],
+     "addressLocality": "",
+     "addressPostcode": ""
+    }
+   },
+   "assets": []
+  },
+  {
+   "recid": "83cc6324-a236-4819-a09c-ac0a32512cf3",
+   "itemkey": "BI0",
+   "parentkey": "",
+   "name": "BUKIT INDAH",
+   "status": 1,
+   "lastupdateutc": "2026-07-23T00:29:27.817691Z",
+   "pubdateutc": "2022-12-09T16:31:58.647208Z",
+   "extdata": {
+    "exp": [
+     "beanie",
+     "deluxe",
+     "junior-hotwheel"
+    ],
+    "folderkey": "bi0",
+    "cinema": {
+     "id": "BI0",
+     "meta": {
+      "name": "",
+      "description": ""
+     },
+     "mapurl": "https://maps.google.com/maps?q=TGV%20Bukit%20Indah&t=&z=13&ie=UTF8&iwloc=&output=embed",
+     "address": "S01, 2nd Floor, AEON MALL Bukit Indah, 8, Jalan Indah 15/2, Bukit Indah, 81200 Johor Bahru, Johor, Malaysia",
+     "keyword": "bukit-indah",
+     "features": [],
+     "latitude": "1.48224514",
+     "location": "johor",
+     "longitude": "103.65692",
+     "telephone": "",
+     "description": "",
+     "parkinginfo": "Green Zone, Entrance H (Enter from Escalator Entrance Zone H - Evolt Karting)",
+     "openingHours": [],
+     "addressRegion": "",
+     "nearbycinemas": [
+      "TSC"
+     ],
+     "addressLocality": "",
+     "addressPostcode": ""
+    }
+   },
+   "assets": []
+  },
+  {
+   "recid": "6b442e0c-13c4-412c-a4d8-a4fb58ea2723",
+   "itemkey": "BBT",
+   "parentkey": "",
+   "name": "BUKIT TINGGI",
+   "status": 1,
+   "lastupdateutc": "2026-07-28T23:56:00.376464Z",
+   "pubdateutc": "2022-12-09T16:31:58.623741Z",
+   "extdata": {
+    "exp": [
+     "deluxe"
+    ],
+    "folderkey": "bbt",
+    "cinema": {
+     "id": "BBT",
+     "meta": {
+      "name": "",
+      "description": ""
+     },
+     "mapurl": "https://maps.google.com/maps?q=TGV%20Bukit%20Tinggi&t=&z=13&ie=UTF8&iwloc=&output=embed",
+     "address": "Lot S32, 2nd Floor, AEON Bukit Tinggi Shopping Centre, 1, Persiaran Batu Nilam 1/KS6, Bandar Bukit Tinggi 2, 41200 Klang, Selangor, Malaysia",
+     "keyword": "bukit-tinggi",
+     "features": [],
+     "latitude": "2.9922533",
+     "location": "klangvalley",
+     "longitude": "101.444845",
+     "telephone": "",
+     "description": "",
+     "parkinginfo": "Zone E Brown & Yellow Pillars;   Number: B-E 24-27, B-D 17-23",
+     "openingHours": [],
+     "addressRegion": "",
+     "nearbycinemas": [],
+     "addressLocality": "",
+     "addressPostcode": ""
+    }
+   },
+   "assets": []
+  },
+  {
+   "recid": "ee3a7c70-39ad-4d59-be62-f08e4b494487",
+   "itemkey": "AU2",
+   "parentkey": "",
+   "name": "AU2 SETIAWANGSA",
+   "status": 1,
+   "lastupdateutc": "2024-04-19T03:50:44.316344Z",
+   "pubdateutc": "2022-12-09T16:31:58.595909Z",
+   "extdata": {
+    "exp": [
+     "deluxe"
+    ],
+    "folderkey": "au2",
+    "cinema": {
+     "id": "AU2",
+     "meta": {
+      "name": "",
+      "description": ""
+     },
+     "mapurl": "https://maps.google.com/maps?q=TGV%20AU2&t=&z=13&ie=UTF8&iwloc=&output=embed",
+     "address": "G77, AEON AU2 Shopping Centre, No. 6, Jalan Taman Setiawangsa, 37/56, AU2, Taman Keramat, 54200 Kuala Lumpur, Wilayah Persekutuan, Malaysia",
+     "keyword": "au2-setiawangsa",
+     "features": [],
+     "latitude": "3.177405217",
+     "location": "klangvalley",
+     "longitude": "101.7494722",
+     "telephone": "",
+     "description": "",
+     "parkinginfo": "Level GROUND, Orange Zone",
+     "openingHours": [],
+     "addressRegion": "",
+     "nearbycinemas": [
+      "1SM",
+      "AMP",
+      "KLC"
+     ],
+     "addressLocality": "",
+     "addressPostcode": ""
+    }
+   },
+   "assets": []
+  },
+  {
+   "recid": "fa298b01-a282-4fca-a21c-b0b37ebf5c51",
+   "itemkey": "1SM",
+   "parentkey": "",
+   "name": "1 SHAMELIN",
+   "status": 1,
+   "lastupdateutc": "2024-04-19T03:44:47.813498Z",
+   "pubdateutc": "2022-12-09T16:31:58.580217Z",
+   "extdata": {
+    "exp": [
+     "deluxe"
+    ],
+    "folderkey": "1sm",
+    "cinema": {
+     "id": "1SM",
+     "meta": {
+      "name": "",
+      "description": ""
+     },
+     "mapurl": "https://maps.google.com/maps?q=TGV%201%20Shamelin&t=&z=13&ie=UTF8&iwloc=&output=embed",
+     "address": "L5-002, Level 5, 1 Shamelin Shopping Mall, 100, Jalan 4/91, Taman Shamelin Perkasa, 56100 Kuala Lumpur, Wilayah Persekutuan, Malaysia",
+     "keyword": "1-shamelin",
+     "features": [],
+     "latitude": "3.122104974",
+     "location": "klangvalley",
+     "longitude": "101.7399513",
+     "telephone": "",
+     "description": "",
+     "parkinginfo": "Level SB, Orange Zone",
+     "openingHours": [],
+     "addressRegion": "",
+     "nearbycinemas": [
+      "SWV",
+      "KLC",
+      "AMP"
+     ],
+     "addressLocality": "",
+     "addressPostcode": ""
+    }
+   },
+   "assets": []
+  },
+  {
+   "recid": "6e965f00-bfe4-461d-8510-6dbaf2e10cc7",
+   "itemkey": "1AV",
+   "parentkey": "",
+   "name": "1ST AVENUE PENANG",
+   "status": 1,
+   "lastupdateutc": "2025-05-03T22:49:50.143172Z",
+   "pubdateutc": "2022-12-09T16:31:58.261214Z",
+   "extdata": {
+    "exp": [
+     "beanie",
+     "deluxe"
+    ],
+    "folderkey": "1av",
+    "cinema": {
+     "id": "1AV",
+     "meta": {
+      "name": "",
+      "description": ""
+     },
+     "mapurl": "https://maps.google.com/maps?q=TGV%201st%20Avenue&t=&z=13&ie=UTF8&iwloc=&output=embed",
+     "address": "8-20, Level 8, 1st Avenue Mall, 182, Jalan Magazine, 10300 Georgetown, Pulau Pinang, Malaysia",
+     "keyword": "1st-avenue-penang",
+     "features": [],
+     "latitude": "5.413054569",
+     "location": "pinang",
+     "longitude": "100.3311666",
+     "telephone": "",
+     "description": "",
+     "parkinginfo": "Level 5, 6 & 7, ORANGE, GREEN & BLUE Zone",
+     "openingHours": [],
+     "addressRegion": "",
+     "nearbycinemas": [
+      "GUR"
+     ],
+     "addressLocality": "",
+     "addressPostcode": ""
+    }
+   },
+   "assets": []
+  },
+  {
+   "recid": "6c5350d5-7c7b-40c7-bf5e-0f666e9ba581",
+   "itemkey": "WWM",
+   "parentkey": "",
+   "name": "SUNWAY WANGSA MALL",
+   "status": 1,
+   "lastupdateutc": "2026-02-24T01:44:44.151095Z",
+   "pubdateutc": "2022-12-09T15:55:36.551515Z",
+   "extdata": {
+    "exp": [
+     "deluxe"
+    ],
+    "folderkey": "wwm",
+    "cinema": {
+     "id": "WWM",
+     "meta": {
+      "name": "",
+      "description": ""
+     },
+     "mapurl": "https://maps.google.com/maps?q=TGV%20Wangsa%20Walk&t=&z=13&ie=UTF8&iwloc=&output=embed",
+     "address": "2-01, Level 2 Wangsa Walk Mall, Wangsa Avenue, 9, Jalan Wangsa Perdana 1, Bandar Wangsa Maju, 53300 Kuala Lumpur, Wilayah Persekutuan, Malaysia",
+     "keyword": "wangsa-walk",
+     "features": [],
+     "latitude": "3.19831096",
+     "location": "klangvalley",
+     "longitude": "101.742057",
+     "telephone": "",
+     "description": "",
+     "parkinginfo": "Level G",
+     "openingHours": [],
+     "addressRegion": "",
+     "nearbycinemas": [
+      "AMP",
+      "AU2"
+     ],
+     "addressLocality": "",
+     "addressPostcode": ""
+    }
+   },
+   "assets": []
+  },
+  {
+   "recid": "75165a68-8077-4ecd-be71-1404ea329243",
+   "itemkey": "VIV",
+   "parentkey": "",
+   "name": "VIVACITY KUCHING",
+   "status": 1,
+   "lastupdateutc": "2026-03-06T17:33:46.26195Z",
+   "pubdateutc": "2022-12-09T15:55:36.10721Z",
+   "extdata": {
+    "exp": [
+     "imax",
+     "beanie",
+     "deluxe",
+     "junior-hotwheel"
+    ],
+    "folderkey": "viv",
+    "cinema": {
+     "id": "VIV",
+     "meta": {
+      "name": "",
+      "description": ""
+     },
+     "mapurl": "https://maps.google.com/maps?q=TGV%20Vivacity%20Megamall&t=&z=13&ie=UTF8&iwloc=&output=embed",
+     "address": "Unit A01, Level 3, Vivacity Megamall, Jalan Wan Alwi, 93350 Kuching, Sarawak, Malaysia",
+     "keyword": "vivacity-kuching",
+     "features": [],
+     "latitude": "1.5270699",
+     "location": "sarawak",
+     "longitude": "110.367959",
+     "telephone": "",
+     "description": "",
+     "parkinginfo": "Level P9 & P7",
+     "openingHours": [],
+     "addressRegion": "",
+     "nearbycinemas": [],
+     "addressLocality": "",
+     "addressPostcode": ""
+    }
+   },
+   "assets": []
+  }
+ ],
+ "hasmorerows": false
+}

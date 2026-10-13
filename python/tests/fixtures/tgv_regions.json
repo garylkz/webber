@@ -1,0 +1,410 @@
+[
+ {
+  "label": "All States/Areas",
+  "value": "all",
+  "cinemas": [
+   {
+    "cinemaid": "KSL",
+    "name": "TGV KSL KLANG (NEW)"
+   },
+   {
+    "cinemaid": "PDH",
+    "name": "PAVILION DAMANSARA HEIGHTS (NEW)"
+   },
+   {
+    "cinemaid": "PKL",
+    "name": "PAVILION KUALA LUMPUR (NEW)"
+   },
+   {
+    "cinemaid": "SWS",
+    "name": "SUNWAY SQUARE (NEW)"
+   },
+   {
+    "cinemaid": "SW0",
+    "name": "SUNWAY PYRAMID"
+   },
+   {
+    "cinemaid": "ALM",
+    "name": "ALAMANDA"
+   },
+   {
+    "cinemaid": "BU0",
+    "name": "1 UTAMA"
+   },
+   {
+    "cinemaid": "1AV",
+    "name": "1ST AVENUE PENANG"
+   },
+   {
+    "cinemaid": "1SM",
+    "name": "1 SHAMELIN"
+   },
+   {
+    "cinemaid": "AU2",
+    "name": "AU2 SETIAWANGSA"
+   },
+   {
+    "cinemaid": "AMP",
+    "name": "AMPANG POINT"
+   },
+   {
+    "cinemaid": "BBT",
+    "name": "BUKIT TINGGI"
+   },
+   {
+    "cinemaid": "BI0",
+    "name": "BUKIT INDAH"
+   },
+   {
+    "cinemaid": "BIN",
+    "name": "BOULEVARD BINTULU"
+   },
+   {
+    "cinemaid": "BKM",
+    "name": "BUKIT MERTAJAM"
+   },
+   {
+    "cinemaid": "BR0",
+    "name": "BUKIT RAJA"
+   },
+   {
+    "cinemaid": "CHR",
+    "name": "CHERAS SELATAN"
+   },
+   {
+    "cinemaid": "CTR",
+    "name": "CHERAS SENTRAL"
+   },
+   {
+    "cinemaid": "CYB",
+    "name": "DPULZE CYBERJAYA"
+   },
+   {
+    "cinemaid": "GUR",
+    "name": "GURNEY PARAGON"
+   },
+   {
+    "cinemaid": "ICT",
+    "name": "CENTRAL I-CITY"
+   },
+   {
+    "cinemaid": "IMP",
+    "name": "MIRI"
+   },
+   {
+    "cinemaid": "IP0",
+    "name": "KINTA CITY"
+   },
+   {
+    "cinemaid": "JAY",
+    "name": "JAYA SEKSYEN 14"
+   },
+   {
+    "cinemaid": "KLC",
+    "name": "SURIA KLCC"
+   },
+   {
+    "cinemaid": "KLE",
+    "name": "SENTRA MALL KLEBANG"
+   },
+   {
+    "cinemaid": "KP0",
+    "name": "KEPONG"
+   },
+   {
+    "cinemaid": "KUL",
+    "name": "KULAIJAYA"
+   },
+   {
+    "cinemaid": "MAN",
+    "name": "SERI MANJUNG"
+   },
+   {
+    "cinemaid": "MN0",
+    "name": "MINES"
+   },
+   {
+    "cinemaid": "MSR",
+    "name": "MESRA MALL"
+   },
+   {
+    "cinemaid": "PBJ",
+    "name": "PAVILION BUKIT JALIL"
+   },
+   {
+    "cinemaid": "RWK",
+    "name": "RAWANG"
+   },
+   {
+    "cinemaid": "S18",
+    "name": "STATION 18 IPOH"
+   },
+   {
+    "cinemaid": "S20",
+    "name": "SEREMBAN 2"
+   },
+   {
+    "cinemaid": "STR",
+    "name": "STRAND KOTA DAMANSARA"
+   },
+   {
+    "cinemaid": "STW",
+    "name": "SETIAWALK PUCHONG"
+   },
+   {
+    "cinemaid": "SWP",
+    "name": "SUNWAY PUTRA"
+   },
+   {
+    "cinemaid": "SWV",
+    "name": "SUNWAY VELOCITY"
+   },
+   {
+    "cinemaid": "TAI",
+    "name": "TAIPING"
+   },
+   {
+    "cinemaid": "TBR",
+    "name": "TEBRAU CITY"
+   },
+   {
+    "cinemaid": "VIV",
+    "name": "VIVACITY KUCHING"
+   },
+   {
+    "cinemaid": "TOP",
+    "name": "TOPPEN"
+   },
+   {
+    "cinemaid": "TSC",
+    "name": "TASEK CENTRAL"
+   },
+   {
+    "cinemaid": "WWM",
+    "name": "SUNWAY WANGSA MALL"
+   }
+  ]
+ },
+ {
+  "label": "Klang Valley",
+  "value": "klangvalley",
+  "cinemas": [
+   {
+    "cinemaid": "KSL",
+    "name": "TGV KSL KLANG (NEW)"
+   },
+   {
+    "cinemaid": "PDH",
+    "name": "PAVILION DAMANSARA HEIGHTS (NEW)"
+   },
+   {
+    "cinemaid": "PKL",
+    "name": "PAVILION KUALA LUMPUR (NEW)"
+   },
+   {
+    "cinemaid": "SWS",
+    "name": "SUNWAY SQUARE (NEW)"
+   },
+   {
+    "cinemaid": "SW0",
+    "name": "SUNWAY PYRAMID"
+   },
+   {
+    "cinemaid": "BU0",
+    "name": "1 UTAMA"
+   },
+   {
+    "cinemaid": "ALM",
+    "name": "ALAMANDA"
+   },
+   {
+    "cinemaid": "1SM",
+    "name": "1 SHAMELIN"
+   },
+   {
+    "cinemaid": "AMP",
+    "name": "AMPANG POINT"
+   },
+   {
+    "cinemaid": "AU2",
+    "name": "AU2 SETIAWANGSA"
+   },
+   {
+    "cinemaid": "BR0",
+    "name": "BUKIT RAJA"
+   },
+   {
+    "cinemaid": "BBT",
+    "name": "BUKIT TINGGI"
+   },
+   {
+    "cinemaid": "ICT",
+    "name": "CENTRAL I-CITY"
+   },
+   {
+    "cinemaid": "CHR",
+    "name": "CHERAS SELATAN"
+   },
+   {
+    "cinemaid": "CTR",
+    "name": "CHERAS SENTRAL"
+   },
+   {
+    "cinemaid": "CYB",
+    "name": "DPULZE CYBERJAYA"
+   },
+   {
+    "cinemaid": "JAY",
+    "name": "JAYA SEKSYEN 14"
+   },
+   {
+    "cinemaid": "KP0",
+    "name": "KEPONG"
+   },
+   {
+    "cinemaid": "MN0",
+    "name": "MINES"
+   },
+   {
+    "cinemaid": "PBJ",
+    "name": "PAVILION BUKIT JALIL"
+   },
+   {
+    "cinemaid": "RWK",
+    "name": "RAWANG"
+   },
+   {
+    "cinemaid": "STW",
+    "name": "SETIAWALK PUCHONG"
+   },
+   {
+    "cinemaid": "STR",
+    "name": "STRAND KOTA DAMANSARA"
+   },
+   {
+    "cinemaid": "SWP",
+    "name": "SUNWAY PUTRA"
+   },
+   {
+    "cinemaid": "SWV",
+    "name": "SUNWAY VELOCITY"
+   },
+   {
+    "cinemaid": "KLC",
+    "name": "SURIA KLCC"
+   },
+   {
+    "cinemaid": "WWM",
+    "name": "SUNWAY WANGSA MALL"
+   }
+  ]
+ },
+ {
+  "label": "Johor",
+  "value": "johor",
+  "cinemas": [
+   {
+    "cinemaid": "BI0",
+    "name": "BUKIT INDAH"
+   },
+   {
+    "cinemaid": "KUL",
+    "name": "KULAIJAYA"
+   },
+   {
+    "cinemaid": "TSC",
+    "name": "TASEK CENTRAL"
+   },
+   {
+    "cinemaid": "TBR",
+    "name": "TEBRAU CITY"
+   },
+   {
+    "cinemaid": "TOP",
+    "name": "TOPPEN"
+   }
+  ]
+ },
+ {
+  "label": "Perak",
+  "value": "perak",
+  "cinemas": [
+   {
+    "cinemaid": "IP0",
+    "name": "KINTA CITY"
+   },
+   {
+    "cinemaid": "KLE",
+    "name": "SENTRA MALL KLEBANG"
+   },
+   {
+    "cinemaid": "MAN",
+    "name": "SERI MANJUNG"
+   },
+   {
+    "cinemaid": "S18",
+    "name": "STATION 18 IPOH"
+   },
+   {
+    "cinemaid": "TAI",
+    "name": "TAIPING"
+   }
+  ]
+ },
+ {
+  "label": "Pulau Pinang",
+  "value": "pinang",
+  "cinemas": [
+   {
+    "cinemaid": "1AV",
+    "name": "1ST AVENUE PENANG"
+   },
+   {
+    "cinemaid": "BKM",
+    "name": "BUKIT MERTAJAM"
+   },
+   {
+    "cinemaid": "GUR",
+    "name": "GURNEY PARAGON"
+   }
+  ]
+ },
+ {
+  "label": "Sarawak",
+  "value": "sarawak",
+  "cinemas": [
+   {
+    "cinemaid": "BIN",
+    "name": "BOULEVARD BINTULU"
+   },
+   {
+    "cinemaid": "IMP",
+    "name": "MIRI"
+   },
+   {
+    "cinemaid": "VIV",
+    "name": "VIVACITY KUCHING"
+   }
+  ]
+ },
+ {
+  "label": "Negeri Sembilan",
+  "value": "negerisembilan",
+  "cinemas": [
+   {
+    "cinemaid": "S20",
+    "name": "SEREMBAN 2"
+   }
+  ]
+ },
+ {
+  "label": "Terengganu",
+  "value": "terengganu",
+  "cinemas": [
+   {
+    "cinemaid": "MSR",
+    "name": "MESRA MALL"
+   }
+  ]
+ }
+]

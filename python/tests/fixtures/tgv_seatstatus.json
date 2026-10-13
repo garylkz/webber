@@ -1,0 +1,77 @@
+{
+ "cinemaid": "BU0",
+ "seatstatuslist": [
+  {
+   "sessionid": "326642",
+   "seatstotal": 153,
+   "seatsused": 23,
+   "usedpercentage": 15
+  },
+  {
+   "sessionid": "327090",
+   "seatstotal": 280,
+   "seatsused": 8,
+   "usedpercentage": 2
+  },
+  {
+   "sessionid": "326641",
+   "seatstotal": 153,
+   "seatsused": 9,
+   "usedpercentage": 5
+  },
+  {
+   "sessionid": "326703",
+   "seatstotal": 153,
+   "seatsused": 51,
+   "usedpercentage": 33
+  },
+  {
+   "sessionid": "326876",
+   "seatstotal": 277,
+   "seatsused": 18,
+   "usedpercentage": 6
+  },
+  {
+   "sessionid": "326888",
+   "seatstotal": 117,
+   "seatsused": 4,
+   "usedpercentage": 3
+  },
+  {
+   "sessionid": "326877",
+   "seatstotal": 134,
+   "seatsused": 61,
+   "usedpercentage": 45
+  },
+  {
+   "sessionid": "327089",
+   "seatstotal": 280,
+   "seatsused": 2,
+   "usedpercentage": 0
+  },
+  {
+   "sessionid": "327092",
+   "seatstotal": 280,
+   "seatsused": 47,
+   "usedpercentage": 16
+  },
+  {
+   "sessionid": "326885",
+   "seatstotal": 107,
+   "seatsused": 11,
+   "usedpercentage": 10
+  },
+  {
+   "sessionid": "326887",
+   "seatstotal": 31,
+   "seatsused": 4,
+   "usedpercentage": 12
+  },
+  {
+   "sessionid": "326881",
+   "seatstotal": 31,
+   "seatsused": 7,
+   "usedpercentage": 22
+  }
+ ]
+}

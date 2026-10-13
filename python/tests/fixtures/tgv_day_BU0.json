@@ -1,0 +1,2268 @@
+{
+ "businessday": {
+  "businessday": "2026-10-11",
+  "cinemas": [
+   {
+    "cinemaid": "BU0",
+    "name": "1 UTAMA",
+    "experiences": "",
+    "extdata": {
+     "exp": [
+      "imaxlaser",
+      "indulge",
+      "beanie",
+      "junior-hotwheel",
+      "deluxe"
+     ],
+     "cinema": {
+      "id": "BU0",
+      "meta": {
+       "name": "TGV Cinemas 1 Utama | Latest Movie Showtimes and Tickets",
+       "description": "Enjoy the only IMAX Laser in Petaling Jaya, plus Malaysia’s first JUNIOR Hot Wheels kids cinema and INDULGE halls. Book your tickets now!"
+      },
+      "mapurl": "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15935.168515219373!2d101.6156377!3d3.1494681!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xfd81eb3a4d9eb904!2s1%20Utama%20Shopping%20Centre!5e0!3m2!1sen!2smy!4v1576741483669!5m2!1sen!2smy",
+      "address": "Level 3, Old Wing, 1 Utama Shopping Centre, 1, Lebuh Bandar Utama, Bandar Utama, 47800 Petaling Jaya, Selangor, Malaysia",
+      "keyword": "1-utama",
+      "features": [],
+      "latitude": "3.148316",
+      "location": "klangvalley",
+      "longitude": "101.616795",
+      "telephone": "",
+      "description": "Located in 1 Utama Shopping Centre, TGV Cinemas 1 Utama is a go-to movie destination for Petaling Jaya and Damansara. \n\nWith 11 halls and 1,556 seats, it brings together big-screen thrills and family-friendly fun, featuring the area’s only IMAX Laser hall, premium INDULGE halls with lounge access, and comfortable Deluxe halls for every kind of movie outing. \n\nFamilies can also level up the fun at Malaysia’s first JUNIOR Hot Wheels kids’ cinema and explore the colourful City of Play, making every visit feel like an adventure beyond the screen. \n\nThe TGV 1 Utama halls include: \n1x IMAX Hall, powered by IMAX Laser \n2x Indulge Halls \n1x Junior Hall \n7x Deluxe Halls ",
+      "parkinginfo": "Level L3, Old Wing Zone",
+      "openingHours": [],
+      "addressRegion": "",
+      "nearbycinemas": [
+       "KP0",
+       "JAY",
+       "SW0"
+      ],
+      "addressLocality": "",
+      "addressPostcode": ""
+     },
+     "folderkey": "bu0"
+    },
+    "movies": [
+     {
+      "movieid": "6ebb1802-f068-41c8-a42c-e4e38ba7e63f",
+      "experiences": [
+       {
+        "experience": "indulge",
+        "sessions": [
+         {
+          "sessionid": "326881",
+          "cinemaid": "BU0",
+          "scheduledfilmid": "HO00025789",
+          "showtimemy": "2026-10-11T17:45:00",
+          "screenname": "INDULGE 2",
+          "businessdate": "2026-10-11",
+          "experience": "indulge",
+          "seattypes": "SINGLE|TWIN",
+          "status": 1,
+          "movieid": "6ebb1802-f068-41c8-a42c-e4e38ba7e63f",
+          "extdata": {
+           "seattype": [
+            "SINGLE",
+            "TWIN"
+           ],
+           "areacategorycodes": [
+            "0000000026",
+            "0000000025"
+           ],
+           "conceptattributenames": [
+            "INDULGE"
+           ],
+           "sessionattributenames": []
+          },
+          "seatstatus": null
+         },
+         {
+          "sessionid": "326887",
+          "cinemaid": "BU0",
+          "scheduledfilmid": "HO00025789",
+          "showtimemy": "2026-10-11T20:30:00",
+          "screenname": "INDULGE 2",
+          "businessdate": "2026-10-11",
+          "experience": "indulge",
+          "seattypes": "SINGLE|TWIN",
+          "status": 1,
+          "movieid": "6ebb1802-f068-41c8-a42c-e4e38ba7e63f",
+          "extdata": {
+           "seattype": [
+            "SINGLE",
+            "TWIN"
+           ],
+           "areacategorycodes": [
+            "0000000026",
+            "0000000025"
+           ],
+           "conceptattributenames": [
+            "INDULGE"
+           ],
+           "sessionattributenames": []
+          },
+          "seatstatus": null
+         }
+        ]
+       },
+       {
+        "experience": "junior-hotwheel",
+        "sessions": [
+         {
+          "sessionid": "326885",
+          "cinemaid": "BU0",
+          "scheduledfilmid": "HO00025786",
+          "showtimemy": "2026-10-11T19:15:00",
+          "screenname": "Junior",
+          "businessdate": "2026-10-11",
+          "experience": "junior-hotwheel",
+          "seattypes": "DUO|SINGLE|TWIN",
+          "status": 1,
+          "movieid": "6ebb1802-f068-41c8-a42c-e4e38ba7e63f",
+          "extdata": {
+           "seattype": [
+            "DUO",
+            "SINGLE",
+            "TWIN"
+           ],
+           "areacategorycodes": [
+            "0000000016",
+            "0000000010",
+            "0000000002"
+           ],
+           "conceptattributenames": [
+            "2D",
+            "JUNIOR"
+           ],
+           "sessionattributenames": [
+            "DELUXE"
+           ]
+          },
+          "seatstatus": null
+         }
+        ]
+       },
+       {
+        "experience": "deluxe",
+        "sessions": [
+         {
+          "sessionid": "327092",
+          "cinemaid": "BU0",
+          "scheduledfilmid": "HO00025786",
+          "showtimemy": "2026-10-11T15:00:00",
+          "screenname": "Cinema 4",
+          "businessdate": "2026-10-11",
+          "experience": "deluxe",
+          "seattypes": "TWIN|SINGLE",
+          "status": 1,
+          "movieid": "6ebb1802-f068-41c8-a42c-e4e38ba7e63f",
+          "extdata": {
+           "seattype": [
+            "TWIN",
+            "SINGLE"
+           ],
+           "areacategorycodes": [
+            "0000000002",
+            "0000000010"
+           ],
+           "conceptattributenames": [
+            "2D"
+           ],
+           "sessionattributenames": [
+            "DELUXE"
+           ]
+          },
+          "seatstatus": null
+         },
+         {
+          "sessionid": "326703",
+          "cinemaid": "BU0",
+          "scheduledfilmid": "HO00025786",
+          "showtimemy": "2026-10-11T16:15:00",
+          "screenname": "Cinema 6",
+          "businessdate": "2026-10-11",
+          "experience": "deluxe",
+          "seattypes": "SINGLE|TWIN",
+          "status": 1,
+          "movieid": "6ebb1802-f068-41c8-a42c-e4e38ba7e63f",
+          "extdata": {
+           "seattype": [
+            "SINGLE",
+            "TWIN"
+           ],
+           "areacategorycodes": [
+            "0000000010",
+            "0000000002"
+           ],
+           "conceptattributenames": [
+            "2D"
+           ],
+           "sessionattributenames": [
+            "DELUXE"
+           ]
+          },
+          "seatstatus": null
+         },
+         {
+          "sessionid": "326641",
+          "cinemaid": "BU0",
+          "scheduledfilmid": "HO00025786",
+          "showtimemy": "2026-10-11T18:30:00",
+          "screenname": "Cinema 6",
+          "businessdate": "2026-10-11",
+          "experience": "deluxe",
+          "seattypes": "SINGLE|TWIN",
+          "status": 1,
+          "movieid": "6ebb1802-f068-41c8-a42c-e4e38ba7e63f",
+          "extdata": {
+           "seattype": [
+            "SINGLE",
+            "TWIN"
+           ],
+           "areacategorycodes": [
+            "0000000010",
+            "0000000002"
+           ],
+           "conceptattributenames": [
+            "2D"
+           ],
+           "sessionattributenames": [
+            "DELUXE"
+           ]
+          },
+          "seatstatus": null
+         },
+         {
+          "sessionid": "327090",
+          "cinemaid": "BU0",
+          "scheduledfilmid": "HO00025786",
+          "showtimemy": "2026-10-11T19:30:00",
+          "screenname": "Cinema 4",
+          "businessdate": "2026-10-11",
+          "experience": "deluxe",
+          "seattypes": "TWIN|SINGLE",
+          "status": 1,
+          "movieid": "6ebb1802-f068-41c8-a42c-e4e38ba7e63f",
+          "extdata": {
+           "seattype": [
+            "TWIN",
+            "SINGLE"
+           ],
+           "areacategorycodes": [
+            "0000000002",
+            "0000000010"
+           ],
+           "conceptattributenames": [
+            "2D"
+           ],
+           "sessionattributenames": [
+            "DELUXE"
+           ]
+          },
+          "seatstatus": null
+         },
+         {
+          "sessionid": "326642",
+          "cinemaid": "BU0",
+          "scheduledfilmid": "HO00025786",
+          "showtimemy": "2026-10-11T20:45:00",
+          "screenname": "Cinema 6",
+          "businessdate": "2026-10-11",
+          "experience": "deluxe",
+          "seattypes": "SINGLE|TWIN",
+          "status": 1,
+          "movieid": "6ebb1802-f068-41c8-a42c-e4e38ba7e63f",
+          "extdata": {
+           "seattype": [
+            "SINGLE",
+            "TWIN"
+           ],
+           "areacategorycodes": [
+            "0000000010",
+            "0000000002"
+           ],
+           "conceptattributenames": [
+            "2D"
+           ],
+           "sessionattributenames": [
+            "DELUXE"
+           ]
+          },
+          "seatstatus": null
+         },
+         {
+          "sessionid": "327089",
+          "cinemaid": "BU0",
+          "scheduledfilmid": "HO00025786",
+          "showtimemy": "2026-10-11T21:45:00",
+          "screenname": "Cinema 4",
+          "businessdate": "2026-10-11",
+          "experience": "deluxe",
+          "seattypes": "TWIN|SINGLE",
+          "status": 1,
+          "movieid": "6ebb1802-f068-41c8-a42c-e4e38ba7e63f",
+          "extdata": {
+           "seattype": [
+            "TWIN",
+            "SINGLE"
+           ],
+           "areacategorycodes": [
+            "0000000002",
+            "0000000010"
+           ],
+           "conceptattributenames": [
+            "2D"
+           ],
+           "sessionattributenames": [
+            "DELUXE"
+           ]
+          },
+          "seatstatus": null
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "movieid": "2ca3b717-79bc-49b9-a513-707cbab866f2",
+      "experiences": [
+       {
+        "experience": "deluxe",
+        "sessions": [
+         {
+          "sessionid": "326877",
+          "cinemaid": "BU0",
+          "scheduledfilmid": "HO00025691",
+          "showtimemy": "2026-10-11T15:30:00",
+          "screenname": "Cinema 2",
+          "businessdate": "2026-10-11",
+          "experience": "deluxe",
+          "seattypes": "TWIN|SINGLE",
+          "status": 1,
+          "movieid": "2ca3b717-79bc-49b9-a513-707cbab866f2",
+          "extdata": {
+           "seattype": [
+            "TWIN",
+            "SINGLE"
+           ],
+           "areacategorycodes": [
+            "0000000002",
+            "0000000010"
+           ],
+           "conceptattributenames": [
+            "2D"
+           ],
+           "sessionattributenames": [
+            "DELUXE"
+           ]
+          },
+          "seatstatus": null
+         },
+         {
+          "sessionid": "326888",
+          "cinemaid": "BU0",
+          "scheduledfilmid": "HO00025691",
+          "showtimemy": "2026-10-11T20:45:00",
+          "screenname": "Cinema 1",
+          "businessdate": "2026-10-11",
+          "experience": "deluxe",
+          "seattypes": "TWIN|SINGLE",
+          "status": 1,
+          "movieid": "2ca3b717-79bc-49b9-a513-707cbab866f2",
+          "extdata": {
+           "seattype": [
+            "TWIN",
+            "SINGLE"
+           ],
+           "areacategorycodes": [
+            "0000000002",
+            "0000000010"
+           ],
+           "conceptattributenames": [
+            "2D"
+           ],
+           "sessionattributenames": [
+            "DELUXE"
+           ]
+          },
+          "seatstatus": null
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "movieid": "76b09b05-5469-4dc7-a54d-bc3be8ca3cc9",
+      "experiences": [
+       {
+        "experience": "imaxlaser",
+        "sessions": [
+         {
+          "sessionid": "326876",
+          "cinemaid": "BU0",
+          "scheduledfilmid": "HO00025764",
+          "showtimemy": "2026-10-11T15:30:00",
+          "screenname": "IMAX",
+          "businessdate": "2026-10-11",
+          "experience": "imaxlaser",
+          "seattypes": "IMAX Twin",
+          "status": 1,
+          "movieid": "76b09b05-5469-4dc7-a54d-bc3be8ca3cc9",
+          "extdata": {
+           "seattype": [
+            "IMAX Twin"
+           ],
+           "areacategorycodes": [
+            "0000000028"
+           ],
+           "conceptattributenames": [
+            "IMAX 2D"
+           ],
+           "sessionattributenames": []
+          },
+          "seatstatus": null
+         },
+         {
+          "sessionid": "326883",
+          "cinemaid": "BU0",
+          "scheduledfilmid": "HO00025764",
+          "showtimemy": "2026-10-11T18:15:00",
+          "screenname": "IMAX",
+          "businessdate": "2026-10-11",
+          "experience": "imaxlaser",
+          "seattypes": "IMAX Twin",
+          "status": 1,
+          "movieid": "76b09b05-5469-4dc7-a54d-bc3be8ca3cc9",
+          "extdata": {
+           "seattype": [
+            "IMAX Twin"
+           ],
+           "areacategorycodes": [
+            "0000000028"
+           ],
+           "conceptattributenames": [
+            "IMAX 2D"
+           ],
+           "sessionattributenames": []
+          },
+          "seatstatus": null
+         },
+         {
+          "sessionid": "326889",
+          "cinemaid": "BU0",
+          "scheduledfilmid": "HO00025764",
+          "showtimemy": "2026-10-11T21:00:00",
+          "screenname": "IMAX",
+          "businessdate": "2026-10-11",
+          "experience": "imaxlaser",
+          "seattypes": "IMAX Twin",
+          "status": 1,
+          "movieid": "76b09b05-5469-4dc7-a54d-bc3be8ca3cc9",
+          "extdata": {
+           "seattype": [
+            "IMAX Twin"
+           ],
+           "areacategorycodes": [
+            "0000000028"
+           ],
+           "conceptattributenames": [
+            "IMAX 2D"
+           ],
+           "sessionattributenames": []
+          },
+          "seatstatus": null
+         }
+        ]
+       },
+       {
+        "experience": "deluxe",
+        "sessions": [
+         {
+          "sessionid": "326882",
+          "cinemaid": "BU0",
+          "scheduledfilmid": "HO00025754",
+          "showtimemy": "2026-10-11T18:00:00",
+          "screenname": "Cinema 2",
+          "businessdate": "2026-10-11",
+          "experience": "deluxe",
+          "seattypes": "TWIN|SINGLE",
+          "status": 1,
+          "movieid": "76b09b05-5469-4dc7-a54d-bc3be8ca3cc9",
+          "extdata": {
+           "seattype": [
+            "TWIN",
+            "SINGLE"
+           ],
+           "areacategorycodes": [
+            "0000000002",
+            "0000000010"
+           ],
+           "conceptattributenames": [
+            "2D"
+           ],
+           "sessionattributenames": [
+            "DELUXE"
+           ]
+          },
+          "seatstatus": null
+         },
+         {
+          "sessionid": "326886",
+          "cinemaid": "BU0",
+          "scheduledfilmid": "HO00025754",
+          "showtimemy": "2026-10-11T20:00:00",
+          "screenname": "Cinema 3",
+          "businessdate": "2026-10-11",
+          "experience": "deluxe",
+          "seattypes": "TWIN|SINGLE",
+          "status": 1,
+          "movieid": "76b09b05-5469-4dc7-a54d-bc3be8ca3cc9",
+          "extdata": {
+           "seattype": [
+            "TWIN",
+            "SINGLE"
+           ],
+           "areacategorycodes": [
+            "0000000002",
+            "0000000010"
+           ],
+           "conceptattributenames": [
+            "2D"
+           ],
+           "sessionattributenames": [
+            "DELUXE"
+           ]
+          },
+          "seatstatus": null
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "movieid": "6c0fb390-d966-4626-8617-3573ca92a07d",
+      "experiences": [
+       {
+        "experience": "deluxe",
+        "sessions": [
+         {
+          "sessionid": "326878",
+          "cinemaid": "BU0",
+          "scheduledfilmid": "HO00025747",
+          "showtimemy": "2026-10-11T15:45:00",
+          "screenname": "Cinema 1",
+          "businessdate": "2026-10-11",
+          "experience": "deluxe",
+          "seattypes": "TWIN|SINGLE",
+          "status": 1,
+          "movieid": "6c0fb390-d966-4626-8617-3573ca92a07d",
+          "extdata": {
+           "seattype": [
+            "TWIN",
+            "SINGLE"
+           ],
+           "areacategorycodes": [
+            "0000000002",
+            "0000000010"
+           ],
+           "conceptattributenames": [
+            "2D"
+           ],
+           "sessionattributenames": [
+            "DELUXE"
+           ]
+          },
+          "seatstatus": null
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "movieid": "eb24710e-c54f-45a6-a860-e80bc68f40cd",
+      "experiences": [
+       {
+        "experience": "junior-hotwheel",
+        "sessions": [
+         {
+          "sessionid": "326879",
+          "cinemaid": "BU0",
+          "scheduledfilmid": "HO00025504",
+          "showtimemy": "2026-10-11T16:15:00",
+          "screenname": "Junior",
+          "businessdate": "2026-10-11",
+          "experience": "junior-hotwheel",
+          "seattypes": "DUO|SINGLE|TWIN",
+          "status": 1,
+          "movieid": "eb24710e-c54f-45a6-a860-e80bc68f40cd",
+          "extdata": {
+           "seattype": [
+            "DUO",
+            "SINGLE",
+            "TWIN"
+           ],
+           "areacategorycodes": [
+            "0000000016",
+            "0000000010",
+            "0000000002"
+           ],
+           "conceptattributenames": [
+            "2D",
+            "JUNIOR"
+           ],
+           "sessionattributenames": [
+            "DELUXE"
+           ]
+          },
+          "seatstatus": null
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "movieid": "c7c75f13-52f0-46d1-a758-14b7a91994e8",
+      "experiences": [
+       {
+        "experience": "deluxe",
+        "sessions": [
+         {
+          "sessionid": "326880",
+          "cinemaid": "BU0",
+          "scheduledfilmid": "HO00025699",
+          "showtimemy": "2026-10-11T16:45:00",
+          "screenname": "Cinema 3",
+          "businessdate": "2026-10-11",
+          "experience": "deluxe",
+          "seattypes": "TWIN|SINGLE",
+          "status": 1,
+          "movieid": "c7c75f13-52f0-46d1-a758-14b7a91994e8",
+          "extdata": {
+           "seattype": [
+            "TWIN",
+            "SINGLE"
+           ],
+           "areacategorycodes": [
+            "0000000002",
+            "0000000010"
+           ],
+           "conceptattributenames": [
+            "2D"
+           ],
+           "sessionattributenames": [
+            "DELUXE"
+           ]
+          },
+          "seatstatus": null
+         },
+         {
+          "sessionid": "326890",
+          "cinemaid": "BU0",
+          "scheduledfilmid": "HO00025699",
+          "showtimemy": "2026-10-11T21:00:00",
+          "screenname": "Cinema 2",
+          "businessdate": "2026-10-11",
+          "experience": "deluxe",
+          "seattypes": "TWIN|SINGLE",
+          "status": 1,
+          "movieid": "c7c75f13-52f0-46d1-a758-14b7a91994e8",
+          "extdata": {
+           "seattype": [
+            "TWIN",
+            "SINGLE"
+           ],
+           "areacategorycodes": [
+            "0000000002",
+            "0000000010"
+           ],
+           "conceptattributenames": [
+            "2D"
+           ],
+           "sessionattributenames": [
+            "DELUXE"
+           ]
+          },
+          "seatstatus": null
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "movieid": "b1ceee09-24b6-4696-b192-20ccc74375f4",
+      "experiences": [
+       {
+        "experience": "deluxe",
+        "sessions": [
+         {
+          "sessionid": "327091",
+          "cinemaid": "BU0",
+          "scheduledfilmid": "HO00025582",
+          "showtimemy": "2026-10-11T17:15:00",
+          "screenname": "Cinema 4",
+          "businessdate": "2026-10-11",
+          "experience": "deluxe",
+          "seattypes": "TWIN|SINGLE",
+          "status": 1,
+          "movieid": "b1ceee09-24b6-4696-b192-20ccc74375f4",
+          "extdata": {
+           "seattype": [
+            "TWIN",
+            "SINGLE"
+           ],
+           "areacategorycodes": [
+            "0000000002",
+            "0000000010"
+           ],
+           "conceptattributenames": [
+            "2D"
+           ],
+           "sessionattributenames": [
+            "DELUXE"
+           ]
+          },
+          "seatstatus": null
+         },
+         {
+          "sessionid": "326884",
+          "cinemaid": "BU0",
+          "scheduledfilmid": "HO00025582",
+          "showtimemy": "2026-10-11T18:30:00",
+          "screenname": "Cinema 1",
+          "businessdate": "2026-10-11",
+          "experience": "deluxe",
+          "seattypes": "TWIN|SINGLE",
+          "status": 1,
+          "movieid": "b1ceee09-24b6-4696-b192-20ccc74375f4",
+          "extdata": {
+           "seattype": [
+            "TWIN",
+            "SINGLE"
+           ],
+           "areacategorycodes": [
+            "0000000002",
+            "0000000010"
+           ],
+           "conceptattributenames": [
+            "2D"
+           ],
+           "sessionattributenames": [
+            "DELUXE"
+           ]
+          },
+          "seatstatus": null
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "movieid": "f5fb036c-9a64-4f3b-bb87-90921016e19c",
+      "experiences": [
+       {
+        "experience": "junior-hotwheel",
+        "sessions": [
+         {
+          "sessionid": "326891",
+          "cinemaid": "BU0",
+          "scheduledfilmid": "HO00025729",
+          "showtimemy": "2026-10-11T21:30:00",
+          "screenname": "Junior",
+          "businessdate": "2026-10-11",
+          "experience": "junior-hotwheel",
+          "seattypes": "DUO|SINGLE|TWIN",
+          "status": 1,
+          "movieid": "f5fb036c-9a64-4f3b-bb87-90921016e19c",
+          "extdata": {
+           "seattype": [
+            "DUO",
+            "SINGLE",
+            "TWIN"
+           ],
+           "areacategorycodes": [
+            "0000000016",
+            "0000000010",
+            "0000000002"
+           ],
+           "conceptattributenames": [
+            "2D",
+            "JUNIOR"
+           ],
+           "sessionattributenames": [
+            "DELUXE"
+           ]
+          },
+          "seatstatus": null
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ "movies": [
+  {
+   "assets": [
+    {
+     "assetkey": "banner-desktop",
+     "folderkey": "other-mommy",
+     "priority": 0,
+     "status": 1,
+     "description": "Other Mommy Movie Banner | Other Mommy | TGV Cinemas",
+     "extdata": {
+      "fileinfo": {
+       "contenttype": "image/jpeg",
+       "filepath": "assets/other-mommy/39878abd-550d-46de-8583-dca812108613/39878abd-550d-46de-8583-dca812108613.jpg",
+       "fileurl": "https://d9s3e2ooa0od7.cloudfront.net/assets/other-mommy/39878abd-550d-46de-8583-dca812108613/39878abd-550d-46de-8583-dca812108613.jpg"
+      },
+      "ext": null
+     }
+    },
+    {
+     "assetkey": "banner-mobile",
+     "folderkey": "other-mommy",
+     "priority": 0,
+     "status": 1,
+     "description": "Other Mommy Movie Banner Mobile | Other Mommy | TGV Cinemas",
+     "extdata": {
+      "fileinfo": {
+       "contenttype": "image/jpeg",
+       "filepath": "assets/other-mommy/0a50bf5b-6455-4d38-b5d1-d85626971687/0a50bf5b-6455-4d38-b5d1-d85626971687.jpg",
+       "fileurl": "https://d9s3e2ooa0od7.cloudfront.net/assets/other-mommy/0a50bf5b-6455-4d38-b5d1-d85626971687/0a50bf5b-6455-4d38-b5d1-d85626971687.jpg"
+      },
+      "ext": null
+     }
+    },
+    {
+     "assetkey": "poster",
+     "folderkey": "other-mommy",
+     "priority": 0,
+     "status": 1,
+     "description": "Other Mommy Movie Poster | Other Mommy | TGV Cinemas",
+     "extdata": {
+      "fileinfo": {
+       "contenttype": "image/jpeg",
+       "filepath": "assets/other-mommy/d1d22010-1a21-4f66-b272-39d8727fed90/d1d22010-1a21-4f66-b272-39d8727fed90.jpg",
+       "fileurl": "https://d9s3e2ooa0od7.cloudfront.net/assets/other-mommy/d1d22010-1a21-4f66-b272-39d8727fed90/d1d22010-1a21-4f66-b272-39d8727fed90.jpg"
+      },
+      "ext": null
+     }
+    },
+    {
+     "assetkey": "poster-medium",
+     "folderkey": "other-mommy",
+     "priority": 0,
+     "status": 1,
+     "description": "",
+     "extdata": {
+      "fileinfo": {
+       "contenttype": "image/jpeg",
+       "filepath": "assets/other-mommy/bb879a71-00a5-428d-9f81-7d62be106be5/bb879a71-00a5-428d-9f81-7d62be106be5.jpg",
+       "fileurl": "https://d9s3e2ooa0od7.cloudfront.net/assets/other-mommy/bb879a71-00a5-428d-9f81-7d62be106be5/bb879a71-00a5-428d-9f81-7d62be106be5.jpg"
+      },
+      "ext": null
+     }
+    },
+    {
+     "assetkey": "thumbnail",
+     "folderkey": "other-mommy",
+     "priority": 0,
+     "status": 1,
+     "description": "Other Mommy Movie Thumbnail | Other Mommy | TGV Cinemas",
+     "extdata": {
+      "fileinfo": {
+       "contenttype": "image/jpeg",
+       "filepath": "assets/other-mommy/e3c53890-c177-4d84-be09-f78886440765/e3c53890-c177-4d84-be09-f78886440765.jpg",
+       "fileurl": "https://d9s3e2ooa0od7.cloudfront.net/assets/other-mommy/e3c53890-c177-4d84-be09-f78886440765/e3c53890-c177-4d84-be09-f78886440765.jpg"
+      },
+      "ext": null
+     }
+    }
+   ],
+   "recid": "6ebb1802-f068-41c8-a42c-e4e38ba7e63f",
+   "itemkey": "other-mommy",
+   "name": "Other Mommy",
+   "folderkey": null,
+   "shortcontent": null,
+   "fullcontent": null,
+   "status": 1,
+   "pubdateutc": "2025-12-10T21:22:28.244Z",
+   "extdata": {
+    "exp": [
+     "beanie",
+     "deluxe",
+     "indulge",
+     "indulge-bed",
+     "indulge-coway-berex",
+     "infinity",
+     "junior-hotwheel",
+     "onyx"
+    ],
+    "tags": [
+     "Horror Thriller"
+    ],
+    "promo": null,
+    "folderkey": "other-mommy",
+    "movieinfo": {
+     "cast": "Jessica Chastain, Jay Duplass Dichen Lachman",
+     "lang": "English",
+     "meta": {
+      "name": "Other Mommy | TGV Cinemas | Other Mommy Malaysia Showtimes",
+      "description": "Book your Other Mommy tickets at your nearest TGV Cinemas with the latest Other Mommy showtimes."
+     },
+     "genre": [
+      "Horror"
+     ],
+     "emblem": [],
+     "rating": "16",
+     "hocodes": [
+      "HO00025791",
+      "HO00025790",
+      "HO00025789",
+      "HO00025788",
+      "HO00025787",
+      "HO00025786"
+     ],
+     "preview": {
+      "type": "image",
+      "actionparam": "banner-mobile"
+     },
+     "toptext": "",
+     "director": "Rob Savage",
+     "synopsis": "<h3>Mother Truly Knows Best...</h3>\n<div>A young girl as her family, and their home, are haunted by a sinister entity that is determined to take up residence inside her. But first, it needs to persuade her to let it in&hellip;</div>",
+     "distributor": "United International Pictures",
+     "runtimemins": 93,
+     "movieTrailer": "https://www.youtube.com/watch?v=bhZ7nKxiFUU",
+     "subtitlelang": [
+      "Bahasa Melayu",
+      "Chinese"
+     ],
+     "hocodedetails": [
+      {
+       "title": "[BED] OTHER MOMMY",
+       "hocode": "HO00025791"
+      },
+      {
+       "title": "[BEREX] OTHER MOMMY",
+       "hocode": "HO00025790"
+      },
+      {
+       "title": "[INDULGE] OTHER MOMMY",
+       "hocode": "HO00025789"
+      },
+      {
+       "title": "[ONYX] OTHER MOMMY",
+       "hocode": "HO00025788"
+      },
+      {
+       "title": "[B] OTHER MOMMY",
+       "hocode": "HO00025787"
+      },
+      {
+       "title": "OTHER MOMMY",
+       "hocode": "HO00025786"
+      }
+     ],
+     "releasedatemy": "2026-10-08",
+     "stateinactive": [],
+     "staticContent": "",
+     "previewDesktop": {
+      "type": "image",
+      "actionparam": "banner-desktop"
+     },
+     "trailerGallery": [
+      "https://www.youtube.com/watch?v=bhZ7nKxiFUU"
+     ]
+    }
+   }
+  },
+  {
+   "assets": [
+    {
+     "assetkey": "banner-desktop",
+     "folderkey": "v",
+     "priority": 0,
+     "status": 1,
+     "description": "V 空枪 Movie Desktop Banner | V 空枪 | TGV Cinemas",
+     "extdata": {
+      "fileinfo": {
+       "contenttype": "image/png",
+       "filepath": "assets/v/9e233c28-7e6c-41c9-a941-367e0dd31663/9e233c28-7e6c-41c9-a941-367e0dd31663.png",
+       "fileurl": "https://d9s3e2ooa0od7.cloudfront.net/assets/v/9e233c28-7e6c-41c9-a941-367e0dd31663/9e233c28-7e6c-41c9-a941-367e0dd31663.png"
+      },
+      "ext": null
+     }
+    },
+    {
+     "assetkey": "banner-mobile",
+     "folderkey": "v",
+     "priority": 0,
+     "status": 1,
+     "description": "V 空枪 Movie Mobile Banner | V 空枪 | TGV Cinemas",
+     "extdata": {
+      "fileinfo": {
+       "contenttype": "image/png",
+       "filepath": "assets/v/28e58008-0eb8-442a-82d7-dc910c78dcb2/28e58008-0eb8-442a-82d7-dc910c78dcb2.png",
+       "fileurl": "https://d9s3e2ooa0od7.cloudfront.net/assets/v/28e58008-0eb8-442a-82d7-dc910c78dcb2/28e58008-0eb8-442a-82d7-dc910c78dcb2.png"
+      },
+      "ext": null
+     }
+    },
+    {
+     "assetkey": "poster",
+     "folderkey": "v",
+     "priority": 0,
+     "status": 1,
+     "description": "V 空枪 Movie Poster | V 空枪 | TGV Cinemas",
+     "extdata": {
+      "fileinfo": {
+       "contenttype": "image/jpeg",
+       "filepath": "assets/v/d33e23f0-def9-4439-96dd-260a4318a352/d33e23f0-def9-4439-96dd-260a4318a352.jpg",
+       "fileurl": "https://d9s3e2ooa0od7.cloudfront.net/assets/v/d33e23f0-def9-4439-96dd-260a4318a352/d33e23f0-def9-4439-96dd-260a4318a352.jpg"
+      },
+      "ext": null
+     }
+    },
+    {
+     "assetkey": "poster-medium",
+     "folderkey": "v",
+     "priority": 0,
+     "status": 1,
+     "description": "",
+     "extdata": {
+      "fileinfo": {
+       "contenttype": "image/jpeg",
+       "filepath": "assets/v/cd2c5afb-3f49-414a-bd46-edefab29f770/cd2c5afb-3f49-414a-bd46-edefab29f770.jpg",
+       "fileurl": "https://d9s3e2ooa0od7.cloudfront.net/assets/v/cd2c5afb-3f49-414a-bd46-edefab29f770/cd2c5afb-3f49-414a-bd46-edefab29f770.jpg"
+      },
+      "ext": null
+     }
+    },
+    {
+     "assetkey": "thumbnail",
+     "folderkey": "v",
+     "priority": 0,
+     "status": 1,
+     "description": "V 空枪 Movie Thumbnail | V 空枪 | TGV Cinemas",
+     "extdata": {
+      "fileinfo": {
+       "contenttype": "image/jpeg",
+       "filepath": "assets/v/1d58576a-70dd-4c7b-bfef-ae9b58902502/1d58576a-70dd-4c7b-bfef-ae9b58902502.jpg",
+       "fileurl": "https://d9s3e2ooa0od7.cloudfront.net/assets/v/1d58576a-70dd-4c7b-bfef-ae9b58902502/1d58576a-70dd-4c7b-bfef-ae9b58902502.jpg"
+      },
+      "ext": null
+     }
+    }
+   ],
+   "recid": "c7c75f13-52f0-46d1-a758-14b7a91994e8",
+   "itemkey": "v",
+   "name": "V 空枪",
+   "folderkey": null,
+   "shortcontent": null,
+   "fullcontent": null,
+   "status": 1,
+   "pubdateutc": "2026-09-14T21:08:46.339Z",
+   "extdata": {
+    "exp": [
+     "beanie",
+     "deluxe",
+     "indulge",
+     "indulge-coway-berex"
+    ],
+    "tags": [
+     "Chinese",
+     "Crime Cop Fight Club"
+    ],
+    "promo": null,
+    "folderkey": "v",
+    "movieinfo": {
+     "cast": "朱一龙 (Zhu Yilong), 檀健次 (Tan Jianci), 梁家辉 (Leung Ka Fai Tony), 卫 诗 雅 (Michelle Wai), 惠 英 红 (Kara Wai), 李施嬅 (Selena Lee), 袁富华 (Ben Yuen)",
+     "lang": "Cantonese / Mandarin",
+     "meta": {
+      "name": "V 空枪 | Latest TGV Cinemas Showtimes",
+      "description": "Book your V 空枪 tickets at your nearest TGV Cinemas with the latest V 空枪 showtimes."
+     },
+     "genre": [
+      "Drama"
+     ],
+     "emblem": [],
+     "rating": "16",
+     "hocodes": [
+      "HO00025704",
+      "HO00025703",
+      "HO00025702",
+      "HO00025701",
+      "HO00025700",
+      "HO00025699"
+     ],
+     "preview": {
+      "type": "image",
+      "actionparam": "banner-mobile"
+     },
+     "toptext": "",
+     "director": "Han Yan",
+     "synopsis": "<h3><strong>朱一龙 &times; 檀健次首次全程粤语原声出演，搭档影帝梁家辉！</strong></h3>\n<div>90年代初，这座 &ldquo;遍地黄金&rdquo; 的欲望之城，秩序崩坏，犯罪丛生。打工仔 万梓强一心想改写命运，在结识空姐骆嘉苑后，两人联手作案，劫取巨 额钱款，这次得手让万梓强愈发疯狂，也将他与富商陈辉延推向了更深 的角力漩涡中。与此同时，内地警察亓宏刚和香港警察关苏辰坚持对万 梓强进行调查，两地警方联手行动，正邪较量一触即发。</div>\n<div>&nbsp;</div>\n<div>Set in the crime-ridden city of the early 1990s, Wan Zi Qiang (万梓强) teams up with flight attendant Luo Jia Yuan (骆嘉苑) to carry out a major heist. As his ambition grows, he becomes caught in a dangerous power struggle with businessman Chen Hui Yan (陈辉延), while the police close in.</div>",
+     "distributor": "Brilliant Pictures",
+     "runtimemins": 160,
+     "movieTrailer": "https://www.youtube.com/watch?v=57DKUl42JJc",
+     "subtitlelang": [
+      "Bahasa Melayu",
+      "English"
+     ],
+     "hocodedetails": [
+      {
+       "title": "[BED] V [CANT]",
+       "hocode": "HO00025704"
+      },
+      {
+       "title": "[BEREX] V [CANT]",
+       "hocode": "HO00025703"
+      },
+      {
+       "title": "[INDULGE] V [CANT]",
+       "hocode": "HO00025702"
+      },
+      {
+       "title": "[ONYX] V [CANT]",
+       "hocode": "HO00025701"
+      },
+      {
+       "title": "[B] V [CANT]",
+       "hocode": "HO00025700"
+      },
+      {
+       "title": "V [CANT]",
+       "hocode": "HO00025699"
+      }
+     ],
+     "releasedatemy": "2026-10-01",
+     "stateinactive": [],
+     "staticContent": "",
+     "previewDesktop": {
+      "type": "image",
+      "actionparam": "banner-desktop"
+     },
+     "trailerGallery": [
+      "https://www.youtube.com/watch?v=57DKUl42JJc"
+     ]
+    }
+   }
+  },
+  {
+   "assets": [
+    {
+     "assetkey": "banner-desktop",
+     "folderkey": "digger",
+     "priority": 0,
+     "status": 1,
+     "description": "Digger Movie Desktop Banner| Digger | TGV Cinemas",
+     "extdata": {
+      "fileinfo": {
+       "contenttype": "image/jpeg",
+       "filepath": "assets/digger/e2e2f795-6fdc-4837-96b3-81b4bbadc742/e2e2f795-6fdc-4837-96b3-81b4bbadc742.jpg",
+       "fileurl": "https://d9s3e2ooa0od7.cloudfront.net/assets/digger/e2e2f795-6fdc-4837-96b3-81b4bbadc742/e2e2f795-6fdc-4837-96b3-81b4bbadc742.jpg"
+      },
+      "ext": null
+     }
+    },
+    {
+     "assetkey": "banner-mobile",
+     "folderkey": "digger",
+     "priority": 0,
+     "status": 1,
+     "description": "Digger Movie Mobile Banner| Digger | TGV Cinemas",
+     "extdata": {
+      "fileinfo": {
+       "contenttype": "image/jpeg",
+       "filepath": "assets/digger/6c9e4f79-16a0-4b6d-88c1-0402eaeca1f5/6c9e4f79-16a0-4b6d-88c1-0402eaeca1f5.jpg",
+       "fileurl": "https://d9s3e2ooa0od7.cloudfront.net/assets/digger/6c9e4f79-16a0-4b6d-88c1-0402eaeca1f5/6c9e4f79-16a0-4b6d-88c1-0402eaeca1f5.jpg"
+      },
+      "ext": null
+     }
+    },
+    {
+     "assetkey": "poster",
+     "folderkey": "digger",
+     "priority": 0,
+     "status": 1,
+     "description": "Digger Movie Poster | Digger | TGV Cinemas",
+     "extdata": {
+      "fileinfo": {
+       "contenttype": "image/webp",
+       "filepath": "assets/digger/76fcc96f-0ada-4f59-b872-769008461040/76fcc96f-0ada-4f59-b872-769008461040.webp",
+       "fileurl": "https://d9s3e2ooa0od7.cloudfront.net/assets/digger/76fcc96f-0ada-4f59-b872-769008461040/76fcc96f-0ada-4f59-b872-769008461040.webp"
+      },
+      "ext": null
+     }
+    },
+    {
+     "assetkey": "poster-medium",
+     "folderkey": "digger",
+     "priority": 0,
+     "status": 1,
+     "description": "",
+     "extdata": {
+      "fileinfo": {
+       "contenttype": "image/jpeg",
+       "filepath": "assets/digger/5aef3c30-69c3-4ae7-9648-a6e583ba2567/5aef3c30-69c3-4ae7-9648-a6e583ba2567.jpg",
+       "fileurl": "https://d9s3e2ooa0od7.cloudfront.net/assets/digger/5aef3c30-69c3-4ae7-9648-a6e583ba2567/5aef3c30-69c3-4ae7-9648-a6e583ba2567.jpg"
+      },
+      "ext": null
+     }
+    },
+    {
+     "assetkey": "thumbnail",
+     "folderkey": "digger",
+     "priority": 0,
+     "status": 1,
+     "description": "Digger Movie Thumbnail| Digger | TGV Cinemas",
+     "extdata": {
+      "fileinfo": {
+       "contenttype": "image/jpeg",
+       "filepath": "assets/digger/83df73aa-4970-402b-8e8e-56d8c4a17f29/83df73aa-4970-402b-8e8e-56d8c4a17f29.jpg",
+       "fileurl": "https://d9s3e2ooa0od7.cloudfront.net/assets/digger/83df73aa-4970-402b-8e8e-56d8c4a17f29/83df73aa-4970-402b-8e8e-56d8c4a17f29.jpg"
+      },
+      "ext": null
+     }
+    }
+   ],
+   "recid": "76b09b05-5469-4dc7-a54d-bc3be8ca3cc9",
+   "itemkey": "digger",
+   "name": "Digger",
+   "folderkey": null,
+   "shortcontent": null,
+   "fullcontent": null,
+   "status": 1,
+   "pubdateutc": "2026-01-01T22:58:48.879Z",
+   "extdata": {
+    "exp": [
+     "beanie",
+     "deluxe",
+     "imax",
+     "imaxlaser",
+     "indulge",
+     "indulge-coway-berex",
+     "onyx"
+    ],
+    "tags": [
+     "Dark Comedy",
+     "IMAX"
+    ],
+    "promo": null,
+    "folderkey": "digger",
+    "movieinfo": {
+     "cast": "Tom Cruise, Sandra Hüller, John Goodman, Jesse Plemons, Sophie Wilde",
+     "lang": "English",
+     "meta": {
+      "name": "Digger (2026) | Latest TGV Cinemas Showtimes",
+      "description": "Book your Digger (2026) tickets at your nearest TGV Cinemas with the latest Digger (2026) showtimes."
+     },
+     "genre": [
+      "Black Comedy"
+     ],
+     "emblem": [
+      {
+       "caption": "IMAX",
+       "enddate": "2028-06-13T15:48",
+       "startdate": "2026-08-01T15:48",
+       "emblemcolor": "#ffffff",
+       "captioncolor": "#0072ce"
+      }
+     ],
+     "rating": "18",
+     "hocodes": [
+      "HO00025764",
+      "HO00025761",
+      "HO00025760",
+      "HO00025759",
+      "HO00025758",
+      "HO00025757",
+      "HO00025756",
+      "HO00025755",
+      "HO00025754"
+     ],
+     "preview": {
+      "type": "image",
+      "actionparam": "banner-mobile"
+     },
+     "toptext": "",
+     "director": "Alejandro González Iñárritu",
+     "synopsis": "<h3>One of Tom Cruise's Finest Performances in This Humorous and Divisive Black Comedy! A Must-Watch in IMAX!</h3>\n<div>The most powerful man in the world embarks on a frantic mission to prove he is humanity's saviour before the disaster he&rsquo;s unleashed destroys everything.</div>",
+     "distributor": "Warner Bros. Pictures ",
+     "runtimemins": "",
+     "movieTrailer": "",
+     "subtitlelang": [],
+     "hocodedetails": [
+      {
+       "title": "[IMAX2D] DIGGER",
+       "hocode": "HO00025764"
+      },
+      {
+       "title": "[ATMOS] DIGGER",
+       "hocode": "HO00025761"
+      },
+      {
+       "title": "[INFINITY] DIGGER",
+       "hocode": "HO00025760"
+      },
+      {
+       "title": "[BED] DIGGER",
+       "hocode": "HO00025759"
+      },
+      {
+       "title": "[BEREX] DIGGER",
+       "hocode": "HO00025758"
+      },
+      {
+       "title": "[INDULGE] DIGGER",
+       "hocode": "HO00025757"
+      },
+      {
+       "title": "[ONYX] DIGGER",
+       "hocode": "HO00025756"
+      },
+      {
+       "title": "[B] DIGGER",
+       "hocode": "HO00025755"
+      },
+      {
+       "title": "DIGGER",
+       "hocode": "HO00025754"
+      }
+     ],
+     "releasedatemy": "2026-10-08",
+     "stateinactive": [],
+     "staticContent": "",
+     "previewDesktop": {
+      "type": "image",
+      "actionparam": "banner-desktop"
+     },
+     "trailerGallery": [
+      "https://www.youtube.com/watch?v=WsY_1aRZUPA"
+     ]
+    }
+   }
+  },
+  {
+   "assets": [
+    {
+     "assetkey": "banner-desktop",
+     "folderkey": "munafik-melawan-iblis",
+     "priority": 0,
+     "status": 1,
+     "description": "Munafik Movie Desktop Banner | Munafik: Melawan Iblis | TGV Cinemas",
+     "extdata": {
+      "fileinfo": {
+       "contenttype": "image/jpeg",
+       "filepath": "assets/munafik-melawan-iblis/f8b4bfd9-2bd2-4a24-b077-951fcc27ba82/f8b4bfd9-2bd2-4a24-b077-951fcc27ba82.jpg",
+       "fileurl": "https://d9s3e2ooa0od7.cloudfront.net/assets/munafik-melawan-iblis/f8b4bfd9-2bd2-4a24-b077-951fcc27ba82/f8b4bfd9-2bd2-4a24-b077-951fcc27ba82.jpg"
+      },
+      "ext": null
+     }
+    },
+    {
+     "assetkey": "banner-mobile",
+     "folderkey": "munafik-melawan-iblis",
+     "priority": 0,
+     "status": 1,
+     "description": "Munafik Movie Mobile Banner | Munafik: Melawan Iblis | TGV Cinemas",
+     "extdata": {
+      "fileinfo": {
+       "contenttype": "image/jpeg",
+       "filepath": "assets/munafik-melawan-iblis/02b015e8-2681-4caf-9015-c45df7233610/02b015e8-2681-4caf-9015-c45df7233610.jpg",
+       "fileurl": "https://d9s3e2ooa0od7.cloudfront.net/assets/munafik-melawan-iblis/02b015e8-2681-4caf-9015-c45df7233610/02b015e8-2681-4caf-9015-c45df7233610.jpg"
+      },
+      "ext": null
+     }
+    },
+    {
+     "assetkey": "poster",
+     "folderkey": "munafik-melawan-iblis",
+     "priority": 0,
+     "status": 1,
+     "description": "Munafik Menawan Ilbis Movie Poster | Munafik Menawan Ilbis | TGV Cinemas",
+     "extdata": {
+      "fileinfo": {
+       "contenttype": "image/jpeg",
+       "filepath": "assets/munafik-melawan-iblis/52a6add7-eb3f-4aa9-a2d6-a44642582b3a/52a6add7-eb3f-4aa9-a2d6-a44642582b3a.jpg",
+       "fileurl": "https://d9s3e2ooa0od7.cloudfront.net/assets/munafik-melawan-iblis/52a6add7-eb3f-4aa9-a2d6-a44642582b3a/52a6add7-eb3f-4aa9-a2d6-a44642582b3a.jpg"
+      },
+      "ext": null
+     }
+    },
+    {
+     "assetkey": "poster-medium",
+     "folderkey": "munafik-melawan-iblis",
+     "priority": 0,
+     "status": 1,
+     "description": "",
+     "extdata": {
+      "fileinfo": {
+       "contenttype": "image/jpeg",
+       "filepath": "assets/munafik-melawan-iblis/118dff51-0c32-4c2f-9bbb-01c3614bbde3/118dff51-0c32-4c2f-9bbb-01c3614bbde3.jpg",
+       "fileurl": "https://d9s3e2ooa0od7.cloudfront.net/assets/munafik-melawan-iblis/118dff51-0c32-4c2f-9bbb-01c3614bbde3/118dff51-0c32-4c2f-9bbb-01c3614bbde3.jpg"
+      },
+      "ext": null
+     }
+    },
+    {
+     "assetkey": "thumbnail",
+     "folderkey": "munafik-melawan-iblis",
+     "priority": 0,
+     "status": 1,
+     "description": "Munafik Movie Thumbnail | Munafik | TGV Cinemas",
+     "extdata": {
+      "fileinfo": {
+       "contenttype": "image/jpeg",
+       "filepath": "assets/munafik-melawan-iblis/9e3f1e5f-91b5-4c5f-a743-13a52f803ba0/9e3f1e5f-91b5-4c5f-a743-13a52f803ba0.jpg",
+       "fileurl": "https://d9s3e2ooa0od7.cloudfront.net/assets/munafik-melawan-iblis/9e3f1e5f-91b5-4c5f-a743-13a52f803ba0/9e3f1e5f-91b5-4c5f-a743-13a52f803ba0.jpg"
+      },
+      "ext": null
+     }
+    }
+   ],
+   "recid": "2ca3b717-79bc-49b9-a513-707cbab866f2",
+   "itemkey": "munafik-melawan-iblis",
+   "name": "Munafik: Melawan Iblis",
+   "folderkey": null,
+   "shortcontent": null,
+   "fullcontent": null,
+   "status": 1,
+   "pubdateutc": "2026-08-13T00:30:46.532Z",
+   "extdata": {
+    "exp": [
+     "beanie",
+     "deluxe",
+     "indulge"
+    ],
+    "tags": [
+     "Indonesia",
+     "Horror Thriller"
+    ],
+    "promo": null,
+    "folderkey": "munafik-melawan-iblis",
+    "movieinfo": {
+     "cast": "Arya Saloka, Acha Septriasa, Dimas Aditya",
+     "lang": "Bahasa Indonesia",
+     "meta": {
+      "name": "Munafik: Melawan Iblis | Latest TGV Cinemas Showtimes",
+      "description": "Book your Munafik: Melawan Iblis tickets at your nearest TGV Cinemas with the latest Munafik: Melawan Iblis showtimes."
+     },
+     "genre": [
+      "Horror",
+      "Thriller"
+     ],
+     "emblem": [],
+     "rating": "16",
+     "hocodes": [
+      "HO00025698",
+      "HO00025696",
+      "HO00025695",
+      "HO00025694",
+      "HO00025693",
+      "HO00025692",
+      "HO00025691",
+      "HO00018840",
+      "HO00018837"
+     ],
+     "preview": {
+      "type": "image",
+      "actionparam": "banner-mobile"
+     },
+     "toptext": "",
+     "director": "Guntur Soeharjanto",
+     "synopsis": "<h3>Currently The Number 1 Scariest Movie From Indonesia!&nbsp;</h3>\n<div>Adam, a religious teacher who stopped performing ruqyah after losing his wife, is asked to save Fitri, who is being terrorized by supernatural forces. When he resumes performing ruqyah, he uncovers a dark secret behind Fitri&rsquo;s terror.</div>",
+     "distributor": "",
+     "runtimemins": 105,
+     "movieTrailer": "https://youtu.be/5oQLX2OXeQQ?si=YPs0MGEtfIV1JUBL",
+     "subtitlelang": [
+      "English",
+      "Bahasa Melayu"
+     ],
+     "hocodedetails": [
+      {
+       "title": "[SPECIAL] MUNAFIK: MELAWAN IBLIS [INDO]",
+       "hocode": "HO00025698"
+      },
+      {
+       "title": "[BED] MUNAFIK: MELAWAN IBLIS [INDO]",
+       "hocode": "HO00025696"
+      },
+      {
+       "title": "[BEREX] MUNAFIK: MELAWAN IBLIS [INDO]",
+       "hocode": "HO00025695"
+      },
+      {
+       "title": "[INDULGE] MUNAFIK: MELAWAN IBLIS [INDO]",
+       "hocode": "HO00025694"
+      },
+      {
+       "title": "[ONYX] MUNAFIK: MELAWAN IBLIS [INDO]",
+       "hocode": "HO00025693"
+      },
+      {
+       "title": "[B] MUNAFIK: MELAWAN IBLIS [INDO]",
+       "hocode": "HO00025692"
+      },
+      {
+       "title": "MUNAFIK: MELAWAN IBLIS [INDO]",
+       "hocode": "HO00025691"
+      },
+      {
+       "title": "[DLX] SYAITAN MUNAFIK [BM]",
+       "hocode": "HO00018840"
+      },
+      {
+       "title": "SYAITAN MUNAFIK [BM]",
+       "hocode": "HO00018837"
+      }
+     ],
+     "releasedatemy": "2026-10-01",
+     "stateinactive": [],
+     "staticContent": "",
+     "previewDesktop": {
+      "type": "image",
+      "actionparam": "banner-desktop"
+     },
+     "trailerGallery": [
+      "https://youtu.be/5oQLX2OXeQQ?si=YPs0MGEtfIV1JUBL"
+     ]
+    }
+   }
+  },
+  {
+   "assets": [
+    {
+     "assetkey": "banner-desktop",
+     "folderkey": "resident-evil",
+     "priority": 0,
+     "status": 1,
+     "description": "Resident Evil Desktop Banner | Resident Evil (2026) | TGV Cinemas",
+     "extdata": {
+      "fileinfo": {
+       "contenttype": "image/jpeg",
+       "filepath": "assets/resident-evil/dcc15d97-bd2d-4514-bc89-7445cff0a10c/dcc15d97-bd2d-4514-bc89-7445cff0a10c.jpg",
+       "fileurl": "https://d9s3e2ooa0od7.cloudfront.net/assets/resident-evil/dcc15d97-bd2d-4514-bc89-7445cff0a10c/dcc15d97-bd2d-4514-bc89-7445cff0a10c.jpg"
+      },
+      "ext": null
+     }
+    },
+    {
+     "assetkey": "banner-mobile",
+     "folderkey": "resident-evil",
+     "priority": 0,
+     "status": 1,
+     "description": "Resident Evil Mobile Banner | Resident Evil (2026) | TGV Cinemas",
+     "extdata": {
+      "fileinfo": {
+       "contenttype": "image/jpeg",
+       "filepath": "assets/resident-evil/23275660-404c-468c-a4c0-04df4b24d5e6/23275660-404c-468c-a4c0-04df4b24d5e6.jpg",
+       "fileurl": "https://d9s3e2ooa0od7.cloudfront.net/assets/resident-evil/23275660-404c-468c-a4c0-04df4b24d5e6/23275660-404c-468c-a4c0-04df4b24d5e6.jpg"
+      },
+      "ext": null
+     }
+    },
+    {
+     "assetkey": "poster",
+     "folderkey": "resident-evil",
+     "priority": 0,
+     "status": 1,
+     "description": "Resident Evil Movie Poster | Resident Evil (2026) | TGV Cinemas",
+     "extdata": {
+      "fileinfo": {
+       "contenttype": "image/jpeg",
+       "filepath": "assets/resident-evil/4569e7e0-a5b5-4b5b-84fc-2c39ede8ac67/4569e7e0-a5b5-4b5b-84fc-2c39ede8ac67.jpg",
+       "fileurl": "https://d9s3e2ooa0od7.cloudfront.net/assets/resident-evil/4569e7e0-a5b5-4b5b-84fc-2c39ede8ac67/4569e7e0-a5b5-4b5b-84fc-2c39ede8ac67.jpg"
+      },
+      "ext": null
+     }
+    },
+    {
+     "assetkey": "poster-medium",
+     "folderkey": "resident-evil",
+     "priority": 0,
+     "status": 1,
+     "description": "Resident Evil Medium Poster | Resident Evil (2026) | TGV Cinemas",
+     "extdata": {
+      "fileinfo": {
+       "contenttype": "image/jpeg",
+       "filepath": "assets/resident-evil/f2c20037-9b96-409f-afb1-7fce9599cd15/f2c20037-9b96-409f-afb1-7fce9599cd15.jpg",
+       "fileurl": "https://d9s3e2ooa0od7.cloudfront.net/assets/resident-evil/f2c20037-9b96-409f-afb1-7fce9599cd15/f2c20037-9b96-409f-afb1-7fce9599cd15.jpg"
+      },
+      "ext": null
+     }
+    }
+   ],
+   "recid": "b1ceee09-24b6-4696-b192-20ccc74375f4",
+   "itemkey": "resident-evil",
+   "name": "Resident Evil",
+   "folderkey": null,
+   "shortcontent": null,
+   "fullcontent": null,
+   "status": 1,
+   "pubdateutc": "2025-09-02T23:41:25.562Z",
+   "extdata": {
+    "exp": [
+     "atmos",
+     "beanie",
+     "deluxe",
+     "imax",
+     "imaxlaser",
+     "indulge"
+    ],
+    "tags": [
+     "IMAX",
+     "Horror Thriller"
+    ],
+    "promo": null,
+    "folderkey": "resident-evil",
+    "movieinfo": {
+     "cast": "Austin Abrams, Paul Walker Hauser, Zach Cherry, Kali Reis",
+     "lang": "English",
+     "meta": {
+      "name": "Resident Evil Movie 2026 | Latest TGV Cinemas Showtimes",
+      "description": "Book your Resident Evil Movie 2026 tickets at your nearest TGV Cinemas with the latest Resident Evil Movie 2026 showtimes."
+     },
+     "genre": [
+      "Horror",
+      "Science Fiction"
+     ],
+     "emblem": [
+      {
+       "caption": "IMAX",
+       "enddate": "2029-09-13T14:27",
+       "startdate": "2026-08-11T14:27",
+       "emblemcolor": "#ffffff",
+       "captioncolor": "#0072ce"
+      }
+     ],
+     "rating": "18",
+     "hocodes": [
+      "HO00025594",
+      "HO00025593",
+      "HO00025590",
+      "HO00025589",
+      "HO00025588",
+      "HO00025587",
+      "HO00025586",
+      "HO00025585",
+      "HO00025584",
+      "HO00025583",
+      "HO00025582"
+     ],
+     "preview": {
+      "type": "image",
+      "actionparam": "banner-mobile"
+     },
+     "toptext": "",
+     "director": "Zach Cregger",
+     "synopsis": "<h3>Brought to You by The Director of <em>Weapons</em> and <em>Barbarians -&nbsp;</em>Zach Cregger!</h3>\n<div>Follows a hapless courier tasked with delivering a package to a remote hospital. He soon finds himself caught in the middle of an outbreak and must fight through hordes of mutated creatures to survive.</div>",
+     "distributor": "Sony Pictures Entertainment ",
+     "runtimemins": 95,
+     "movieTrailer": "https://www.youtube.com/watch?v=11qPmuFO36I",
+     "subtitlelang": [
+      "Bahasa Melayu",
+      "Chinese"
+     ],
+     "hocodedetails": [
+      {
+       "title": "[SPECIAL] RESIDENT EVIL",
+       "hocode": "HO00025594"
+      },
+      {
+       "title": "[FAN] RESIDENT EVIL",
+       "hocode": "HO00025593"
+      },
+      {
+       "title": "[ATMOS] RESIDENT EVIL",
+       "hocode": "HO00025590"
+      },
+      {
+       "title": "[INFINITY] RESIDENT EVIL",
+       "hocode": "HO00025589"
+      },
+      {
+       "title": "[BED] RESIDENT EVIL",
+       "hocode": "HO00025588"
+      },
+      {
+       "title": "[BEREX] RESIDENT EVIL",
+       "hocode": "HO00025587"
+      },
+      {
+       "title": "[INDULGE] RESIDENT EVIL",
+       "hocode": "HO00025586"
+      },
+      {
+       "title": "[ONYX] RESIDENT EVIL",
+       "hocode": "HO00025585"
+      },
+      {
+       "title": "[B] RESIDENT EVIL",
+       "hocode": "HO00025584"
+      },
+      {
+       "title": "[IMAX2D] RESIDENT EVIL",
+       "hocode": "HO00025583"
+      },
+      {
+       "title": "RESIDENT EVIL",
+       "hocode": "HO00025582"
+      }
+     ],
+     "releasedatemy": "2026-09-16",
+     "stateinactive": [],
+     "staticContent": "",
+     "previewDesktop": {
+      "type": "image",
+      "actionparam": "banner-desktop"
+     },
+     "trailerGallery": [
+      "https://www.youtube.com/watch?v=11qPmuFO36I"
+     ]
+    }
+   }
+  },
+  {
+   "assets": [
+    {
+     "assetkey": "banner-desktop",
+     "folderkey": "verity",
+     "priority": 0,
+     "status": 1,
+     "description": "Verity Movie Desktop Banner | Verity | TGV Cinemas",
+     "extdata": {
+      "fileinfo": {
+       "contenttype": "image/jpeg",
+       "filepath": "assets/verity/ead77845-0e4f-401c-aa81-ed71669f3b34/ead77845-0e4f-401c-aa81-ed71669f3b34.jpg",
+       "fileurl": "https://d9s3e2ooa0od7.cloudfront.net/assets/verity/ead77845-0e4f-401c-aa81-ed71669f3b34/ead77845-0e4f-401c-aa81-ed71669f3b34.jpg"
+      },
+      "ext": null
+     }
+    },
+    {
+     "assetkey": "banner-mobile",
+     "folderkey": "verity",
+     "priority": 0,
+     "status": 1,
+     "description": "Verity Movie Mobile Banner | Verity| TGV Cinemas",
+     "extdata": {
+      "fileinfo": {
+       "contenttype": "image/jpeg",
+       "filepath": "assets/verity/2eb1e2ad-6b52-455d-b0b8-e9b81fe183a9/2eb1e2ad-6b52-455d-b0b8-e9b81fe183a9.jpg",
+       "fileurl": "https://d9s3e2ooa0od7.cloudfront.net/assets/verity/2eb1e2ad-6b52-455d-b0b8-e9b81fe183a9/2eb1e2ad-6b52-455d-b0b8-e9b81fe183a9.jpg"
+      },
+      "ext": null
+     }
+    },
+    {
+     "assetkey": "poster",
+     "folderkey": "verity",
+     "priority": 0,
+     "status": 1,
+     "description": "Verity Movie Poster | Verity| TGV Cinemas",
+     "extdata": {
+      "fileinfo": {
+       "contenttype": "image/jpeg",
+       "filepath": "assets/verity/b27b6922-faf4-4c6a-b980-258f2165f1bc/b27b6922-faf4-4c6a-b980-258f2165f1bc.jpg",
+       "fileurl": "https://d9s3e2ooa0od7.cloudfront.net/assets/verity/b27b6922-faf4-4c6a-b980-258f2165f1bc/b27b6922-faf4-4c6a-b980-258f2165f1bc.jpg"
+      },
+      "ext": null
+     }
+    },
+    {
+     "assetkey": "poster-medium",
+     "folderkey": "verity",
+     "priority": 0,
+     "status": 1,
+     "description": "Verity Movie Medium Poster | Verity | TGV Cinemas",
+     "extdata": {
+      "fileinfo": {
+       "contenttype": "image/jpeg",
+       "filepath": "assets/verity/025624f3-7a5b-4c5e-85d1-44c64eab55e4/025624f3-7a5b-4c5e-85d1-44c64eab55e4.jpg",
+       "fileurl": "https://d9s3e2ooa0od7.cloudfront.net/assets/verity/025624f3-7a5b-4c5e-85d1-44c64eab55e4/025624f3-7a5b-4c5e-85d1-44c64eab55e4.jpg"
+      },
+      "ext": null
+     }
+    },
+    {
+     "assetkey": "thumbnail",
+     "folderkey": "verity",
+     "priority": 0,
+     "status": 1,
+     "description": "Verity Movie Thumbnail | Verity| TGV Cinemas",
+     "extdata": {
+      "fileinfo": {
+       "contenttype": "image/jpeg",
+       "filepath": "assets/verity/2b4cac48-2a79-4883-9c38-efe9a2c988f9/2b4cac48-2a79-4883-9c38-efe9a2c988f9.jpg",
+       "fileurl": "https://d9s3e2ooa0od7.cloudfront.net/assets/verity/2b4cac48-2a79-4883-9c38-efe9a2c988f9/2b4cac48-2a79-4883-9c38-efe9a2c988f9.jpg"
+      },
+      "ext": null
+     }
+    }
+   ],
+   "recid": "f5fb036c-9a64-4f3b-bb87-90921016e19c",
+   "itemkey": "verity",
+   "name": "Verity",
+   "folderkey": null,
+   "shortcontent": null,
+   "fullcontent": null,
+   "status": 1,
+   "pubdateutc": "2026-01-01T23:14:42.562Z",
+   "extdata": {
+    "exp": [
+     "atmos",
+     "beanie",
+     "deluxe",
+     "indulge",
+     "indulge-bed",
+     "junior-hotwheel",
+     "onyx"
+    ],
+    "tags": [
+     "Horror Thriller",
+     "Drama"
+    ],
+    "promo": null,
+    "folderkey": "verity",
+    "movieinfo": {
+     "cast": "Dakota Johnson, Anne Hathaway, Josh Hartnett, Ismael Cruz Cordova",
+     "lang": "English",
+     "meta": {
+      "name": "Verity (2026) | Latest TGV Cinemas Showtimes",
+      "description": "Book your Verity (2026) tickets at your nearest TGV Cinemas with the latest Verity (2026) showtimes."
+     },
+     "genre": [
+      "Thriller"
+     ],
+     "emblem": [],
+     "rating": "18",
+     "hocodes": [
+      "HO00025738",
+      "HO00025736",
+      "HO00025735",
+      "HO00025734",
+      "HO00025733",
+      "HO00025732",
+      "HO00025731",
+      "HO00025730",
+      "HO00025729"
+     ],
+     "preview": {
+      "type": "image",
+      "actionparam": "banner-mobile"
+     },
+     "toptext": "",
+     "director": "Michael Showalter",
+     "synopsis": "<h3>A Haunting and Thrilling Story with Anne Hathaway and Dakota Johnson as Leads!</h3>\n<div>Struggling writer Lowen Ashleigh is on the brink of financial ruin when she accepts the job offer of a lifetime: she's been hired to complete the remaining books in a successful series that bestselling thriller author Verity Crawford is unable to finish after a mysterious accident. Upon arrival at the lavish Crawford estate, Ashleigh slowly learns that things are not exactly as they seem.</div>",
+     "distributor": "Sony Pictures Entertainment ",
+     "runtimemins": 115,
+     "movieTrailer": "https://www.youtube.com/watch?v=r2Rhs-s0FsI",
+     "subtitlelang": [
+      "Bahasa Melayu",
+      "Chinese"
+     ],
+     "hocodedetails": [
+      {
+       "title": "[SPECIAL] VERITY",
+       "hocode": "HO00025738"
+      },
+      {
+       "title": "[ATMOS] VERITY",
+       "hocode": "HO00025736"
+      },
+      {
+       "title": "[INFINITY] VERITY",
+       "hocode": "HO00025735"
+      },
+      {
+       "title": "[BED] VERITY",
+       "hocode": "HO00025734"
+      },
+      {
+       "title": "[BEREX] VERITY",
+       "hocode": "HO00025733"
+      },
+      {
+       "title": "[INDULGE] VERITY",
+       "hocode": "HO00025732"
+      },
+      {
+       "title": "[ONYX] VERITY",
+       "hocode": "HO00025731"
+      },
+      {
+       "title": "[B] VERITY",
+       "hocode": "HO00025730"
+      },
+      {
+       "title": "VERITY",
+       "hocode": "HO00025729"
+      }
+     ],
+     "releasedatemy": "2026-10-01",
+     "stateinactive": [],
+     "staticContent": "<div>Adapted from Colleen Hoover's best-selling novel, this seductive, psychological thriller follows renowned author Verity Crawford (Anne Hathaway) and Lowen Ashleigh (Dakota Johnson), a struggling writer who relocates to the remote Crawford estate to ghostwrite for Verity.</div>\n<div>&nbsp;</div>\n<div>After Lowen uncovers what appears to be Verity's chilling autobiographical notes, she wrestles with the disturbing and twisted confessions about Verity&rsquo;s husband, Jeremy (Josh Hartnett), and finds it hard to separate fiction from reality, manipulation from attraction, and opportunity from obsession.</div>",
+     "previewDesktop": {
+      "type": "image",
+      "actionparam": "banner-desktop"
+     },
+     "trailerGallery": []
+    }
+   }
+  },
+  {
+   "assets": [
+    {
+     "assetkey": "banner-desktop",
+     "folderkey": "the-intern-2026",
+     "priority": 0,
+     "status": 1,
+     "description": "The Intern Desktop Banner | The Intern (2026) | TGV Cinemas",
+     "extdata": {
+      "fileinfo": {
+       "contenttype": "image/jpeg",
+       "filepath": "assets/the-intern-2026/75fa434e-a08d-45cd-807d-ad1cb74c12ca/75fa434e-a08d-45cd-807d-ad1cb74c12ca.jpg",
+       "fileurl": "https://d9s3e2ooa0od7.cloudfront.net/assets/the-intern-2026/75fa434e-a08d-45cd-807d-ad1cb74c12ca/75fa434e-a08d-45cd-807d-ad1cb74c12ca.jpg"
+      },
+      "ext": null
+     }
+    },
+    {
+     "assetkey": "banner-mobile",
+     "folderkey": "the-intern-2026",
+     "priority": 0,
+     "status": 1,
+     "description": "The Intern Mobile Banner | The Intern (2026) | TGV Cinemas",
+     "extdata": {
+      "fileinfo": {
+       "contenttype": "image/jpeg",
+       "filepath": "assets/the-intern-2026/542e2770-305c-479d-b99e-b25a3668855a/542e2770-305c-479d-b99e-b25a3668855a.jpg",
+       "fileurl": "https://d9s3e2ooa0od7.cloudfront.net/assets/the-intern-2026/542e2770-305c-479d-b99e-b25a3668855a/542e2770-305c-479d-b99e-b25a3668855a.jpg"
+      },
+      "ext": null
+     }
+    },
+    {
+     "assetkey": "poster",
+     "folderkey": "the-intern-2026",
+     "priority": 0,
+     "status": 1,
+     "description": "The Intern Movie Poster | The Intern (2026) | TGV Cinemas",
+     "extdata": {
+      "fileinfo": {
+       "contenttype": "image/jpeg",
+       "filepath": "assets/the-intern-2026/44404e94-35dc-460f-bfb7-14e8bd899717/44404e94-35dc-460f-bfb7-14e8bd899717.jpg",
+       "fileurl": "https://d9s3e2ooa0od7.cloudfront.net/assets/the-intern-2026/44404e94-35dc-460f-bfb7-14e8bd899717/44404e94-35dc-460f-bfb7-14e8bd899717.jpg"
+      },
+      "ext": null
+     }
+    },
+    {
+     "assetkey": "poster-medium",
+     "folderkey": "the-intern-2026",
+     "priority": 0,
+     "status": 1,
+     "description": "The Intern Medium Poster | The Intern (2026) | TGV Cinemas",
+     "extdata": {
+      "fileinfo": {
+       "contenttype": "image/jpeg",
+       "filepath": "assets/the-intern-2026/034d065f-5545-4bd3-b5f3-0d381ea56b39/034d065f-5545-4bd3-b5f3-0d381ea56b39.jpg",
+       "fileurl": "https://d9s3e2ooa0od7.cloudfront.net/assets/the-intern-2026/034d065f-5545-4bd3-b5f3-0d381ea56b39/034d065f-5545-4bd3-b5f3-0d381ea56b39.jpg"
+      },
+      "ext": null
+     }
+    },
+    {
+     "assetkey": "thumbnail",
+     "folderkey": "the-intern-2026",
+     "priority": 0,
+     "status": 1,
+     "description": "The Intern Movie Thumbnail | The Intern (2026) | TGV Cinemas",
+     "extdata": {
+      "fileinfo": {
+       "contenttype": "image/jpeg",
+       "filepath": "assets/the-intern-2026/b22ff6eb-ba50-4e24-b63d-a2ca09120212/b22ff6eb-ba50-4e24-b63d-a2ca09120212.jpg",
+       "fileurl": "https://d9s3e2ooa0od7.cloudfront.net/assets/the-intern-2026/b22ff6eb-ba50-4e24-b63d-a2ca09120212/b22ff6eb-ba50-4e24-b63d-a2ca09120212.jpg"
+      },
+      "ext": null
+     }
+    }
+   ],
+   "recid": "6c0fb390-d966-4626-8617-3573ca92a07d",
+   "itemkey": "the-intern-2026",
+   "name": "The Intern (Korean)",
+   "folderkey": null,
+   "shortcontent": null,
+   "fullcontent": null,
+   "status": 1,
+   "pubdateutc": "2026-09-14T04:37:15.691Z",
+   "extdata": {
+    "exp": [
+     "beanie",
+     "deluxe",
+     "indulge"
+    ],
+    "tags": [
+     "Thai Jap Kor Viet",
+     "Drama"
+    ],
+    "promo": null,
+    "folderkey": "the-intern-2026",
+    "movieinfo": {
+     "cast": "Choi Min Shik, Han So Hee, Kim Jun Han, Ryu Hye Young, Kim Kum Soon, Park Ye Ni, Kim Yo Han, Lim Sung Gyun, Yun Sang Jeong",
+     "lang": "Korean",
+     "meta": {
+      "name": "The Intern (2026) | Latest TGV Cinemas Showtimes",
+      "description": "Book your The Intern (2026) tickets at your nearest TGV Cinemas with the latest The Intern (2026) showtimes."
+     },
+     "genre": [
+      "Drama"
+     ],
+     "emblem": [],
+     "rating": "13",
+     "hocodes": [
+      "HO00025752",
+      "HO00025751",
+      "HO00025750",
+      "HO00025749",
+      "HO00025748",
+      "HO00025747"
+     ],
+     "preview": {
+      "type": "image",
+      "actionparam": "banner-mobile"
+     },
+     "toptext": "",
+     "director": "Kim Do Young",
+     "synopsis": "<h3>Starting Again With a New Job</h3>\n<div>Young CEO, Sun-woo(played by Han So Hee), the 10 billion revenue legend in just three years, who made her brand WOO22(Woo-two-two) a dark horse in fashion, has been working flat-out for the success, meets her company&rsquo;s new senior intern, Ki-ho(played by Choi Min Shik).</div>\n<div><br>Even though he&rsquo;s a man with 37 years of experience, Ki-ho struggles at WOO22, adjusting himself to the digital workplace and freewheeling office culture. But thanks to Ki-ho&rsquo;s diligence and down-to-earth personality, Sun-woo gradually opens up to him, and the two, completely different in every possible way, share POVs and experiences that they lack in each other, which eventually brings an unexpected warmth to their hectic everyday lives&hellip;</div>",
+     "distributor": "Warner Bros. Pictures",
+     "runtimemins": 132,
+     "movieTrailer": "https://www.youtube.com/watch?v=XMp9ietHc8A",
+     "subtitlelang": [
+      "Bahasa Melayu",
+      "Chinese",
+      "English"
+     ],
+     "hocodedetails": [
+      {
+       "title": "[BED] THE INTERN [KOR]",
+       "hocode": "HO00025752"
+      },
+      {
+       "title": "[BEREX] THE INTERN [KOR]",
+       "hocode": "HO00025751"
+      },
+      {
+       "title": "[INDULGE] THE INTERN [KOR]",
+       "hocode": "HO00025750"
+      },
+      {
+       "title": "[ONYX] THE INTERN [KOR]",
+       "hocode": "HO00025749"
+      },
+      {
+       "title": "[B] THE INTERN [KOR]",
+       "hocode": "HO00025748"
+      },
+      {
+       "title": "THE INTERN [KOR]",
+       "hocode": "HO00025747"
+      }
+     ],
+     "releasedatemy": "2026-10-01",
+     "stateinactive": [],
+     "staticContent": "",
+     "previewDesktop": {
+      "type": "image",
+      "actionparam": "banner-desktop"
+     },
+     "trailerGallery": [
+      "https://www.youtube.com/watch?v=XMp9ietHc8A",
+      "https://www.youtube.com/watch?v=4RZeIEe9D2Q"
+     ]
+    }
+   }
+  },
+  {
+   "assets": [
+    {
+     "assetkey": "banner-desktop",
+     "folderkey": "once-upon-a-time-in-the-middle-east",
+     "priority": 0,
+     "status": 1,
+     "description": "Once Upon a Time in the Middle East Desktop Banner | Once Upon a Time in the Middle East 欢迎来龙餐馆 | TGV Cinemas",
+     "extdata": {
+      "fileinfo": {
+       "contenttype": "image/jpeg",
+       "filepath": "assets/once-upon-a-time-in-the-middle-east/c975df76-0d38-447d-a14b-55b9e02bf53f/c975df76-0d38-447d-a14b-55b9e02bf53f.jpg",
+       "fileurl": "https://d9s3e2ooa0od7.cloudfront.net/assets/once-upon-a-time-in-the-middle-east/c975df76-0d38-447d-a14b-55b9e02bf53f/c975df76-0d38-447d-a14b-55b9e02bf53f.jpg"
+      },
+      "ext": null
+     }
+    },
+    {
+     "assetkey": "banner-mobile",
+     "folderkey": "once-upon-a-time-in-the-middle-east",
+     "priority": 0,
+     "status": 1,
+     "description": "Once Upon a Time in the Middle East Mobile Banner | Once Upon a Time in the Middle East 欢迎来龙餐馆 | TGV Cinemas",
+     "extdata": {
+      "fileinfo": {
+       "contenttype": "image/jpeg",
+       "filepath": "assets/once-upon-a-time-in-the-middle-east/8c5b8179-7cc3-47bf-8d08-4d9aa2be4466/8c5b8179-7cc3-47bf-8d08-4d9aa2be4466.jpg",
+       "fileurl": "https://d9s3e2ooa0od7.cloudfront.net/assets/once-upon-a-time-in-the-middle-east/8c5b8179-7cc3-47bf-8d08-4d9aa2be4466/8c5b8179-7cc3-47bf-8d08-4d9aa2be4466.jpg"
+      },
+      "ext": null
+     }
+    },
+    {
+     "assetkey": "poster",
+     "folderkey": "once-upon-a-time-in-the-middle-east",
+     "priority": 0,
+     "status": 1,
+     "description": "Once Upon a Time in the Middle East Movie Poster | Once Upon a Time in the Middle East 欢迎来龙餐馆 | TGV Cinemas",
+     "extdata": {
+      "fileinfo": {
+       "contenttype": "image/jpeg",
+       "filepath": "assets/once-upon-a-time-in-the-middle-east/71d3deaf-9ccd-43d4-9b98-a91789eb6ab2/71d3deaf-9ccd-43d4-9b98-a91789eb6ab2.jpg",
+       "fileurl": "https://d9s3e2ooa0od7.cloudfront.net/assets/once-upon-a-time-in-the-middle-east/71d3deaf-9ccd-43d4-9b98-a91789eb6ab2/71d3deaf-9ccd-43d4-9b98-a91789eb6ab2.jpg"
+      },
+      "ext": null
+     }
+    },
+    {
+     "assetkey": "poster-medium",
+     "folderkey": "once-upon-a-time-in-the-middle-east",
+     "priority": 0,
+     "status": 1,
+     "description": "",
+     "extdata": {
+      "fileinfo": {
+       "contenttype": "image/jpeg",
+       "filepath": "assets/once-upon-a-time-in-the-middle-east/4dbbc1d4-7ecc-4bfc-accc-139a8b6f8d49/4dbbc1d4-7ecc-4bfc-accc-139a8b6f8d49.jpg",
+       "fileurl": "https://d9s3e2ooa0od7.cloudfront.net/assets/once-upon-a-time-in-the-middle-east/4dbbc1d4-7ecc-4bfc-accc-139a8b6f8d49/4dbbc1d4-7ecc-4bfc-accc-139a8b6f8d49.jpg"
+      },
+      "ext": null
+     }
+    },
+    {
+     "assetkey": "thumbnail",
+     "folderkey": "once-upon-a-time-in-the-middle-east",
+     "priority": 0,
+     "status": 1,
+     "description": "",
+     "extdata": {
+      "fileinfo": {
+       "contenttype": "image/jpeg",
+       "filepath": "assets/once-upon-a-time-in-the-middle-east/0e1420a7-0910-42ee-b326-734f059e4f73/0e1420a7-0910-42ee-b326-734f059e4f73.jpg",
+       "fileurl": "https://d9s3e2ooa0od7.cloudfront.net/assets/once-upon-a-time-in-the-middle-east/0e1420a7-0910-42ee-b326-734f059e4f73/0e1420a7-0910-42ee-b326-734f059e4f73.jpg"
+      },
+      "ext": null
+     }
+    }
+   ],
+   "recid": "eb24710e-c54f-45a6-a860-e80bc68f40cd",
+   "itemkey": "once-upon-a-time-in-the-middle-east",
+   "name": "Once Upon a Time in the Middle East 欢迎来龙餐馆",
+   "folderkey": null,
+   "shortcontent": null,
+   "fullcontent": null,
+   "status": 1,
+   "pubdateutc": "2026-08-20T15:31:36.252Z",
+   "extdata": {
+    "exp": [
+     "beanie",
+     "deluxe",
+     "junior-hotwheel"
+    ],
+    "tags": [
+     "Chinese",
+     "Disaster"
+    ],
+    "promo": null,
+    "folderkey": "once-upon-a-time-in-the-middle-east",
+    "movieinfo": {
+     "cast": "Shen Teng 沈腾、Jiang Qiming 蒋奇明、Omar Sherif 奥马尔 · 谢里夫、Aarif Lee 李治廷、Sherif Sobhy 谢里夫 · 萨比",
+     "lang": "Mandarin",
+     "meta": {
+      "name": "Once Upon a Time in the Middle East 欢迎来龙餐馆 | TGV Cinemas",
+      "description": "Book your Once Upon a Time in the Middle East 欢迎来龙餐馆  tickets at your nearest TGV Cinemas."
+     },
+     "genre": [
+      "Drama",
+      "War"
+     ],
+     "emblem": [],
+     "rating": "16",
+     "hocodes": [
+      "HO00025510",
+      "HO00025508",
+      "HO00025507",
+      "HO00025506",
+      "HO00025505",
+      "HO00025504",
+      "HO00025604"
+     ],
+     "preview": {
+      "type": "image",
+      "actionparam": "banner-mobile"
+     },
+     "toptext": "",
+     "director": "Wen Mu Ye 文牧野",
+     "synopsis": "<h3>沈腾撕掉喜剧标签！被观众称为演技巅峰 🔥</h3>\n<div>东北大厨徐福（沈腾 饰）为养家还债，扛着炒锅跑去中东一家中餐馆做厨师。他亮出龙抬头、拔丝地瓜、宫保鸡丁等各色中华美食，和前台经理马俊生（蒋奇明 饰）一个掌勺一个揽客，愣是把无人问津的龙餐馆经营得风生水起！然而战争突然爆发，当地局势急转直下。乱世之中，各方势力轮番登场，徐福的命运将会何去何从？战火中的龙餐馆又将如何维系？</div>\n<div>&nbsp;</div>\n<div>Xu Fu (Shen Teng), a chef from Northeast China, heads to the Middle East to work at a Chinese restaurant. Carrying his wok, he hopes to support his family and pay off his debts. He serves up classic Chinese dishes: the Dragon‐Raising‐Its‐Head feast, candied sweet potatoes and Kung Pao chicken. He partners with restaurant manager Ma Junsheng (Jiang Qiming): Xu Fu handles the cooking, while Ma Junsheng takes care of guests. Together, they turn the little‐known Dragon Restaurant into a thriving spot.</div>\n<div>&nbsp;</div>\n<div>War soon breaks out, and local conditions quickly turn dangerous. Different armed groups clash across the region. What will happen to Xu Fu? Can Dragon Restaurant survive amid the chaos of war?</div>",
+     "distributor": "Mega Films Distribution",
+     "runtimemins": 140,
+     "movieTrailer": "https://youtu.be/mvAW0evWCJw?si=FBD8f_AZDdP2NnMl",
+     "subtitlelang": [
+      "Chinese",
+      "Bahasa Melayu",
+      "English"
+     ],
+     "hocodedetails": [
+      {
+       "title": "[SPECIAL] ONCE UPON A TIME IN MIDDLE EAST [MAND]",
+       "hocode": "HO00025510"
+      },
+      {
+       "title": "[BED] ONCE UPON A TIME IN MIDDLE EAST [MAND]",
+       "hocode": "HO00025508"
+      },
+      {
+       "title": "[BEREX] ONCE UPON A TIME IN MIDDLE EAST [MAND]",
+       "hocode": "HO00025507"
+      },
+      {
+       "title": "[ONYX] ONCE UPON A TIME IN MIDDLE EAST [MAND]",
+       "hocode": "HO00025506"
+      },
+      {
+       "title": "[B] ONCE UPON A TIME IN MIDDLE EAST [MAND]",
+       "hocode": "HO00025505"
+      },
+      {
+       "title": "ONCE UPON A TIME IN MIDDLE EAST [MAND]",
+       "hocode": "HO00025504"
+      },
+      {
+       "title": "[INDULGE] ONCE UPON A TIME IN MIDDLE EAST [MAND]",
+       "hocode": "HO00025604"
+      }
+     ],
+     "releasedatemy": "2026-09-11",
+     "stateinactive": [],
+     "staticContent": "<h3>Alternate Synopsis</h3>\n<div>\n<p style=\"margin: 0cm;\"><span style=\"font-family: Arial, sans-serif;\">Chef Xu Fu travels to the Middle East to work as a chef at a Chinese restaurant to support his family and pay off debts. There, he meets Ma Jun Sheng, the restaurant's manager. They attract customers from all over with authentic Chinese cuisine, and the restaurant quickly gains fame. However, with the outbreak of war, the situation deteriorates rapidly, and no one can escape unscathed, including Xu Fu and Ma Jun Sheng.</span></p>\n<p class=\"MsoNormal\">&nbsp;</p>\n<span lang=\"ZH-CN\" style=\"font-size: 12pt; font-family: DengXian;\">徐福（沈腾</span><span lang=\"ZH-CN\" style=\"font-size: 12pt; font-family: Arial, sans-serif;\"> </span><span lang=\"ZH-CN\" style=\"font-size: 12pt; font-family: DengXian;\">饰）为养家还债远赴中东中餐馆当厨师，在当地结识了大堂经理马俊生（蒋奇明</span><span lang=\"ZH-CN\" style=\"font-size: 12pt; font-family: Arial, sans-serif;\"> </span><span lang=\"ZH-CN\" style=\"font-size: 12pt; font-family: DengXian;\">饰）。他们以地道中国风味广招八方来客，龙餐馆声名鹊起。然而随着战争爆发，当地形势急转直下，没有人能够独善其身，徐福和马俊生也不例外，他们的命运将何去何从？战火中的龙餐馆又将如何维系？</span></div>",
+     "previewDesktop": {
+      "type": "image",
+      "actionparam": "banner-desktop"
+     },
+     "trailerGallery": [
+      "https://youtu.be/mvAW0evWCJw?si=FBD8f_AZDdP2NnMl"
+     ]
+    }
+   }
+  }
+ ]
+}
