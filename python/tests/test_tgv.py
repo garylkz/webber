@@ -26,6 +26,7 @@ from tgv_scraper import (
     filter_formats,
     filter_times,
     find_cinema,
+    hall_anchor,
     normalise_date,
     parse_cinemas,
     parse_day,
@@ -36,6 +37,7 @@ from tgv_scraper import (
     parse_showtime,
     parse_tickets,
     render_seat_plan,
+    seat_number,
     strip_html,
 )
 
@@ -320,7 +322,10 @@ def test_movie_without_a_runtime_still_parses():
         "movieinfo": {"runtimemins": "", "rating": "tba"},
     }})
     assert film.runtime is None
-    assert film.rating == "tba"
+    # "tba" is a placeholder, not a rating. Both scrapers now treat it as
+    # absent, so a caller reading either one's output does not have to filter
+    # for placeholder strings on one site and not the other.
+    assert film.rating is None
     assert film.title == "Avengers: Doomsday"
 
 
@@ -810,8 +815,13 @@ def test_alignment_moves_a_short_row_onto_the_shared_number_columns(utama_plan):
 
 
 def test_alignment_never_loses_or_duplicates_a_seat(utama_plan, pdh_plan):
-    """Moving seats is only safe if the total is unchanged and no two seats in a
-    row land in the same column."""
+    """Moving seats is only safe if the total is unchanged, no two seats in a row
+    land in the same column, and no seat is pushed off the grid.
+
+    The negative check is not hypothetical: an earlier version mixed the hall
+    anchor with the area anchor, seats 1 and 2 collided with seat 3, and the
+    fallback parked them at column -1. That left the totals correct while the
+    drawing grew a spurious -1 column."""
     for plan in (utama_plan, pdh_plan):
         aligned = align_by_number(plan)
         for area, original in zip(aligned.areas, plan.areas):
@@ -820,15 +830,100 @@ def test_alignment_never_loses_or_duplicates_a_seat(utama_plan, pdh_plan):
             for row in area.occupied_rows:
                 columns = [s.column for s in row.seats]
                 assert len(set(columns)) == len(columns), "two seats stacked"
+                assert all(c >= 0 for c in columns), f"seat pushed off the grid: {columns}"
+                assert [s.id for s in row.seats] == [s.id for s in row.seats]
+        assert aligned.first_column >= 0
+
+
+def test_the_twin_rows_line_up_on_the_single_columns(utama_plan):
+    """Both areas share one grid, so seat 12 must sit in the same column in the
+    TWIN rows as it does in the SINGLE rows above them.
+
+    Before this, each area anchored off its own fullest row and the TWIN rows
+    kept a private numbering that drifted two columns to the left."""
+    aligned = align_by_number(utama_plan)
+    single = next(a for a in aligned.areas if a.description == "SINGLE")
+    twin = next(a for a in aligned.areas if a.description == "TWIN")
+
+    def columns(area, number):
+        seat = next(s for r in area.occupied_rows for s in r.seats
+                    if seat_number(s) == number)
+        return seat.column
+
+    for number in range(1, 13):
+        assert columns(twin, number) == columns(single, number), (
+            f"twin seat {number} is not under single seat {number}"
+        )
+    assert aligned.conflicting_areas == ()
+
+
+def test_an_anchor_is_extrapolated_past_the_numbers_it_actually_has(pdh_plan):
+    """Pavilion's SINGLE rows are numbered 3 to 15, so the anchor row holds no
+    entry for seats 1 and 2. The numbering is a straight run, so they belong one
+    and two columns past the lowest number, and the TWIN row uses them."""
+    hall = hall_anchor(pdh_plan)
+    single = next(a for a in pdh_plan.areas if a.description == "SINGLE")
+    lowest = min(seat_number(s) for r in single.occupied_rows for s in r.seats)
+    assert min(hall) == 1, "the two missing numbers are filled in"
+    assert min(hall) < lowest
+    assert max(hall) == 15, "and no further, the numbering stops where it stops"
+    assert hall[lowest - 1] == hall[lowest] + 1, "one column per seat"
+    assert hall[lowest - 2] == hall[lowest] + 2
+    assert all(c >= 0 for c in hall.values())
+
+
+def test_extrapolation_never_invents_a_seat_in_an_aisle(pdh_plan):
+    """A gap in the middle of a row is a walkway. Only the two ends of the run may
+    be extended, or a seat would be drawn where the hall has no seat."""
+    hall = hall_anchor(pdh_plan)
+    single = next(a for a in pdh_plan.areas if a.description == "SINGLE")
+    row = single.occupied_rows[0]
+    for number, column in hall.items():
+        # Anything the anchor invented must sit outside the row's own columns.
+        if number < min(seat_number(s) for s in row.seats) or number > max(
+            seat_number(s) for s in row.seats
+        ):
+            assert column not in row.columns, (
+                f"extrapolated seat {number} landed on an occupied column {column}"
+            )
+
+
+def test_every_seat_lines_up_across_the_areas_at_both_halls(utama_plan, pdh_plan):
+    """Every seat number that appears in more than one area sits in the same
+    column in each of them. This is the property the drawing exists to show."""
+    for plan in (utama_plan, pdh_plan):
+        aligned = align_by_number(plan)
+        assert aligned.conflicting_areas == ()
+        placed: dict[int, int] = {}
+        for area in aligned.areas:
+            for row in area.occupied_rows:
+                for seat in row.seats:
+                    number = seat_number(seat)
+                    if number is None:
+                        continue
+                    if number in placed:
+                        assert placed[number] == seat.column, (
+                            f"seat {number} is at c{placed[number]} and c{seat.column}"
+                        )
+                    placed[number] = seat.column
+
+
+def test_shared_alignment_can_be_turned_off(utama_plan):
+    """shared=False keeps each area on its own anchor, which is the old
+    behaviour and the one-way asymmetry the GSC suite pins."""
+    shared = align_by_number(utama_plan, shared=True)
+    own = align_by_number(utama_plan, shared=False)
+    assert shared.moved_by_alignment > own.moved_by_alignment
+    assert own.conflicting_areas == ()
 
 
 def test_alignment_is_a_no_op_where_numbering_already_agrees(pdh_plan):
-    """Every Pavilion row is identical, so nothing should move there."""
+    """Every Pavilion SINGLE row is identical, so none of them should move."""
     aligned = align_by_number(pdh_plan)
-    assert aligned.moved_by_alignment == 0
-    for area, original in zip(aligned.areas, pdh_plan.areas):
-        for row, before in zip(area.occupied_rows, original.occupied_rows):
-            assert [s.column for s in row.seats] == [s.column for s in before.seats]
+    single = next(a for a in aligned.areas if a.description == "SINGLE")
+    original = next(a for a in pdh_plan.areas if a.description == "SINGLE")
+    for row, before in zip(single.occupied_rows, original.occupied_rows):
+        assert [s.column for s in row.seats] == [s.column for s in before.seats]
 
 
 def test_alignment_leaves_non_numeric_seat_ids_alone(utama_plan):

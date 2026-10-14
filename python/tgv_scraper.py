@@ -992,6 +992,16 @@ def seat_number(seat: Seat) -> int | None:
         return None
 
 
+def anchor_from_row(row: SeatRow) -> dict[int, int]:
+    """seat number -> column, read off one row."""
+    anchor: dict[int, int] = {}
+    for seat in row.seats:
+        number = seat_number(seat)
+        if number is not None and number not in anchor:
+            anchor[number] = seat.column
+    return anchor
+
+
 def number_anchor(area: SeatArea) -> dict[int, int]:
     """seat number -> column, taken from the fullest row of this area.
 
@@ -1003,15 +1013,101 @@ def number_anchor(area: SeatArea) -> dict[int, int]:
     if not rows:
         return {}
     fullest = max(rows, key=lambda row: (len(row.seats), -row.index))
-    anchor: dict[int, int] = {}
-    for seat in fullest.seats:
-        number = seat_number(seat)
-        if number is not None and number not in anchor:
-            anchor[number] = seat.column
-    return anchor
+    return anchor_from_row(fullest)
 
 
-def align_by_number(plan: SeatPlan) -> SeatPlan:
+def hall_anchor(plan: SeatPlan) -> dict[int, int]:
+    """seat number -> column for the whole hall, from its single fullest row.
+
+    Both areas in a hall share one column grid: TGV gives them identical
+    `left`, `width` and `columnCount`. So the fullest row anywhere in the hall
+    fixes where every number sits, and the other area can be lined up on it
+    rather than keeping its own private lettering.
+
+    The anchor is then extrapolated past both ends, because a hall's rows do not
+    all carry the same numbers. At Pavilion Damansara the SINGLE rows run 3 to 15
+    while the TWIN row runs 1 to 10, so seats 1 and 2 have no entry in the anchor
+    row at all. They are not stray data: the numbering is a straight run, so they
+    belong one and two columns beyond the anchor row's lowest number.
+    """
+    rows = [row for area in plan.areas for row in area.occupied_rows]
+    if not rows:
+        return {}
+    fullest = max(rows, key=lambda row: (len(row.seats), -row.index))
+    anchor = anchor_from_row(fullest)
+    # Only extend as far as the numbers actually in use. Beyond that is guesswork
+    # about seats that do not exist, and the aisle in the anchor row already
+    # shows where the run may not continue unbroken.
+    used = [
+        number
+        for row in rows
+        for number in (seat_number(s) for s in row.seats)
+        if number is not None
+    ]
+    return _extrapolate(anchor, low=min(used), high=max(used))
+
+
+def _extrapolate(anchor: dict[int, int], low: int, high: int) -> dict[int, int]:
+    """Extend a number -> column map outwards, at its own spacing, to cover
+    `low` through `high`.
+
+    Only the two ends are extended, never the middle: a gap in the middle is an
+    aisle, and inventing a column there would put a seat where the hall has a
+    walkway.
+
+    The step comes from the anchor's own lowest and highest numbers, so the run
+    continues in whichever direction that row was lettered. Stopping at the real
+    numbering means a two-seat shortfall is filled with two seats and not eight.
+    """
+    numbers = sorted(anchor)
+    if len(numbers) < 2:
+        return dict(anchor)
+
+    out = dict(anchor)
+    edge_low, edge_high = numbers[0], numbers[-1]
+    low_step = anchor[edge_low] - anchor[edge_low + 1]
+    high_step = anchor[edge_high] - anchor[edge_high - 1]
+
+    for step, edge, target, direction in (
+        (low_step, edge_low, low, -1),
+        (high_step, edge_high, high, 1),
+    ):
+        if step == 0:
+            continue
+        number = edge
+        column = anchor[edge]
+        while number != target:
+            number += direction
+            column += step
+            if column < 0 or number in out:
+                break
+            out[number] = column
+    return out
+
+
+def _area_fits_hall(area: SeatArea, hall: dict[int, int]) -> bool:
+    """Can the hall anchor place every row of this area without a collision?
+
+    A row fits when each of its numbers appears in the hall anchor and the
+    resulting columns are all distinct. Anything else means either an unlettered
+    number or two seats in one place, so the caller keeps the area's own
+    lettering instead.
+    """
+    if not hall:
+        return False
+    for row in area.occupied_rows:
+        columns: list[int] = []
+        for seat in row.seats:
+            number = seat_number(seat)
+            if number is None or number not in hall:
+                return False
+            columns.append(hall[number])
+        if len(set(columns)) != len(columns):
+            return False
+    return True
+
+
+def align_by_number(plan: SeatPlan, shared: bool = True) -> SeatPlan:
     """Return a copy where each seat's column comes from its number.
 
     TGV gives every row its own columns, and in a row with fewer seats the
@@ -1020,14 +1116,22 @@ def align_by_number(plan: SeatPlan) -> SeatPlan:
     same place in every row, and a row short of one seat simply has an empty
     space where the missing number would be.
 
-    So this rebuilds each area from its own number-to-column map. Seats whose
-    number is missing from the anchor, or that the API labels non-numerically,
-    keep the column they arrived with.
+    With `shared`, the anchor is the hall's single fullest row, so the TWIN rows
+    line up on the same columns as the SINGLE rows above them. The two areas
+    share one grid but do not always share a numbering: where the hall anchor
+    cannot place an area without stacking two seats in one column, that area
+    falls back to its own map and is named in `conflicting_areas`. An area is
+    placed from one map throughout, never a blend of the two. Seats the API
+    labels non-numerically keep the column they arrived with.
     """
     moved = 0
+    conflicts: list[str] = []
+    hall = hall_anchor(plan) if shared else {}
     areas: list[SeatArea] = []
+
     for area in plan.areas:
-        anchor = number_anchor(area)
+        use_hall = shared and _area_fits_hall(area, hall)
+        anchor = hall if use_hall else number_anchor(area)
         rows: list[SeatRow] = []
         for row in area.rows:
             seats: list[Seat] = []
@@ -1058,6 +1162,8 @@ def align_by_number(plan: SeatPlan) -> SeatPlan:
                     )
                 )
             rows.append(SeatRow(index=row.index, name=row.name, seats=tuple(seats)))
+        if shared and hall and not use_hall:
+            conflicts.append(area.label)
         areas.append(
             SeatArea(
                 number=area.number,
@@ -1079,6 +1185,7 @@ def align_by_number(plan: SeatPlan) -> SeatPlan:
         screen_width=plan.screen_width,
     )
     aligned.moved_by_alignment = moved
+    aligned.conflicting_areas = tuple(conflicts)
     return aligned
 
 
@@ -1095,6 +1202,10 @@ class SeatPlan:
     screen_width: float = 0.0
     # How many seats align_by_number had to move. 0 on a plan it did not touch.
     moved_by_alignment: int = 0
+    # Areas the hall-wide anchor could not letter without stacking two seats in
+    # one column, so they kept their own numbering. Empty when every area lined
+    # up on the shared grid.
+    conflicting_areas: tuple[str, ...] = ()
 
     @property
     def first_column(self) -> int:
@@ -1721,6 +1832,8 @@ def render_seat_plan(plan: SeatPlan, width: int = 3, ruler: bool = True,
             out.append(
                 f"{area.label} - {area.seat_count} seats, {taken} taken, "
                 f"{area.seat_count - taken} free"
+                + ("  (own numbering, this hall's areas disagree)"
+                   if area.label in plan.conflicting_areas else "")
             )
         by_column = {seat.column: seat for seat in row.seats}
         out.append(
