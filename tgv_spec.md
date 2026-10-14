@@ -6,6 +6,47 @@ is specific to a language or runtime.
 
 ---
 
+## The shared contract
+
+The two scrapers in this repo are deliberately interchangeable: they expose the
+same function names and emit the same JSON keys, so one consumer reads either
+site's output. Where a function does the same job on both sites it is named the
+same and behaves the same. This document covers what is common and what is
+TGV-specific; `gsc_spec.md` covers the other side.
+
+**Named for the same job on both sites:** `movies`, `detail`, `cinemas`,
+`regions`, `business_dates`, `day`, `schedule`, `movie`, `tickets`,
+`session_prices`, `seat_status`, `seat_plan`, `render_seat_plan`,
+`filter_times`, `filter_formats`, `by_region`, `by_city`, `filter_cinemas`,
+`find_cinema`, `normalise_date`, `parse_clock`, `looks_like_date`,
+`experience_label`, `clean`, `split_codes`, `as_list`, `strip_html`,
+`duration_minutes`, `seat_number`, `Throttle`, `show_movies`, `show_schedule`,
+`show_cinemas`, and the `Movie`, `Cinema`, `Showtime`, `TicketType`, `Seat`,
+`SeatRow`, `SeatArea` and `SeatPlan` records.
+
+**Deliberately one-sided:**
+
+| Name | Only | Why |
+|---|---|---|
+| `listing`, `parse_listing`, `parse_detail`, `parse_cinemas_page`, `join_directories` | GSC | GSC reads a website as well as a service. TGV has no server-rendered site behind the API. |
+| `parse_movies`, `parse_movie_shows` | GSC | GSC publishes a catalogue and has a one-film lookup. TGV reports films only through sessions, so `tgv.movies()` is a union of day payloads. |
+| `align_by_number`, `number_anchor` | TGV | TGV numbers each row independently, so a hall has to be realigned before it can be drawn. GSC's coordinates are already absolute. |
+
+**Some fields changed shape on this side**, because the two sites disagree and
+one of them was wrong:
+
+| Field | Was | Now | Why |
+|---|---|---|---|
+| `Movie.cast` | `str` | `tuple[str, ...]` | TGV stores the cast as one comma-joined string. GSC returns a list. A tuple is what both can produce, and splitting it once here beats every caller splitting it again. |
+| `Cinema.keyword` | `str` | `slug` | The Python scraper spelled it `keyword` and GSC spelled it `slug`. `keyword` is kept as an alias, so existing callers keep working. |
+| `Movie.rating` | `"tba"` | `None` | `tba` is a placeholder, not a rating. Both scrapers now treat `N/A`, `NA`, `-`, `TBC` and `TBA` as absent, so a caller does not have to filter for placeholder strings on one site and not the other. |
+| `Cinema.city`, `Cinema.state`, `Showtime.hall_id`, `Movie.duration`, `Movie.booking_url`, `Movie.booking_id` | absent | `None` | Filled in by the other scraper. They stay in the shared output so the key sets match. |
+
+Everything else in this document is unchanged, and the notes below about TGV's
+own quirks still stand.
+
+---
+
 ## Concepts
 
 | Term | Meaning |
@@ -38,6 +79,9 @@ is specific to a language or runtime.
 | `schedule(cinemaIds?, date?)` | `{cinemaId: Movie[]}` | The same across many cinemas. Cinemas are queried in parallel. With no ids given, every cinema in the country is swept. |
 | `movie(title, date?)` | `[{cinemaId, movie}]` | Every session of one film across cinemas. Matches on the URL slug or the title. Fails if the film has no sessions. |
 | `businessDates()` | `date[]` | Every date the API will answer for, ascending. This is the set across all cinemas, so it includes special and advance dates with nothing on them — check with `day()` before trusting one. |
+| `movies(date?, cinemaIds?)` | `Movie[]` | Every film with sessions on a date, one record per film with all of its sessions. TGV has no catalogue endpoint, so this is a union of day payloads and costs one request per cinema. Unlike `day()`, a film seen in several cinemas is merged rather than repeated. |
+| `detail(title, date?)` | `Movie` | One film as a single record: the first of `movie()`'s hits. TGV has no detail page separate from the schedule, so this needs no second call. |
+| `cinemaExperiences(cinemaId)` | `string[]` | One outlet's hall formats, from the directory. One request. |
 
 ## Sessions
 
@@ -78,7 +122,9 @@ result afterwards would still pay for every screening that was thrown away.
 | `rating`, `runtime`, `language`, `releaseDate` | Descriptive fields, as TGV reports them. |
 | `synopsis` | Stored as HTML, collapsed to plain text. |
 | `posterUrl`, `bannerUrl` | Built from the CDN path TGV stores. |
-| `cinemaId`, `cinemaName`, `showtimes` | Set when a movie is the result of a schedule query. |
+| `cast` | Names as a list. TGV stores one comma-joined string, so it is split here. |
+| `language`, `languages` | The raw language string and the same value split into a list of codes. |
+| `cinemaId`, `cinemaName`, `showtimes` | Set when a movie is the result of a schedule query. Cleared by `movies()`, whose records span the country. |
 
 ## Showtimes
 
@@ -89,6 +135,11 @@ result afterwards would still pay for every screening that was thrown away.
 | `hall`, `experience`, `experienceName` | Hall name, hall format code, and its display label. Unknown codes still render as a title-cased name. |
 | `seatsLeft`, `soldOut` | Remaining seats, and whether the hall is full. |
 | `sessionId` | Identifies this screening. Prices and seat maps are fetched per session id. |
+| `hallId` | Always null here. TGV prices per hall area and does not send the hall's own id; the other scraper fills it in. |
+
+`Seat.state` normalises the API's integer seat status to the same letters the
+other scraper uses: `A` free, `B` booked, `?` unknown. The raw integer is kept
+as `Seat.status`, and `number` is the printed seat number.
 
 ## Prices
 
