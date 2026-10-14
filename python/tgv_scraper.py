@@ -81,6 +81,10 @@ ENDPOINTS = {
     "tickets": "/api/boxoffice/v1/moviesession_gettickets",
 }
 
+# Text standing in for a value the site has not published. Treated as absent by
+# `clean`, so it never reaches a caller.
+PLACEHOLDERS = {"N/A", "NA", "-", "TBC", "TBA"}
+
 # TGV reports money in cents, as integers. Only `priceInCents` is the ticket
 # price and is used; `taxInCents` does not reconcile with any Malaysian rate and
 # is ignored (see TicketType).
@@ -138,11 +142,27 @@ def experience_label(code: str | None) -> str | None:
 
 
 def clean(value: str | None) -> str | None:
-    """Strip whitespace and turn empty strings into None."""
+    """Strip whitespace, turn empty strings into None, drop placeholder text.
+
+    The other scraper in this repo treats `N/A`, `NA`, `-`, `TBC` and `TBA` as
+    "no value", so this one does too. TGV's own payloads never carry them, so
+    the rule costs nothing here, and it keeps a caller reading either site's
+    output from having to handle both a missing value and a literal placeholder.
+    """
     if value is None:
         return None
     value = value.strip()
-    return value or None
+    if not value or value.upper() in PLACEHOLDERS:
+        return None
+    return value
+
+
+def split_codes(value: str | None) -> tuple[str, ...]:
+    """'ENG,BM,CHI' -> ('ENG', 'BM', 'CHI'). Empty when there is nothing."""
+    if not value:
+        return ()
+    parts = (clean(part) for part in value.split(","))
+    return tuple(part for part in parts if part)
 
 
 def strip_html(value: str | None) -> str | None:
@@ -353,13 +373,24 @@ def _results(body: dict, path: str) -> dict:
 
 @dataclass
 class Cinema:
-    """One TGV outlet."""
+    """One TGV outlet.
+
+    `slug` is the URL segment, which the API spells `keyword`. The other scraper
+    in this repo calls the same field `slug`, so that is the name used here and
+    `keyword` is kept as an alias so existing callers keep working.
+
+    `city` and `state` stay None: TGV files an outlet under a region rather than
+    a town, and `location`/`region` already carry that. They are in the shared
+    output so one consumer can read either site's records.
+    """
 
     id: str
     name: str
-    keyword: str | None = None
+    slug: str | None = None
     location: str | None = None  # region key, e.g. "klangvalley"
     region: str | None = None  # region label, e.g. "Klang Valley"
+    city: str | None = None
+    state: str | None = None
     address: str | None = None
     postcode: str | None = None
     latitude: str | None = None
@@ -373,18 +404,36 @@ class Cinema:
     status: int = 1
 
     @property
+    def keyword(self) -> str | None:
+        """Alias of `slug`, the name this field used to have."""
+        return self.slug
+
+    @property
+    def town(self) -> str | None:
+        """TGV files an outlet under its region, not its town, so this is None.
+
+        The other scraper reads a town out of its own outlet names. Here the
+        nearest equivalent is the region label, which is what `by_city` falls
+        back to so one call works over either site's records.
+        """
+        return self.region
+
+    @property
     def url(self) -> str:
-        if self.location and self.keyword:
-            return f"{SITE}/cinemas/{self.location}/{self.keyword}"
+        if self.location and self.slug:
+            return f"{SITE}/cinemas/{self.location}/{self.slug}"
         return f"{SITE}/cinemas"
 
     def to_dict(self) -> dict:
         return {
             "id": self.id,
             "name": self.name,
+            "slug": self.slug,
             "url": self.url,
+            "city": self.city,
             "location": self.location,
             "region": self.region,
+            "state": self.state,
             "address": self.address,
             "postcode": self.postcode,
             "latitude": self.latitude,
@@ -472,6 +521,10 @@ class Showtime:
     cinema_id: str
     start: datetime | None
     hall: str | None = None
+    # TGV prices tickets per hall area and never sends the hall's own id, so this
+    # stays None here. The other scraper fills it in. It is in the shared output
+    # so one consumer can read either site's records.
+    hall_id: str | None = None
     business_date: str | None = None
     experience: str | None = None
     seat_types: tuple[str, ...] = ()
@@ -595,9 +648,11 @@ class Showtime:
             "session_id": self.session_id,
             "movie_id": self.movie_id,
             "cinema_id": self.cinema_id,
+            "hall_id": self.hall_id,
             "date": self.business_date,
             "start": self.start.isoformat() if self.start else None,
             "time": self.time,
+            "ends": self.ends.isoformat() if self.ends else None,
             "hall": self.hall,
             "experience": self.experience,
             "experience_name": self.experience_name,
@@ -605,6 +660,7 @@ class Showtime:
             "seats_total": self.seats_total,
             "seats_used": self.seats_used,
             "seats_left": self.seats_left,
+            "sold_out": self.sold_out,
             "status": self.status,
             "price": self.price,
             "price_range": self.price_range,
@@ -617,7 +673,16 @@ class Showtime:
 
 @dataclass
 class Movie:
-    """A film, with every session found for it in one cinema on one date."""
+    """A film, with every session found for it in one cinema on one date.
+
+    `cast` is a tuple because the API stores it as one comma-joined string.
+    Splitting it here beats leaving it for every caller to split again, and it is
+    the shape the other scraper already produces.
+
+    `duration`, `booking_url` and `booking_id` stay None: TGV has no detail page
+    separate from the schedule and no booking link. They are in the shared output
+    so one consumer can read either site's records.
+    """
 
     id: str
     title: str
@@ -630,7 +695,7 @@ class Movie:
     subtitles: tuple[str, ...] = ()
     synopsis: str | None = None
     director: str | None = None
-    cast: str | None = None
+    cast: tuple[str, ...] = ()
     distributor: str | None = None
     release_date: str | None = None
     trailer_url: str | None = None
@@ -641,11 +706,19 @@ class Movie:
     showtimes: tuple[Showtime, ...] = ()
     cinema_id: str | None = None
     cinema_name: str | None = None
+    duration: str | None = None
+    booking_url: str | None = None
+    booking_id: int | None = None
     extra: dict = field(default_factory=dict)
 
     @property
     def url(self) -> str:
         return f"{SITE}/movies/details/{self.slug}" if self.slug else SITE
+
+    @property
+    def languages(self) -> tuple[str, ...]:
+        """Audio codes as a tuple. TGV can join several with commas."""
+        return split_codes(self.language)
 
     @property
     def trailer_id(self) -> str | None:
@@ -671,11 +744,13 @@ class Movie:
             "tags": list(self.tags),
             "rating": self.rating,
             "runtime": self.runtime,
+            "duration": self.duration,
             "language": self.language,
+            "languages": list(self.languages),
             "subtitles": list(self.subtitles),
             "synopsis": self.synopsis,
             "director": self.director,
-            "cast": self.cast,
+            "cast": list(self.cast),
             "distributor": self.distributor,
             "release_date": self.release_date,
             "trailer_url": self.trailer_url,
@@ -686,6 +761,8 @@ class Movie:
             "session_ids": list(self.session_ids),
             "cinema_id": self.cinema_id,
             "cinema_name": self.cinema_name,
+            "booking_url": self.booking_url,
+            "booking_id": self.booking_id,
             "showtimes": [s.to_dict() for s in self.showtimes],
         }
 
@@ -726,7 +803,7 @@ def parse_cinemas(payload: dict, regions: dict | None = None) -> list[Cinema]:
             Cinema(
                 id=cid,
                 name=name,
-                keyword=clean(info.get("keyword")),
+                slug=clean(info.get("keyword")),
                 location=location,
                 region=labels.get(location),
                 address=clean(info.get("address")),
@@ -782,7 +859,7 @@ def parse_movie(record: dict) -> Movie:
         subtitles=tuple(as_list(info.get("subtitlelang"))),
         synopsis=strip_html(info.get("synopsis")),
         director=clean(info.get("director")),
-        cast=clean(info.get("cast")),
+        cast=split_codes(info.get("cast")),
         distributor=clean(info.get("distributor")),
         release_date=clean(info.get("releasedatemy")),
         trailer_url=trailer,
@@ -865,8 +942,13 @@ def parse_seat_status(payload: dict) -> dict[str, tuple[int, int]]:
 # The API reports a seat's state as a bare integer. These are the values seen in
 # the wild; anything else is rendered as `?` rather than guessed at, because a
 # mislabelled seat is worse than an unreadable one.
-SEAT_FREE = 0
-SEAT_BOOKED = 1
+SEAT_FREE = "A"
+SEAT_BOOKED = "B"
+SEAT_UNKNOWN = "?"
+
+# The raw integers behind those letters, kept so `Seat.status` can report what
+# the API actually sent.
+SEAT_STATUS = {0: SEAT_FREE, 1: SEAT_BOOKED}
 
 
 @dataclass
@@ -877,31 +959,48 @@ class Seat:
     what carries the hall's shape: columns with no seat in them are aisles, and
     dropping them is what makes a grid look one seat wider on some rows than on
     others. `id` is the number TGV prints on the booking page.
+
+    `status` is the API's own integer and `state` is the same thing normalised to
+    the letters the other scraper uses: 'A' free, 'B' booked, '?' unknown. TGV
+    never marks a seat blocked, so 'D' never appears here.
     """
 
     id: str
     row: int
     column: int
-    status: int = SEAT_FREE
+    status: int = 0
+    number: str | None = None
+    category: int | None = None
+    seat_type: str | None = None
     priority: int = 0
     seat_style: int = 0
     seats_in_group: tuple = ()
 
     @property
+    def state(self) -> str:
+        """Normalised state: 'A' free, 'B' booked, '?' unknown."""
+        return SEAT_STATUS.get(self.status, SEAT_UNKNOWN)
+
+    @property
     def free(self) -> bool:
-        return self.status == SEAT_FREE
+        return self.state == SEAT_FREE
 
     @property
     def booked(self) -> bool:
-        return self.status == SEAT_BOOKED
+        return self.state == SEAT_BOOKED
 
     def to_dict(self) -> dict:
         return {
             "id": self.id,
+            "number": self.number,
             "row": self.row,
             "column": self.column,
             "status": self.status,
+            "state": self.state,
+            "category": self.category,
+            "seat_type": self.seat_type,
             "free": self.free,
+            "booked": self.booked,
         }
 
 
@@ -1156,6 +1255,9 @@ def align_by_number(plan: SeatPlan, shared: bool = True) -> SeatPlan:
                         row=seat.row,
                         column=column,
                         status=seat.status,
+                        number=seat.number,
+                        category=seat.category,
+                        seat_type=seat.seat_type,
                         priority=seat.priority,
                         seat_style=seat.seat_style,
                         seats_in_group=seat.seats_in_group,
@@ -1191,7 +1293,17 @@ def align_by_number(plan: SeatPlan, shared: bool = True) -> SeatPlan:
 
 @dataclass
 class SeatPlan:
-    """The whole hall for one session: every area, and the screen's position."""
+    """The whole hall for one session: every area, and the screen's position.
+
+    The counts come off the grid, which for TGV is the whole grid: every seat in
+    the hall is in the payload with its own state. The other scraper's counts come
+    from the service's own availability block instead, because its grid disagrees
+    with it, and it therefore also reports `seats_blocked`. TGV never marks a seat
+    blocked, so `seats_blocked` is always 0 here.
+
+    `available` is {area code: seats still free in that area}, which is the same
+    idea as the other scraper's seat-category breakdown.
+    """
 
     cinema_id: str | None = None
     session_id: str | None = None
@@ -1200,6 +1312,10 @@ class SeatPlan:
     boundary_right: float = 0.0
     screen_start: float = 0.0
     screen_width: float = 0.0
+    # TGV's seat plan names no hall, so `hall_id` stays None. `hall_name` is set
+    # by `seat_plan()` from the showtime the caller already has.
+    hall_id: str | None = None
+    hall_name: str | None = None
     # How many seats align_by_number had to move. 0 on a plan it did not touch.
     moved_by_alignment: int = 0
     # Areas the hall-wide anchor could not letter without stacking two seats in
@@ -1228,6 +1344,41 @@ class SeatPlan:
         return tuple(s for area in self.areas for s in area.free)
 
     @property
+    def seats(self) -> tuple[Seat, ...]:
+        return tuple(seat for area in self.areas for seat in area.seats)
+
+    @property
+    def seats_total(self) -> int | None:
+        """Seats in the hall. None when the payload listed no grid at all."""
+        counted = [area.seat_count for area in self.areas if area.seat_count]
+        return sum(counted) if counted else None
+
+    @property
+    def seats_booked(self) -> int | None:
+        total = self.seats_total
+        return None if total is None else len(self.booked)
+
+    @property
+    def seats_blocked(self) -> int:
+        """Always 0: TGV has no blocked state to count."""
+        return 0
+
+    @property
+    def available(self) -> dict[str, int]:
+        """{area name: seats still free in that area}, e.g. {'SINGLE': 154}."""
+        return {
+            area.label: len(area.free)
+            for area in self.areas
+            if area.seats
+        }
+
+    @property
+    def seats_left(self) -> int | None:
+        """Seats still sellable in this hall."""
+        counts = [len(area.free) for area in self.areas if area.seats]
+        return sum(counts) if counts else None
+
+    @property
     def hall_rows(self) -> tuple[tuple[SeatArea, SeatRow], ...]:
         """Every row of the hall, screen end first, paired with its area.
 
@@ -1253,6 +1404,13 @@ class SeatPlan:
         return {
             "cinema_id": self.cinema_id,
             "session_id": self.session_id,
+            "hall_id": self.hall_id,
+            "hall_name": self.hall_name,
+            "seats_total": self.seats_total,
+            "seats_left": self.seats_left,
+            "seats_booked": self.seats_booked,
+            "seats_blocked": self.seats_blocked,
+            "available": dict(self.available),
             "areas": [a.to_dict() for a in self.areas],
         }
 
@@ -1269,6 +1427,10 @@ def parse_seat_plan(payload: dict) -> SeatPlan:
     areas: list[SeatArea] = []
 
     for area in layout.get("areas") or []:
+        area_code = clean(area.get("areaCategoryCode"))
+        # 'SINGLE', 'TWIN'... rather than the opaque category code, which is what
+        # a seat's type is worth to a caller.
+        area_label = clean(area.get("description")) or area_code
         rows: list[SeatRow] = []
         for row in area.get("rows") or []:
             seats = tuple(
@@ -1276,7 +1438,11 @@ def parse_seat_plan(payload: dict) -> SeatPlan:
                     id=str(seat.get("id")),
                     row=(seat.get("position") or {}).get("rowIndex", row.get("rowIndexZeroBased")),
                     column=(seat.get("position") or {}).get("columnIndex", 0),
-                    status=seat.get("status", SEAT_FREE),
+                    status=seat.get("status", 0),
+                    # TGV books by the printed seat number, which is the id.
+                    number=str(seat.get("id")),
+                    category=seat.get("seatStyle"),
+                    seat_type=area_label,
                     priority=seat.get("priority", 0),
                     seat_style=seat.get("seatStyle", 0),
                     seats_in_group=tuple(seat.get("seatsInGroup") or ()),
@@ -1295,7 +1461,7 @@ def parse_seat_plan(payload: dict) -> SeatPlan:
         areas.append(
             SeatArea(
                 number=area.get("number", 0),
-                code=clean(area.get("areaCategoryCode")),
+                code=area_code,
                 description=clean(area.get("description")),
                 seat_count=area.get("numberOfSeats", 0),
                 row_count=area.get("rowCount", 0),
@@ -1708,6 +1874,69 @@ def movie(slug_or_title: str, on: str | Date | None = None, seats: bool = False,
     return found
 
 
+def movies(on: str | Date | None = None, cinema_ids: list[str] | None = None,
+           workers: int = 4, **kwargs) -> list[Movie]:
+    """Every film with sessions on a date, one record per film.
+
+    TGV has no catalogue endpoint, so this is the union of the day payloads and
+    costs one request per cinema. That is the one structural difference from the
+    other scraper, whose `movies()` is a single request. Pass `cinema_ids` to
+    keep it to the outlets you care about.
+
+    Unlike `day()`, a film seen in several cinemas is merged into one record
+    rather than repeated, and `cinema_id`/`cinema_name` are cleared because a
+    record spanning the country belongs to no single outlet.
+    """
+    data = schedule(cinema_ids=cinema_ids, on=on, workers=workers, **kwargs)
+    merged: dict[str, Movie] = {}
+    for films in data.values():
+        for film in films:
+            existing = merged.get(film.id)
+            if existing is None:
+                film.cinema_id = None
+                film.cinema_name = None
+                merged[film.id] = film
+                continue
+            for showtime in film.showtimes:
+                if showtime.session_id not in existing.session_ids:
+                    existing.showtimes = (*existing.showtimes, showtime)
+                    existing.session_ids = (*existing.session_ids, showtime.session_id)
+    return sorted(merged.values(), key=lambda m: m.title.casefold())
+
+
+def detail(slug_or_title: str, on: str | Date | None = None,
+           cinema_ids: list[str] | None = None, **kwargs) -> Movie:
+    """One film as a single record: the first of `movie()`'s hits.
+
+    TGV has no detail page separate from the schedule, so everything a record
+    holds arrives on the session payload and this needs no second call. The other
+    scraper's `detail()` reads a page and backfills from its catalogue; the job
+    is the same and the name is the same, but the work behind it is not.
+    """
+    found = movie(slug_or_title, on=on, cinema_ids=cinema_ids, **kwargs)
+    return found[0][1]
+
+
+def cinema_experiences(cinema_id: str, **kwargs) -> dict[str, str]:
+    """{format code: label} for one outlet, from the outlet directory.
+
+    One request. `cinemas(with_details=True)` already carries the same codes on
+    each `Cinema.experiences`, so this is the single-outlet form of that. The
+    other scraper reads the same codes off a day payload instead, because its
+    directory has no formats on it.
+    """
+    throttle = kwargs.pop("throttle", None) or Throttle(kwargs.get("delay", 0.0))
+    timeout = kwargs.get("timeout", 25.0)
+    cid = str(cinema_id).strip().upper()
+    for outlet in cinemas(with_details=True, throttle=throttle, timeout=timeout):
+        if outlet.id == cid:
+            return {
+                code: experience_label(code) or code
+                for code in outlet.experiences
+            }
+    raise SystemExit(f"no cinema with id {cid!r}")
+
+
 def seat_status(cinema_id: str, session_ids: list[str], **kwargs) -> dict:
     """Raw {session id: {seats_total, seats_used, used_percentage}}."""
     throttle = kwargs.pop("throttle", None) or Throttle(kwargs.get("delay", 0.0))
@@ -1763,10 +1992,15 @@ def seat_plan(cinema_id: str, showtime: Showtime | str, **kwargs) -> SeatPlan:
         timeout=kwargs.get("timeout", 25.0),
         throttle=throttle,
     )
-    return parse_seat_plan(_results(body, "seat_plan"))
+    plan = parse_seat_plan(_results(body, "seat_plan"))
+    # The plan payload names no hall, so the showtime the caller already has is
+    # where the hall's name comes from.
+    if not isinstance(showtime, str):
+        plan.hall_name = showtime.hall
+    return plan
 
 
-SEAT_MARKS = {SEAT_FREE: None, SEAT_BOOKED: "X"}
+SEAT_MARKS = {SEAT_FREE: None, SEAT_BOOKED: "X", SEAT_UNKNOWN: "?"}
 
 
 def _seat_cell(seat: Seat | None, width: int) -> str:
@@ -1774,7 +2008,7 @@ def _seat_cell(seat: Seat | None, width: int) -> str:
     when taken. The width is constant so every column lines up down the grid."""
     if seat is None:
         return " " * width
-    mark = SEAT_MARKS.get(seat.status)
+    mark = SEAT_MARKS.get(seat.state)
     return (mark if mark else seat.id).rjust(width)
 
 
@@ -1868,11 +2102,30 @@ def by_region(outlets: list[Cinema], region: str) -> list[Cinema]:
     ]
 
 
+def by_city(outlets: list[Cinema], city: str) -> list[Cinema]:
+    """Narrow an already-fetched cinema list to one town, case-insensitively.
+
+    TGV files an outlet under its region rather than a town, so there is no town
+    to match on and this falls back to the region label. That makes one call work
+    over either site's records: on GSC it finds the town, here the region.
+    """
+    wanted = city.strip().casefold()
+    return [
+        c for c in outlets
+        if wanted in {(c.city or "").casefold(), (c.town or "").casefold()}
+    ]
+
+
+def filter_cinemas(outlets: list[Cinema], where: str) -> list[Cinema]:
+    """Narrow a cinema list by region or town, whichever matches."""
+    return by_region(outlets, where) or by_city(outlets, where)
+
+
 def find_cinema(outlets: list[Cinema], needle: str) -> Cinema:
     """Look one outlet up by id, name or keyword, case-insensitively."""
     key = needle.strip().casefold()
     for c in outlets:
-        if c.id.casefold() == key or (c.keyword or "").casefold() == key:
+        if c.id.casefold() == key or (c.slug or "").casefold() == key:
             return c
     for c in outlets:
         if c.name.casefold() == key:
@@ -1935,7 +2188,7 @@ def show_cinemas(outlets: list[Cinema]) -> None:
         print(f"    {location} | {formats}")
 
 
-def _looks_like_date(value: str | None) -> bool:
+def looks_like_date(value: str | None) -> bool:
     """True when a positional argument is a date rather than a cinema name.
 
     The CLI takes an optional cinema and an optional date for `--movie`, and
@@ -1952,6 +2205,10 @@ def _looks_like_date(value: str | None) -> bool:
     except SystemExit:
         return False
     return True
+
+
+# The name this function had before the shared contract renamed it.
+_looks_like_date = looks_like_date
 
 
 def main() -> None:

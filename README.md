@@ -572,7 +572,7 @@ cd python
 .venv/bin/python -m pytest -m live  # also hits the real sites
 ```
 
-312 offline tests and 44 live ones. The fixtures were captured from the live sources;
+317 offline tests and 44 live ones. The fixtures were captured from the live sources;
 if either site changes shape the offline suite is what fails first, which is
 intentional.
 
