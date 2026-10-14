@@ -46,8 +46,8 @@ cover the same ground and emit the same JSON, with no dependencies and no build
 step. See [TypeScript](#typescript) below.
 
 
-Further details in `docs/tvg_reader.md` and `docs/gsc_reader.md`; specs in `docs/*_spec.md`.
----
+> Further details in `docs/tvg_reader.md` and `docs/gsc_reader.md`; specs in `docs/*_spec.md`.
+
 
 # certifi
 
