@@ -7,10 +7,10 @@ for licensing.
 | Tool | Source | Python | TypeScript |
 | --- | --- | :-: | :-: |
 | `gsc_scraper` | server-rendered HTML + booking service | ✅ | ✅ |
-| TGV Cinemas `tgv_scraper` | TGV JSON API | ✅ | ✅ |
+| `tgv_scraper` | TGV JSON API | ✅ | ✅ |
 | `gr_scraper` | shelf RSS feed | ✅ | ✅ |
 | `mu_scrapper` | public gql2 endpoint | ✅ | ✅ |
-| YouTube `yt_rss` | channel RSS feed | ✅ | ✅ |
+| `yt_rss` | channel RSS feed | ✅ | ✅ |
 
 Every platform is implemented in every language, and **the two implementations
 are interchangeable**: same source, same CLI flags, same output. The parsers
@@ -20,8 +20,7 @@ either one. The differences are the ones the language forces:
 | | Python | TypeScript |
 | --- | --- | --- |
 | Run it | `python gsc_scraper.py` | `node gsc_scraper.ts` |
-| Needs | 3.9+, `requests` for Goodreads and Meetup | Node 22.6+, nothing to install |
-| Build step | none | none, types are stripped at load |
+| Runtimes | Python 3.9+ | Node 22.6+ |
 | Network calls | synchronous | a Promise, so `await` every call |
 | Field names | `showtime.session_id` | `showtime.sessionId` |
 | JSON output | `to_dict()` | `toDict()` |
