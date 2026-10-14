@@ -59,6 +59,10 @@ const UA =
 // Malaysia wall clock. No DST, so a fixed offset is exact.
 const MYT_OFFSET_MS = 8 * 60 * 60 * 1000;
 
+// The other scraper in this repo treats these as "no value", so this one does
+// too. TGV's own payloads never carry them.
+const PLACEHOLDERS = new Set(['N/A', 'NA', '-', 'TBC', 'TBA']);
+
 export const ENDPOINTS = {
   cinemas: '/api/cinemas/v1/getcinemas',
   regions: '/api/cinemas/v1/getstatecinema',
@@ -310,11 +314,28 @@ export function experienceLabel(code: string | null | undefined): string | null 
   return titled || null;
 }
 
-/** Strip whitespace and turn empty strings into null. */
+/**
+ * Strip whitespace, turn empty strings into null, drop placeholder text.
+ *
+ * The two scrapers share this so a caller can run the same code over either
+ * one's output. TGV's own payloads never carry placeholders, so the extra rule
+ * costs nothing here, and it keeps `N/A` and friends from reaching a caller
+ * that would otherwise have to handle both.
+ */
 export function clean(value: unknown): string | null {
   if (value === null || value === undefined) return null;
   const text = String(value).trim();
-  return text || null;
+  if (!text || PLACEHOLDERS.has(text.toUpperCase())) return null;
+  return text;
+}
+
+/** 'ENG,BM,CHI' -> ['ENG', 'BM', 'CHI']. Empty when there is nothing. */
+export function splitCodes(value: string | null | undefined): string[] {
+  if (!value) return [];
+  return value
+    .split(',')
+    .map((part) => clean(part))
+    .filter((part): part is string => Boolean(part));
 }
 
 /** TGV stores synopsis as HTML. Collapse it to plain text. */
@@ -610,9 +631,16 @@ function results<T>(body: Envelope<T>, path: string): T {
 export class Cinema {
   id: string;
   name: string;
-  keyword: string | null;
+  /**
+   * The URL segment, and the outlet's own keyword. The Python scraper spells
+   * this `slug` so both read one contract, and `keyword` is kept here as an
+   * alias so existing callers keep working.
+   */
+  slug: string | null;
+  city: string | null;
   location: string | null; // region key, e.g. "klangvalley"
   region: string | null; // region label, e.g. "Klang Valley"
+  state: string | null;
   address: string | null;
   postcode: string | null;
   latitude: string | null;
@@ -628,9 +656,11 @@ export class Cinema {
   constructor(fields: {
     id: string;
     name: string;
-    keyword?: string | null;
+    slug?: string | null;
+    city?: string | null;
     location?: string | null;
     region?: string | null;
+    state?: string | null;
     address?: string | null;
     postcode?: string | null;
     latitude?: string | null;
@@ -645,9 +675,11 @@ export class Cinema {
   }) {
     this.id = fields.id;
     this.name = fields.name;
-    this.keyword = fields.keyword ?? null;
+    this.slug = fields.slug ?? null;
+    this.city = fields.city ?? null;
     this.location = fields.location ?? null;
     this.region = fields.region ?? null;
+    this.state = fields.state ?? null;
     this.address = fields.address ?? null;
     this.postcode = fields.postcode ?? null;
     this.latitude = fields.latitude ?? null;
@@ -661,8 +693,14 @@ export class Cinema {
     this.status = fields.status ?? 1;
   }
 
+  /** Alias of `slug`, the name this field had before the two scrapers were
+   * brought onto one contract. */
+  get keyword(): string | null {
+    return this.slug;
+  }
+
   get url(): string {
-    if (this.location && this.keyword) return `${SITE}/cinemas/${this.location}/${this.keyword}`;
+    if (this.location && this.slug) return `${SITE}/cinemas/${this.location}/${this.slug}`;
     return `${SITE}/cinemas`;
   }
 
@@ -670,9 +708,12 @@ export class Cinema {
     return {
       id: this.id,
       name: this.name,
+      slug: this.slug,
       url: this.url,
+      city: this.city,
       location: this.location,
       region: this.region,
+      state: this.state,
       address: this.address,
       postcode: this.postcode,
       latitude: this.latitude,
@@ -778,6 +819,11 @@ export class Showtime {
   status: number;
   seatsTotal: number | null;
   seatsUsed: number | null;
+  /**
+   * TGV prices per hall area and does not send the hall's own id, so this stays
+   * null here. The other scraper fills it in.
+   */
+  hallId: string | null;
   /** Needed to ask for prices; TGV prices tickets per hall area. */
   areaCodes: string[];
   /** The movie's runtime in minutes, set by the caller so `ends` works. */
@@ -797,6 +843,7 @@ export class Showtime {
     status?: number;
     seatsTotal?: number | null;
     seatsUsed?: number | null;
+    hallId?: string | null;
     areaCodes?: string[];
     runtime?: number | null;
     ticketTypes?: TicketType[];
@@ -812,6 +859,7 @@ export class Showtime {
     this.status = fields.status ?? 1;
     this.seatsTotal = fields.seatsTotal ?? null;
     this.seatsUsed = fields.seatsUsed ?? null;
+    this.hallId = fields.hallId ?? null;
     this.areaCodes = fields.areaCodes ?? [];
     this.runtime = fields.runtime ?? null;
     this.ticketTypes = fields.ticketTypes ?? [];
@@ -927,9 +975,11 @@ export class Showtime {
       session_id: this.sessionId,
       movie_id: this.movieId,
       cinema_id: this.cinemaId,
+      hall_id: this.hallId,
       date: this.businessDate,
       start: this.start ? this.start.toISOString() : null,
       time: this.time,
+      ends: this.ends ? this.ends.toISOString() : null,
       hall: this.hall,
       experience: this.experience,
       experience_name: this.experienceName,
@@ -937,6 +987,7 @@ export class Showtime {
       seats_total: this.seatsTotal,
       seats_used: this.seatsUsed,
       seats_left: this.seatsLeft,
+      sold_out: this.soldOut,
       status: this.status,
       price: this.price,
       price_range: this.priceRange,
@@ -960,7 +1011,11 @@ export class Movie {
   subtitles: string[];
   synopsis: string | null;
   director: string | null;
-  cast: string | null;
+  /**
+   * Names as a list. TGV stores the cast as one comma-joined string, so it is
+   * split here rather than left for every caller to split again.
+   */
+  cast: string[];
   distributor: string | null;
   releaseDate: string | null;
   trailerUrl: string | null;
@@ -971,6 +1026,11 @@ export class Movie {
   showtimes: Showtime[];
   cinemaId: string | null;
   cinemaName: string | null;
+  // Fields the other scraper fills in and TGV has nothing for. They stay in
+  // the shared output so a consumer reads one shape from either source.
+  duration: string | null;
+  bookingUrl: string | null;
+  bookingId: number | null;
 
   constructor(fields: {
     id: string;
@@ -984,7 +1044,7 @@ export class Movie {
     subtitles?: string[];
     synopsis?: string | null;
     director?: string | null;
-    cast?: string | null;
+    cast?: string[] | string | null;
     distributor?: string | null;
     releaseDate?: string | null;
     trailerUrl?: string | null;
@@ -995,6 +1055,9 @@ export class Movie {
     showtimes?: Showtime[];
     cinemaId?: string | null;
     cinemaName?: string | null;
+    duration?: string | null;
+    bookingUrl?: string | null;
+    bookingId?: number | null;
   }) {
     this.id = fields.id;
     this.title = fields.title;
@@ -1007,7 +1070,9 @@ export class Movie {
     this.subtitles = fields.subtitles ?? [];
     this.synopsis = fields.synopsis ?? null;
     this.director = fields.director ?? null;
-    this.cast = fields.cast ?? null;
+    // A raw string is still accepted, so a caller building a Movie by hand does
+    // not have to split it first.
+    this.cast = Array.isArray(fields.cast) ? [...fields.cast] : splitCodes(fields.cast);
     this.distributor = fields.distributor ?? null;
     this.releaseDate = fields.releaseDate ?? null;
     this.trailerUrl = fields.trailerUrl ?? null;
@@ -1018,10 +1083,18 @@ export class Movie {
     this.showtimes = fields.showtimes ?? [];
     this.cinemaId = fields.cinemaId ?? null;
     this.cinemaName = fields.cinemaName ?? null;
+    this.duration = fields.duration ?? null;
+    this.bookingUrl = fields.bookingUrl ?? null;
+    this.bookingId = fields.bookingId ?? null;
   }
 
   get url(): string {
     return this.slug ? `${SITE}/movies/details/${this.slug}` : SITE;
+  }
+
+  /** Audio codes as a list, split from the raw `language` string. */
+  get languages(): string[] {
+    return splitCodes(this.language);
   }
 
   /** YouTube id from whatever trailer URL shape TGV stored. */
@@ -1045,11 +1118,13 @@ export class Movie {
       tags: [...this.tags],
       rating: this.rating,
       runtime: this.runtime,
+      duration: this.duration,
       language: this.language,
+      languages: [...this.languages],
       subtitles: [...this.subtitles],
       synopsis: this.synopsis,
       director: this.director,
-      cast: this.cast,
+      cast: [...this.cast],
       distributor: this.distributor,
       release_date: this.releaseDate,
       trailer_url: this.trailerUrl,
@@ -1060,6 +1135,8 @@ export class Movie {
       session_ids: [...this.sessionIds],
       cinema_id: this.cinemaId,
       cinema_name: this.cinemaName,
+      booking_url: this.bookingUrl,
+      booking_id: this.bookingId,
       showtimes: this.showtimes.map((s) => s.toDict()),
     };
   }
@@ -1106,7 +1183,7 @@ export function parseCinemas(
       new Cinema({
         id: cid,
         name,
-        keyword: clean(info.keyword),
+        slug: clean(info.keyword),
         location,
         region: location ? (labels[location] ?? null) : null,
         address: clean(info.address),
@@ -1250,9 +1327,12 @@ export interface SeatCounts {
 
 // The API reports a seat's state as a bare integer. These are the values seen in
 // the wild; anything else is rendered as `?` rather than guessed at, because a
-// mislabelled seat is worse than an unreadable one.
+// mislabelled seat is worse than an unreadable one. `state` normalises them to
+// the same letters the other scraper uses, so one renderer reads both.
 export const SEAT_FREE = 0;
 export const SEAT_BOOKED = 1;
+export const SEAT_STATE: Record<number, string> = { [SEAT_FREE]: 'A', [SEAT_BOOKED]: 'B' };
+export const SEAT_UNKNOWN = '?';
 
 export class Seat {
   /**
@@ -1289,21 +1369,36 @@ export class Seat {
     this.seatsInGroup = fields.seatsInGroup ?? [];
   }
 
+  /** The seat's printed number, or null when the id is not numeric. */
+  get number(): string | null {
+    return seatNumberStr(this);
+  }
+
+  /** Normalised state: 'A' free, 'B' booked, '?' unknown. */
+  get state(): string {
+    return SEAT_STATE[this.status] ?? SEAT_UNKNOWN;
+  }
+
   get free(): boolean {
-    return this.status === SEAT_FREE;
+    return this.state === 'A';
   }
 
   get booked(): boolean {
-    return this.status === SEAT_BOOKED;
+    return this.state === 'B';
   }
 
   toDict(): Record<string, unknown> {
     return {
       id: this.id,
+      number: this.number,
       row: this.row,
       column: this.column,
       status: this.status,
+      state: this.state,
+      category: this.seatStyle,
+      seat_type: null,
       free: this.free,
+      booked: this.booked,
     };
   }
 }
@@ -1411,6 +1506,9 @@ export class SeatPlan {
   /** The whole hall for one session: every area, and the screen's position. */
   cinemaId: string | null;
   sessionId: string | null;
+  /** TGV does not send the hall's own id, so this stays null. */
+  hallId: string | null;
+  hallName: string | null;
   areas: SeatArea[];
   boundaryLeft: number;
   boundaryRight: number;
@@ -1422,6 +1520,8 @@ export class SeatPlan {
   constructor(fields: {
     cinemaId?: string | null;
     sessionId?: string | null;
+    hallId?: string | null;
+    hallName?: string | null;
     areas?: SeatArea[];
     boundaryLeft?: number;
     boundaryRight?: number;
@@ -1431,6 +1531,8 @@ export class SeatPlan {
   }) {
     this.cinemaId = fields.cinemaId ?? null;
     this.sessionId = fields.sessionId ?? null;
+    this.hallId = fields.hallId ?? null;
+    this.hallName = fields.hallName ?? null;
     this.areas = fields.areas ?? [];
     this.boundaryLeft = fields.boundaryLeft ?? 0;
     this.boundaryRight = fields.boundaryRight ?? 0;
@@ -1475,6 +1577,45 @@ export class SeatPlan {
    * where the low indices put them. Ordering by the raw index instead draws the
    * hall upside down.
    */
+  get free(): Seat[] {
+    return this.areas.flatMap((a) => a.free);
+  }
+
+  get booked(): Seat[] {
+    return this.areas.flatMap((a) => a.booked);
+  }
+
+  get seats(): Seat[] {
+    return this.areas.flatMap((a) => a.seats);
+  }
+
+  get seatsTotal(): number | null {
+    return this.seats.length || null;
+  }
+
+  get seatsLeft(): number | null {
+    return this.free.length || null;
+  }
+
+  get seatsBooked(): number | null {
+    return this.booked.length || null;
+  }
+
+  /** TGV does not mark seats as blocked, only free or booked. */
+  get seatsBlocked(): number | null {
+    return null;
+  }
+
+  /** TGV sends no per-category availability block. */
+  get available(): Record<string, number> {
+    return {};
+  }
+
+  /** TGV sends no seat category table. */
+  get categories(): Record<string, { name: string | null; seatsTaken: number }> {
+    return {};
+  }
+
   get hallRows(): [SeatArea, SeatRow][] {
     const rows = this.areas.flatMap((area) => area.occupiedRows.map((row) => [area, row] as [SeatArea, SeatRow]));
     rows.sort((a, b) => b[1].index - a[1].index);
@@ -1485,6 +1626,13 @@ export class SeatPlan {
     return {
       cinema_id: this.cinemaId,
       session_id: this.sessionId,
+      hall_id: this.hallId,
+      hall_name: this.hallName,
+      seats_total: this.seatsTotal,
+      seats_left: this.seatsLeft,
+      seats_booked: this.seatsBooked,
+      seats_blocked: this.seatsBlocked,
+      available: this.available,
       areas: this.areas.map((a) => a.toDict()),
     };
   }
@@ -1494,6 +1642,17 @@ export class SeatPlan {
 export function seatNumber(seat: Seat): number | null {
   const text = String(seat.id).trim();
   return /^\d+$/.test(text) ? Number(text) : null;
+}
+
+/**
+ * `seatNumber` as the printed string, or null.
+ *
+ * The other scraper's seats carry the printed label as a string already, so
+ * both expose it under one name and one type.
+ */
+export function seatNumberStr(seat: Seat): string | null {
+  const number = seatNumber(seat);
+  return number === null ? null : String(number);
 }
 
 /**
@@ -2031,6 +2190,79 @@ export async function schedule(
   );
 }
 
+/**
+ * Every film with sessions on a date, one record per film.
+ *
+ * The API has no catalogue endpoint: it only reports films through the sessions
+ * they have. So this is the union of one date's schedules, which costs one
+ * request per cinema, and unlike `day()` it merges a film seen in several
+ * cinemas into one record with every session on it.
+ *
+ * Pass `cinemaIds` to narrow the sweep.
+ */
+export async function movies(
+  on: string | Date | null = null,
+  cinemaIds: string[] | null = null,
+  options: NetOptions = {}
+): Promise<Movie[]> {
+  const everything = await schedule(cinemaIds, on, options);
+  const merged = new Map<string, Movie>();
+  for (const films of Object.values(everything)) {
+    for (const film of films) {
+      const existing = merged.get(film.id);
+      if (!existing) {
+        // Keep one record per film, but remember it is a national run.
+        film.cinemaId = null;
+        film.cinemaName = null;
+        merged.set(film.id, film);
+        continue;
+      }
+      existing.showtimes = [...existing.showtimes, ...film.showtimes].sort(showtimeOrder);
+      existing.experiences = [...new Set([...existing.experiences, ...film.experiences])];
+    }
+  }
+  const out = [...merged.values()];
+  for (const film of out) {
+    film.sessionIds = film.showtimes.map((s) => s.sessionId).filter(Boolean);
+  }
+  out.sort((a, b) => a.title.toLowerCase().localeCompare(b.title.toLowerCase()));
+  return out;
+}
+
+/**
+ * One film, as a single record.
+ *
+ * TGV has no detail page separate from the schedule, so this is the film
+ * `movie()` finds first, with its sessions and every field the API carries.
+ * The other scraper needs a second call here because its service has no
+ * synopsis, director or cast; TGV has all of them in the session payload.
+ */
+export async function detail(
+  slugOrTitle: string,
+  on: string | Date | null = null,
+  options: NetOptions = {}
+): Promise<Movie> {
+  const found = await movie(slugOrTitle, on, options);
+  if (!found.length) {
+    throw new TgvError(`no sessions for ${slugOrTitle} on ${normaliseDate(on)}`);
+  }
+  return found[0][1];
+}
+
+/**
+ * The hall formats one cinema offers, from the outlet directory.
+ *
+ * TGV publishes these on the cinema record itself, so this is one request for
+ * the directory. The other scraper has to read them off a day payload.
+ */
+export async function cinemaExperiences(
+  cinemaId: string,
+  options: NetOptions = {}
+): Promise<string[]> {
+  const outlets = await cinemas(options);
+  return findCinema(outlets, cinemaId).experiences;
+}
+
 export interface MovieHit {
   cinemaId: string;
   movie: Movie;
@@ -2273,11 +2505,35 @@ export function byRegion(outlets: Cinema[], region: string): Cinema[] {
   );
 }
 
-/** Look one outlet up by id, name or keyword, case-insensitively. */
+/**
+ * Narrow an already-fetched cinema list to one town.
+ *
+ * TGV files every outlet under a sales region rather than a town, so this
+ * matches on the town's own name where one is set and otherwise on the town
+ * part of the outlet name, e.g. "Kuala Lumpur" for "Kuala Lumpur - 1 Utama".
+ */
+export function byCity(outlets: Cinema[], city: string): Cinema[] {
+  const wanted = city.trim().toLowerCase();
+  return outlets.filter((c) => wanted === (c.city || '').toLowerCase() || wanted === townOf(c));
+}
+
+/** The town part of an outlet name, e.g. "Kuala Lumpur". */
+export function townOf(outlet: Cinema): string {
+  const cut = outlet.name.indexOf(' - ');
+  return cut === -1 ? '' : outlet.name.slice(0, cut).trim().toLowerCase();
+}
+
+/** Narrow an outlet list by region or town, whichever matches. */
+export function filterCinemas(outlets: Cinema[], where: string): Cinema[] {
+  const byRegionMatch = byRegion(outlets, where);
+  return byRegionMatch.length ? byRegionMatch : byCity(outlets, where);
+}
+
+/** Look one outlet up by id, slug or name, case-insensitively. */
 export function findCinema(outlets: Cinema[], needle: string): Cinema {
   const key = needle.trim().toLowerCase();
   for (const c of outlets) {
-    if (c.id.toLowerCase() === key || (c.keyword || '').toLowerCase() === key) return c;
+    if (c.id.toLowerCase() === key || (c.slug || '').toLowerCase() === key) return c;
   }
   for (const c of outlets) {
     if (c.name.toLowerCase() === key) return c;
