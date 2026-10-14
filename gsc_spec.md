@@ -335,4 +335,5 @@ Both scrapers in this repo expose the same function names and emit the same
 JSON keys, so one consumer reads either site's output. `gsc_spec.md` and
 `tgv_spec.md` describe the shared surface once each, with the differences
 listed where they occur. The Python offline suite pins the key sets, and the
-TypeScript port was checked against the same six sets.
+TypeScript ports under `typescript/` emit the same six sets and produce
+byte-identical records from the same saved bodies.

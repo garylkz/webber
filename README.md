@@ -8,10 +8,14 @@ see [LICENSE](LICENSE).
 | --- | --- | --- | --- |
 | `python/gsc_scraper.py` | [GSC Cinemas](https://www.gsc.com.my) | server-rendered HTML **and** GSC's booking service | stdlib |
 | `python/tgv_scraper.py` | [TGV Cinemas](https://www.tgv.com.my) | TGV's own JSON API | stdlib |
-| `typescript/tgv_scraper.ts` | [TGV Cinemas](https://www.tgv.com.my) | TGV's own JSON API | `typescript`, type check only |
 | `python/gr_scraper.py` | [Goodreads](https://goodreads.com) | the public shelf RSS endpoint | `requests` |
 | `python/mu_scrapper.py` | [Meetup](https://www.meetup.com) | the public `gql2` frontend endpoint | `requests` |
 | `python/yt_rss.py` | [YouTube](https://youtube.com) | the channel RSS feed | stdlib |
+| `typescript/gsc_scraper.ts` | GSC Cinemas | same as the Python one | Node 22.6+ |
+| `typescript/tgv_scraper.ts` | TGV Cinemas | same as the Python one | Node 22.6+ |
+| `typescript/gr_scraper.ts` | Goodreads | same as the Python one | Node 22.6+ |
+| `typescript/mu_scrapper.ts` | Meetup | same as the Python one | Node 22.6+ |
+| `typescript/yt_rss.ts` | YouTube | same as the Python one | Node 22.6+ |
 
 The two cinema chains are undocumented and take **no API key, no signature and no
 session token**. GSC's is an ASP.NET service at `epaymentapi.gsc.com.my` that speaks
@@ -19,9 +23,12 @@ XML; TGV's is a JSON API at `api.tgv.com.my`. Both are called the way a browser
 calls them, anonymously.
 
 The two cinema scrapers are single-file and dependency-free — standard library
-only, nothing to install. `tgv_scraper.ts` is a TypeScript port of the TGV script
-covering the same ground. The Goodreads and Meetup scrapers came in from upstream
+only, nothing to install. The Goodreads and Meetup scrapers came in from upstream
 and still use `requests`; `yt_rss.py` is standard library only.
+
+**Every one of these has a TypeScript port under `typescript/`.** The ports
+cover the same ground and emit the same JSON, with no dependencies and no build
+step. See [TypeScript](#typescript) below.
 
 ## The other three
 
@@ -263,9 +270,9 @@ delay with `--no-delay` only if you have a reason to.
 
 ## TypeScript
 
-`typescript/tgv_scraper.ts` is a port of the above: same API, same CLI flags. It
-runs directly on Node 22.6+ — types are stripped at load, so there is no build step
-and no dependencies.
+Every Python script has a TypeScript port under `typescript/`, same CLI flags and
+same output. They run directly on Node 22.6+ — types are stripped at load, so
+there is no build step and no dependencies.
 
 ```bash
 cd typescript
@@ -274,6 +281,13 @@ node tgv_scraper.ts BU0 --seats              # one cinema, seats left
 node tgv_scraper.ts BU0 --seat-map --time 13:30
 node tgv_scraper.ts --prices --per-person
 node tgv_scraper.ts --json --movie other-mommy
+
+node gsc_scraper.ts 235 2026-10-14 --prices   # the GSC equivalent
+node gsc_scraper.ts --movie digger
+
+node gr_scraper.ts 1123497 to-read             # Goodreads
+node mu_scrapper.ts --query python             # Meetup
+node yt_rss.ts "https://youtube.com/@handle"   # YouTube RSS
 ```
 
 Imported, every network call is a promise:
@@ -286,19 +300,27 @@ const late = films.flatMap((f) => f.showtimes).find((s) => s.time === '21:45');
 (await sessionPrices(late)).price;
 ```
 
-**It emits the same JSON keys as the Python scripts**, all six record types,
-which is checked against them rather than asserted by hand. It has **no test
-suite of its own yet**. Its parsers are pure functions over saved JSON, and the
-fixtures under `python/tests/fixtures/` are the natural starting point.
+**The ports emit the same JSON keys as the Python scripts**, all six record
+types, and the parsers produce byte-identical output from the same saved bodies.
+They have **no test suite of their own yet**; their parsers are pure functions
+over the fixtures under `python/tests/fixtures/`, which is where a suite would
+start.
+
+Two notes on the ports. The two cinema scrapers are async where Python is sync,
+so every network call returns a Promise, and the field names are camelCase
+(`showtime.sessionId`, not `session_id`) while `toDict()` emits the snake_case
+keys the contract pins. `gsc_scraper.ts` carries a small XML parser, because Node
+has none built in and GSC's booking service speaks XML.
 
 Optional type check, no build output, needs `typescript` installed:
 
 ```bash
 cd typescript
-npx tsc --noEmit tgv_scraper.ts
+npx tsc --noEmit *.ts
 ```
 
-Function-by-function behaviour is in [`tgv_spec.md`](tgv_spec.md).
+Function-by-function behaviour is in [`tgv_spec.md`](tgv_spec.md) and
+[`gsc_spec.md`](gsc_spec.md).
 
 ---
 
@@ -561,8 +583,8 @@ pip install certifi
 They pick up `certifi`'s bundle automatically when it is importable. That is the only
 situation where you need it, and it is not a hard requirement. `gr_scraper.py` and
 `mu_scrapper.py` need `requests`, which bundles its own CA store, so they are
-unaffected. The TypeScript implementation has no such issue: TLS trust comes from
-the runtime.
+unaffected. The TypeScript implementations have no such issue: TLS trust comes
+from the Node runtime.
 
 # Tests
 
@@ -582,10 +604,11 @@ key sets** so a field added to one and not the other fails the build. It also
 asserts the one-sided functions, with the reason, so nobody "fixes" a deliberate
 asymmetry by accident.
 
-The TypeScript implementation has no test suite yet. Its parsers are pure functions
-over saved JSON, mirroring the Python ones, so the fixtures under `python/tests/fixtures/`
-are the natural starting point. Its output keys have been checked against the
-Python ones for all six record types.
+The TypeScript implementations have no test suite yet. Their parsers are pure
+functions over the fixtures under `python/tests/fixtures/`, mirroring the Python
+ones, so those fixtures are the natural starting point. Their output has been
+checked against the Python ones for all six record types and is byte-identical
+from the same saved bodies.
 
 If the live run fails with a TLS error, run it with a Python that has `certifi` (see
 above), e.g. `python3 -m pytest -m live` instead of the venv one.
