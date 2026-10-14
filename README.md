@@ -1,23 +1,51 @@
-# webber
+# webber-parity
 
-Cinema scrapers for Malaysia. MIT licensed — see [LICENSE](LICENSE).
+Scrapers for public sites that need no account: two Malaysian cinema chains
+built to be interchangeable, plus three unrelated scrapers merged in from
+`garylkz/Webber`. MIT licensed — see [LICENSE](LICENSE).
 
-| Implementation | Site | Source |
-| --- | --- | --- |
-| `python/gsc_scraper.py` | [GSC Cinemas](https://www.gsc.com.my) | server-rendered HTML **and** GSC's booking service |
-| `python/tgv_scraper.py` | [TGV Cinemas](https://www.tgv.com.my) | TGV's own JSON API |
-| `typescript/tgv_scraper.ts` | [TGV Cinemas](https://www.tgv.com.my) | TGV's own JSON API |
+| Implementation | Site | Source | Needs |
+| --- | --- | --- | --- |
+| `python/gsc_scraper.py` | [GSC Cinemas](https://www.gsc.com.my) | server-rendered HTML **and** GSC's booking service | stdlib |
+| `python/tgv_scraper.py` | [TGV Cinemas](https://www.tgv.com.my) | TGV's own JSON API | stdlib |
+| `typescript/tgv_scraper.ts` | [TGV Cinemas](https://www.tgv.com.my) | TGV's own JSON API | `typescript`, type check only |
+| `python/gr_scraper.py` | [Goodreads](https://goodreads.com) | the public shelf RSS endpoint | `requests` |
+| `python/mu_scrapper.py` | [Meetup](https://www.meetup.com) | the public `gql2` frontend endpoint | `requests` |
+| `python/yt_rss.py` | [YouTube](https://youtube.com) | the channel RSS feed | stdlib |
 
-Both chains are undocumented and take **no API key, no signature and no session
-token**. GSC's is an ASP.NET service at `epaymentapi.gsc.com.my` that speaks
+The two cinema chains are undocumented and take **no API key, no signature and no
+session token**. GSC's is an ASP.NET service at `epaymentapi.gsc.com.my` that speaks
 XML; TGV's is a JSON API at `api.tgv.com.my`. Both are called the way a browser
 calls them, anonymously.
 
-The Python scripts are single-file and dependency-free — standard library only,
-nothing to install. `tgv_scraper.ts` is a TypeScript port of the TGV script
-covering the same ground.
+The two cinema scrapers are single-file and dependency-free — standard library
+only, nothing to install. `tgv_scraper.ts` is a TypeScript port of the TGV script
+covering the same ground. The Goodreads and Meetup scrapers came in from upstream
+and still use `requests`; `yt_rss.py` is standard library only.
 
-**The two scrapers are built to be interchangeable.** They expose the same
+## The other three
+
+These are separate tools, not part of the parity contract above. Each one is a
+single file with its own docstring and its own arguments.
+
+```bash
+cd python
+
+# Goodreads: a user's shelf through the RSS endpoint Goodreads left public.
+python gr_scraper.py                                  # default user's read shelf
+python gr_scraper.py search <name>                    # look up a user id first
+python gr_scraper.py 12345678 to-read                 # a user id and a shelf
+
+# Meetup: events from the unauthenticated frontend GraphQL endpoint.
+python mu_scrapper.py                                 # nearby events near KL
+python mu_scrapper.py --query python --radius 10
+python mu_scrapper.py --country sg --city "Singapore" --dump
+
+# YouTube: a channel URL to its official RSS feed.
+python yt_rss.py "https://youtube.com/@handle"
+```
+
+**The two cinema scrapers are built to be interchangeable.** They expose the same
 function names and emit the same JSON keys for every record, so one consumer
 reads either site's output. [`tgv_spec.md`](tgv_spec.md) and
 [`gsc_spec.md`](gsc_spec.md) each open with the shared contract and list what
@@ -521,17 +549,20 @@ Function-by-function behaviour is in [`gsc_spec.md`](gsc_spec.md).
 
 # certifi
 
-Both Python scripts work with no dependencies *provided your Python has a CA store*.
-Some installs (Homebrew Python on macOS, slim containers) ship without one, and every
-HTTPS call then fails with `CERTIFICATE_VERIFY_FAILED`. If you hit that:
+The four dependency-free Python scripts work with nothing installed *provided your
+Python has a CA store*. Some installs (Homebrew Python on macOS, slim containers)
+ship without one, and every HTTPS call then fails with `CERTIFICATE_VERIFY_FAILED`.
+If you hit that:
 
 ```bash
 pip install certifi
 ```
 
-Both pick up `certifi`'s bundle automatically when it is importable. That is the only
-situation where you need it, and it is not a hard requirement. The TypeScript
-implementation has no such issue: TLS trust comes from the runtime.
+They pick up `certifi`'s bundle automatically when it is importable. That is the only
+situation where you need it, and it is not a hard requirement. `gr_scraper.py` and
+`mu_scrapper.py` need `requests`, which bundles its own CA store, so they are
+unaffected. The TypeScript implementation has no such issue: TLS trust comes from
+the runtime.
 
 # Tests
 
