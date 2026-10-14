@@ -1,8 +1,8 @@
-# webber-parity
+# webber
 
 Scrapers for public sites that need no account: two Malaysian cinema chains
-built to be interchangeable, plus three unrelated scrapers merged in from
-`garylkz/Webber`. MIT licensed — see [LICENSE](LICENSE).
+built to be interchangeable, plus three unrelated scrapers. MIT licensed —
+see [LICENSE](LICENSE).
 
 | Implementation | Site | Source | Needs |
 | --- | --- | --- | --- |
