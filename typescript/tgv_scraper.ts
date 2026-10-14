@@ -186,12 +186,14 @@ interface MovieRecord {
   recid?: string;
   name?: string;
   itemkey?: string;
+  // `assets` is a sibling of `extdata`, not a child of it. Reading it from the
+  // wrong place silently yields no poster on every film.
+  assets?: { assetkey?: string; extdata?: { fileinfo?: { filepath?: string } } }[];
   extdata?: {
     folderkey?: string;
     tags?: unknown;
     exp?: unknown;
     movieinfo?: MovieInfo;
-    assets?: { assetkey?: string; extdata?: { fileinfo?: { filepath?: string } } }[];
   };
 }
 
@@ -391,6 +393,24 @@ export function mytMidnight(dateText: string): Date {
 }
 
 const todayMyt = (): string => mytDateString(new Date());
+
+/**
+ * A Date -> 'YYYY-MM-DDTHH:MM:SS+08:00', the shape a Malaysia-aware datetime
+ * serialises to.
+ *
+ * `toISOString()` would give the same instant as a `Z`, but the offset is what a
+ * reader of this scraper's output expects to see, and it is what the Python side
+ * writes, so the two stay comparable.
+ */
+function isoMyt(date: Date | null): string | null {
+  if (!date) return null;
+  const myt = new Date(date.getTime() + MYT_OFFSET_MS);
+  const p = (n: number) => String(n).padStart(2, '0');
+  return (
+    `${myt.getUTCFullYear()}-${p(myt.getUTCMonth() + 1)}-${p(myt.getUTCDate())}` +
+    `T${p(myt.getUTCHours())}:${p(myt.getUTCMinutes())}:${p(myt.getUTCSeconds())}+08:00`
+  );
+}
 
 /** Accept 'YYYY-MM-DD', a Date, or nothing. Returns 'YYYY-MM-DD'. */
 export function normaliseDate(value?: string | Date | null): string {
@@ -949,8 +969,12 @@ export class Showtime {
 
   get time(): string | null {
     if (!this.start) return null;
-    return `${String(this.start.getUTCHours()).padStart(2, '0')}:${String(
-      this.start.getUTCMinutes()
+    // Shift into Malaysia wall-clock first. A JS Date is an instant, so
+    // getUTCHours() on a 15:30 MYT showtime reads 07, nine hours behind what the
+    // site lists.
+    const myt = new Date(this.start.getTime() + MYT_OFFSET_MS);
+    return `${String(myt.getUTCHours()).padStart(2, '0')}:${String(
+      myt.getUTCMinutes()
     ).padStart(2, '0')}`;
   }
 
@@ -977,9 +1001,9 @@ export class Showtime {
       cinema_id: this.cinemaId,
       hall_id: this.hallId,
       date: this.businessDate,
-      start: this.start ? this.start.toISOString() : null,
+      start: isoMyt(this.start),
       time: this.time,
-      ends: this.ends ? this.ends.toISOString() : null,
+      ends: isoMyt(this.ends),
       hall: this.hall,
       experience: this.experience,
       experience_name: this.experienceName,
@@ -1148,7 +1172,7 @@ export class Movie {
 
 /** Build a CDN url for one of a movie's named assets (poster, banner...). */
 function assetUrl(movie: MovieRecord, key: string): string | null {
-  for (const asset of movie.extdata?.assets ?? []) {
+  for (const asset of movie.assets ?? []) {
     if (asset.assetkey !== key) continue;
     const path = asset.extdata?.fileinfo?.filepath;
     if (path) return `${CDN}/${String(path).replace(/^\/+/, '')}`;
@@ -1350,6 +1374,12 @@ export class Seat {
   priority: number;
   seatStyle: number;
   seatsInGroup: unknown[];
+  /**
+   * The hall area this seat is in, as its name: 'SINGLE', 'TWIN'. TGV prices
+   * per area and never sends the seat's own category, so the area is the closest
+   * thing to the type the other scraper reports.
+   */
+  seatType: string | null;
 
   constructor(fields: {
     id: string;
@@ -1359,6 +1389,7 @@ export class Seat {
     priority?: number;
     seatStyle?: number;
     seatsInGroup?: unknown[];
+    seatType?: string | null;
   }) {
     this.id = fields.id;
     this.row = fields.row;
@@ -1367,6 +1398,7 @@ export class Seat {
     this.priority = fields.priority ?? 0;
     this.seatStyle = fields.seatStyle ?? 0;
     this.seatsInGroup = fields.seatsInGroup ?? [];
+    this.seatType = fields.seatType ?? null;
   }
 
   /** The seat's printed number, or null when the id is not numeric. */
@@ -1396,7 +1428,7 @@ export class Seat {
       status: this.status,
       state: this.state,
       category: this.seatStyle,
-      seat_type: null,
+      seat_type: this.seatType,
       free: this.free,
       booked: this.booked,
     };
@@ -1589,26 +1621,52 @@ export class SeatPlan {
     return this.areas.flatMap((a) => a.seats);
   }
 
+  /**
+   * Seats in the hall, from the area counts the payload declares.
+   *
+   * The area figure is used rather than counting the grid because the payload
+   * reports `numberOfSeats` per area and the rows are padded: the same count the
+   * other scraper reports as `null` on an empty plan.
+   */
   get seatsTotal(): number | null {
-    return this.seats.length || null;
+    const counted = this.areas.map((a) => a.seatCount).filter((n) => n > 0);
+    return counted.length ? counted.reduce((a, b) => a + b, 0) : null;
   }
 
+  /** Seats still sellable in this hall, counted off the grid. */
   get seatsLeft(): number | null {
-    return this.free.length || null;
+    const counts = this.areas.filter((a) => a.seats.length).map((a) => a.free.length);
+    return counts.length ? counts.reduce((a, b) => a + b, 0) : null;
   }
 
   get seatsBooked(): number | null {
-    return this.booked.length || null;
+    const total = this.seatsTotal;
+    return total === null ? null : this.booked.length;
   }
 
-  /** TGV does not mark seats as blocked, only free or booked. */
-  get seatsBlocked(): number | null {
-    return null;
+  /**
+   * Always 0: TGV has no blocked state to count.
+   *
+   * The other scraper's grid marks seats `D`, so it reports a real figure here;
+   * this stays 0 rather than null so one consumer can add the two up.
+   */
+  get seatsBlocked(): number {
+    return 0;
   }
 
-  /** TGV sends no per-category availability block. */
+  /**
+   * {area name: seats still free in that area}, e.g. `{'SINGLE': 154}`.
+   *
+   * TGV sends no per-category availability block, so this is counted off the grid
+   * rather than read. It is the same idea as the other scraper's seat-category
+   * breakdown.
+   */
   get available(): Record<string, number> {
-    return {};
+    const out: Record<string, number> = {};
+    for (const area of this.areas) {
+      if (area.seats.length) out[area.label] = area.free.length;
+    }
+    return out;
   }
 
   /** TGV sends no seat category table. */
@@ -1723,6 +1781,7 @@ export function alignByNumber(plan: SeatPlan): SeatPlan {
             priority: seat.priority,
             seatStyle: seat.seatStyle,
             seatsInGroup: seat.seatsInGroup,
+            seatType: seat.seatType,
           })
         );
       }
@@ -1767,6 +1826,9 @@ export function parseSeatPlan(payload: SeatPlanResults): SeatPlan {
 
   for (const area of layout.areas ?? []) {
     const rows: SeatRow[] = [];
+    // 'SINGLE', 'TWIN'... rather than the opaque category code, which is what a
+    // seat's type is worth to a caller.
+    const areaLabel = clean(area.description) ?? clean(area.areaCategoryCode);
     for (const row of area.rows ?? []) {
       const seats = (row.seats ?? [])
         .filter((seat) => seat.id !== null && seat.id !== undefined)
@@ -1780,6 +1842,7 @@ export function parseSeatPlan(payload: SeatPlanResults): SeatPlan {
               priority: seat.priority ?? 0,
               seatStyle: seat.seatStyle ?? 0,
               seatsInGroup: seat.seatsInGroup ?? [],
+              seatType: areaLabel,
             })
         );
       rows.push(
@@ -2396,7 +2459,11 @@ export async function seatPlan(
     },
     net
   );
-  return parseSeatPlan(results(body, 'seat_plan'));
+  const plan = parseSeatPlan(results(body, 'seat_plan'));
+  // The plan payload names no hall, so the showtime the caller already has is
+  // where the hall's name comes from.
+  if (!bare) plan.hallName = showtime.hall;
+  return plan;
 }
 
 // ---------------------------------------------------------------------------
@@ -2726,7 +2793,9 @@ function parseArgs(argv: string[]): CliArgs {
       positionals.push(token);
     }
   }
-  [args.cinema, args.date] = positionals;
+  // Destructuring an absent positional gives undefined, not null, and the
+  // `--movie` branch below tests `!== null`, so normalise here.
+  [args.cinema, args.date] = [positionals[0] ?? null, positionals[1] ?? null];
   return args;
 }
 
@@ -2925,7 +2994,9 @@ const entry = process.argv[1];
 const isMain = Boolean(entry) && import.meta.url === `file://${entry}`;
 if (isMain) {
   main().catch((exc: unknown) => {
-    if (exc instanceof KeyboardInterrupt || (exc as Error)?.name === 'AbortError') {
+    // Ctrl-C in Node arrives as SIGINT and is not catchable as an exception, so
+    // the only error worth a bare 130 is an aborted fetch.
+    if ((exc as Error)?.name === 'AbortError') {
       process.exit(130);
     }
     console.error(`error: ${exc instanceof Error ? exc.message : String(exc)}`);
