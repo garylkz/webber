@@ -6,11 +6,10 @@ for licensing.
 
 | Tool | Source | Python | TypeScript |
 | --- | --- | :-: | :-: |
-| GSC Cinemas `gsc_scraper` | server-rendered HTML + booking service | ✅ | ✅ |
+| `gsc_scraper` | server-rendered HTML + booking service | ✅ | ✅ |
 | TGV Cinemas `tgv_scraper` | TGV JSON API | ✅ | ✅ |
-| Goodreads `gr_scraper` | shelf RSS feed | ✅ | ✅ |
-| Meetup `mu_scrapper` | public gql2 endpoint | ✅ | ✅ |
-| YouTube `yt_rss` | channel RSS feed | ✅ | ✅ |
+| `gr_scraper` | shelf RSS feed | ✅ | ✅ |
+| `mu_scrapper` | public gql2 endpoint | ✅ | ✅ |
 | YouTube `yt_rss` | channel RSS feed | ✅ | ✅ |
 
 Every platform is implemented in every language, and **the two implementations
