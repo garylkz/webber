@@ -1,4 +1,4 @@
-# TGV Scraper — Functional Specification
+# TGV Scraper — Specification
 
 Showtimes, ticket prices and seat maps for TGV Cinemas Malaysia, read from
 TGV's own JSON API. This document describes what each function does. Nothing here
@@ -12,7 +12,7 @@ The two scrapers in this repo are deliberately interchangeable: they expose the
 same function names and emit the same JSON keys, so one consumer reads either
 site's output. Where a function does the same job on both sites it is named the
 same and behaves the same. This document covers what is common and what is
-TGV-specific; `gsc_spec.md` covers the other side.
+TGV-specific; [`gsc_spec.md`](gsc_spec.md) covers the other side.
 
 **Named for the same job on both sites:** `movies`, `detail`, `cinemas`,
 `regions`, `business_dates`, `day`, `schedule`, `movie`, `tickets`,
@@ -44,6 +44,15 @@ one of them was wrong:
 
 Everything else in this document is unchanged, and the notes below about TGV's
 own quirks still stand.
+
+---
+
+## Usage
+
+Same CLI and importable interface in both languages as the paired GSC spec.
+A Movie is read through movies() and day(); showtime.time comes back
+with a +08:00 offset; seat_plan() draws a hall; align_by_number() fixes
+the coordinates when they are numbered independently.
 
 ---
 

@@ -1,4 +1,4 @@
-# GSC Scraper — Functional Specification
+# GSC Scraper — Specification
 
 Movies, showtimes, ticket prices and seat maps for GSC Cinemas Malaysia. This
 document describes what each function does. Nothing here is specific to a
@@ -22,6 +22,18 @@ the way a browser calls them. It speaks **XML**, not JSON.
 
 So this scraper reads two sources: the website for the editorial listings and a
 movie's credits, and the booking service for everything a session needs.
+
+---
+
+## Usage
+
+Both languages expose the same CLI and the same importable functions. For the
+cinema pair the commands are identical; substitute `python` / `.py` for `node`
+/ `.ts`: `gsc_scraper` takes `cinema` / `date` / `--movie` / `--seats` /
+`--seat-map` / `--prices`; `tgv_scraper` takes `BU0` / `--cinemas` /
+`--movie` / `--seats`. The specs (`docs/gsc_spec.md`, `docs/tvg_spec.md`)
+describe the behaviour once; this section confirms the language-neutral
+interface exists in both implementations.
 
 ---
 
@@ -332,8 +344,8 @@ different job with different terms.
 ## The shared contract
 
 Both scrapers in this repo expose the same function names and emit the same
-JSON keys, so one consumer reads either site's output. `gsc_spec.md` and
-`tgv_spec.md` describe the shared surface once each, with the differences
-listed where they occur. The Python offline suite pins the key sets, and the
+JSON keys, so one consumer reads either site's output. This document and
+[`tgv_spec.md`](tgv_spec.md) describe the shared surface once each, with the
+differences listed where they occur. The Python offline suite pins the key sets, and the
 TypeScript ports under `typescript/` emit the same six sets and produce
 byte-identical records from the same saved bodies.

@@ -1,64 +1,50 @@
 # webber
 
-Scrapers for public sites that need no account: two Malaysian cinema chains
-built to be interchangeable, plus three unrelated scrapers. MIT licensed —
-see [LICENSE](LICENSE).
+A library of website scrapers swinging on the web: two Malaysian cinema chains
+built to be interchangeable, plus three unrelated scrapers. See [LICENSE](LICENSE)
+for licensing.
 
-| Implementation | Site | Source | Needs |
-| --- | --- | --- | --- |
-| `python/gsc_scraper.py` | [GSC Cinemas](https://www.gsc.com.my) | server-rendered HTML **and** GSC's booking service | stdlib |
-| `python/tgv_scraper.py` | [TGV Cinemas](https://www.tgv.com.my) | TGV's own JSON API | stdlib |
-| `python/gr_scraper.py` | [Goodreads](https://goodreads.com) | the public shelf RSS endpoint | `requests` |
-| `python/mu_scrapper.py` | [Meetup](https://www.meetup.com) | the public `gql2` frontend endpoint | `requests` |
-| `python/yt_rss.py` | [YouTube](https://youtube.com) | the channel RSS feed | stdlib |
-| `typescript/gsc_scraper.ts` | GSC Cinemas | same as the Python one | Node 22.6+ |
-| `typescript/tgv_scraper.ts` | TGV Cinemas | same as the Python one | Node 22.6+ |
-| `typescript/gr_scraper.ts` | Goodreads | same as the Python one | Node 22.6+ |
-| `typescript/mu_scrapper.ts` | Meetup | same as the Python one | Node 22.6+ |
-| `typescript/yt_rss.ts` | YouTube | same as the Python one | Node 22.6+ |
+| Tool | Source | Python | TypeScript |
+| --- | --- | :-: | :-: |
+| GSC Cinemas `gsc_scraper` | server-rendered HTML + booking service | ✅ | ✅ |
+| TGV Cinemas `tgv_scraper` | TGV JSON API | ✅ | ✅ |
+| Goodreads `gr_scraper` | shelf RSS feed | ✅ | ✅ |
+| Meetup `mu_scrapper` | public gql2 endpoint | ✅ | ✅ |
+| YouTube `yt_rss` | channel RSS feed | ✅ | ✅ |
+| YouTube `yt_rss` | channel RSS feed | ✅ | ✅ |
+
+Every platform is implemented in every language, and **the two implementations
+are interchangeable**: same source, same CLI flags, same output. The parsers
+produce byte-identical records from the same saved bodies, so a consumer reads
+either one. The differences are the ones the language forces:
+
+| | Python | TypeScript |
+| --- | --- | --- |
+| Run it | `python gsc_scraper.py` | `node gsc_scraper.ts` |
+| Needs | 3.9+, `requests` for Goodreads and Meetup | Node 22.6+, nothing to install |
+| Build step | none | none, types are stripped at load |
+| Network calls | synchronous | a Promise, so `await` every call |
+| Field names | `showtime.session_id` | `showtime.sessionId` |
+| JSON output | `to_dict()` | `toDict()` |
+
+The last two rows are the only ones that matter when porting code: fields are
+camelCase in TypeScript and snake_case in Python, and `to_dict()` / `toDict()`
+emit the **same snake_case keys** on both, which is what the shared contract
+pins. Read records from the properties you named and serialise with either
+method.
 
 The two cinema chains are undocumented and take **no API key, no signature and no
 session token**. GSC's is an ASP.NET service at `epaymentapi.gsc.com.my` that speaks
 XML; TGV's is a JSON API at `api.tgv.com.my`. Both are called the way a browser
 calls them, anonymously.
 
-The two cinema scrapers are single-file and dependency-free — standard library
-only, nothing to install. The Goodreads and Meetup scrapers came in from upstream
-and still use `requests`; `yt_rss.py` is standard library only.
+All five are single-file. The two cinema scrapers and `yt_rss` are standard
+library only. The Goodreads and Meetup scrapers came in from upstream and still
+use `requests`; their TypeScript ports use `fetch` and need nothing.
 
 **Every one of these has a TypeScript port under `typescript/`.** The ports
 cover the same ground and emit the same JSON, with no dependencies and no build
 step. See [TypeScript](#typescript) below.
-
-## The other three
-
-These are separate tools, not part of the parity contract above. Each one is a
-single file with its own docstring and its own arguments.
-
-```bash
-cd python
-
-# Goodreads: a user's shelf through the RSS endpoint Goodreads left public.
-python gr_scraper.py                                  # default user's read shelf
-python gr_scraper.py search <name>                    # look up a user id first
-python gr_scraper.py 12345678 to-read                 # a user id and a shelf
-
-# Meetup: events from the unauthenticated frontend GraphQL endpoint.
-python mu_scrapper.py                                 # nearby events near KL
-python mu_scrapper.py --query python --radius 10
-python mu_scrapper.py --country sg --city "Singapore" --dump
-
-# YouTube: a channel URL to its official RSS feed.
-python yt_rss.py "https://youtube.com/@handle"
-```
-
-**The two cinema scrapers are built to be interchangeable.** They expose the same
-function names and emit the same JSON keys for every record, so one consumer
-reads either site's output. [`tgv_spec.md`](tgv_spec.md) and
-[`gsc_spec.md`](gsc_spec.md) each open with the shared contract and list what
-differs. [Parity with TGV](#parity-with-tgv) below summarises the gap.
-
----
 
 # TGV Cinemas
 
@@ -202,7 +188,7 @@ Notes:
   split here rather than left for every caller to split again.
 - **`rating` can be a placeholder.** An unreleased film's `rating` is `tba`, which
   now becomes `None` like every other placeholder. See
-  [Parity with TGV](#parity-with-tgv).
+  [Shared contract (see specs)](#parity-with-tgv).
 - **The same film appears twice** in a `moviesession_get` payload: a full detail
   record under `results.movies`, and a bare id next to the sessions under
   `results.businessday.cinemas[].movies[]`. The parser joins them on the id, so
@@ -530,7 +516,7 @@ the directory.
 
 ---
 
-## Parity with TGV
+## Shared contract (see specs)
 
 The two scrapers are built to be interchangeable. They expose the same function
 names, take the same arguments for the same job, and emit **the same JSON keys**
