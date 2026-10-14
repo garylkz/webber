@@ -49,7 +49,7 @@ step. See [TypeScript](#typescript) below.
 > Further details in `docs/tvg_reader.md` and `docs/gsc_reader.md`; specs in `docs/*_spec.md`.
 
 
-# certifi
+## certifi
 
 The four dependency-free Python scripts work with nothing installed *provided your
 Python has a CA store*. Some installs (Homebrew Python on macOS, slim containers)
@@ -66,7 +66,7 @@ situation where you need it, and it is not a hard requirement. `gr_scraper.py` a
 unaffected. The TypeScript implementations have no such issue: TLS trust comes
 from the Node runtime.
 
-# Tests
+## Tests
 
 ```bash
 cd python
