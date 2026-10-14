@@ -13,7 +13,7 @@ from gsc_scraper import (
     by_city,
     clean,
     duration_minutes,
-    parse_cinemas,
+    parse_cinemas_page,
     parse_detail,
     parse_listing,
     split_codes,
@@ -49,7 +49,7 @@ def detail() -> Movie:
 
 @pytest.fixture(scope="module")
 def outlets() -> list[Cinema]:
-    return parse_cinemas(load("cinemas.html"))
+    return parse_cinemas_page(load("cinemas.html"))
 
 
 # -- listings ---------------------------------------------------------
@@ -71,7 +71,7 @@ def test_slugs_are_unique(listing, request):
 def test_now_showing_card_is_fully_parsed(now_showing):
     movie = next(m for m in now_showing if m.slug == "munafik-melawan-iblis")
     assert movie.title == "Munafik: Melawan Iblis"
-    assert movie.genre == "Horror"
+    assert movie.genre == ("Horror",)
     assert movie.duration == "1 hr 45 mins"
     assert movie.runtime == 105
     assert movie.language == "BM"
@@ -139,9 +139,11 @@ def test_placeholder_subtitles_become_empty_tuple(now_showing):
 def test_no_placeholder_strings_survive(listing, request):
     """No field on any listing should contain GSC's placeholder text."""
     for movie in request.getfixturevalue(listing):
-        for name in ("genre", "duration", "language", "rating"):
+        for name in ("duration", "language", "rating"):
             value = getattr(movie, name)
             assert value is None or value.upper() not in PLACEHOLDERS, (movie.slug, name, value)
+        for value in movie.genre:
+            assert value.upper() not in PLACEHOLDERS, (movie.slug, value)
         for code in movie.subtitles:
             assert code.upper() not in PLACEHOLDERS, (movie.slug, code)
 
@@ -228,14 +230,18 @@ def test_by_city_unknown_town_is_empty(outlets):
 
 def test_cinema_to_dict_is_json_friendly(outlets):
     data = outlets[0].to_dict()
-    assert set(data) == {"name", "slug", "url", "city", "features"}
+    assert set(data) == {
+        "id", "name", "slug", "url", "city", "location", "region", "state", "address",
+        "postcode", "latitude", "longitude", "telephone", "parking", "opening_hours",
+        "features", "experiences", "description",
+    }
     assert isinstance(data["features"], list)
     json.dumps(data)
     json.dumps([c.to_dict() for c in outlets])
 
 
-def test_parse_cinemas_tolerates_foreign_html():
-    assert parse_cinemas("<html><body><p>nope</p></body></html>") == []
+def test_parse_cinemas_page_tolerates_foreign_html():
+    assert parse_cinemas_page("<html><body><p>nope</p></body></html>") == []
 
 
 # -- details ----------------------------------------------------------
@@ -244,7 +250,7 @@ def test_parse_cinemas_tolerates_foreign_html():
 def test_detail_core_fields(detail):
     assert detail.title == "Munafik: Melawan Iblis"
     assert detail.slug == "munafik-melawan-iblis"
-    assert detail.genre == "Horror"
+    assert detail.genre == ("Horror",)
     assert detail.language == "BM"
     assert detail.subtitles == ("ENG",)
     assert detail.rating == "16"
