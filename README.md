@@ -10,6 +10,7 @@ built to be interchangeable, plus three unrelated scrapers.
 | `gr_scraper` | shelf RSS feed | ✅ | ✅ |
 | `meetup_scrapper` | public gql2 endpoint | ✅ | ✅ |
 | `yt_rss` | channel RSS feed | ✅ | ✅ |
+| `fourd_scraper` | Magnum 4D + Da Ma Cai result JSON | ✅ | ✅ |
 
 Every platform is implemented in every language, and **the two implementations
 are interchangeable**: same source, same CLI flags, same output. The parsers
@@ -35,9 +36,10 @@ session token**. GSC's is an ASP.NET service at `epaymentapi.gsc.com.my` that sp
 XML; TGV's is a JSON API at `api.tgv.com.my`. Both are called the way a browser
 calls them, anonymously.
 
-All five are single-file. The two cinema scrapers and `yt_rss` are standard
+All six are single-file. The two cinema scrapers and `yt_rss` are standard
 library only. The Goodreads and Meetup scrapers came in from upstream and still
-use `requests`; their TypeScript ports use `fetch` and need nothing.
+use `requests`, and `fourd_scraper` uses it too; their TypeScript ports use
+`fetch` and need nothing.
 
 **Every one of these has a TypeScript port under `typescript/`.** The ports
 cover the same ground and emit the same JSON, with no dependencies and no build
@@ -55,7 +57,7 @@ cd python
 .venv/bin/python -m pytest -m live  # also hits the real sites
 ```
 
-317 offline tests and 44 live ones. The fixtures were captured from the live sources;
+347 offline tests and 47 live ones. The fixtures were captured from the live sources;
 if either site changes shape the offline suite is what fails first, which is
 intentional.
 
