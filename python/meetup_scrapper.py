@@ -6,8 +6,21 @@ frontend GraphQL interface (https://www.meetup.com/gql2), method 2a in
 notes/topics/meetup-scraping.md.
 
 Two modes:
-  default (list)   print nearby upcoming events, newest relevance first.
-  --dump           scan a whole country via geo anchors and write JSON.
+  default (list)   print a JSON object of nearby upcoming events to stdout.
+  --dump           scan a whole country via geo anchors, write JSON to out/
+                   and print a JSON summary to stdout.
+
+Every CLI result is printed as JSON (pretty, utf-8, ensure_ascii=False);
+progress and errors go to stderr. The importable functions are unchanged.
+
+The default (list) mode prints:
+
+  {"location": {"city": ..., "lat": ..., "lon": ..., "radius": ...},
+   "query": "...", "total": N, "events": [ ...gql2 event nodes... ]}
+
+The --dump mode keeps writing the JSON file and prints:
+
+  {"total": N, "new": M, "file": "out/mtp_events_...json"}
 
 Defaults to Kuala Lumpur, Malaysia (country code "my"), 25 mi radius, which
 covers KL and the close parts of Selangor. The underlying EventSearchFilter
@@ -15,11 +28,11 @@ supports: query, country, city, state, zip, lat/lon, radius, eventType
 (PHYSICAL|ONLINE|HYBRID), isHappeningNow, and a start/end date range.
 
 Examples:
-  python mu_scrapper.py                          # nearby upcoming events near KL
-  python mu_scrapper.py --query python           # keyword filter
-  python mu_scrapper.py --radius 10 --event-type ONLINE
-  python mu_scrapper.py --country sg --city "Singapore" --lat 1.3521 --lon 103.8198
-  python mu_scrapper.py --start-date 2026-08-20 --end-date 2026-09-20 --dump
+  python meetup_scrapper.py                          # nearby upcoming events near KL
+  python meetup_scrapper.py --query python           # keyword filter
+  python meetup_scrapper.py --radius 10 --event-type ONLINE
+  python meetup_scrapper.py --country sg --city "Singapore" --lat 1.3521 --lon 103.8198
+  python meetup_scrapper.py --start-date 2026-08-20 --end-date 2026-09-20 --dump
 """
 
 import argparse
@@ -151,17 +164,22 @@ def parse_date(value, end=False):
     return dt.isoformat()
 
 
+def build_list_payload(nodes, city, lat, lon, radius, query):
+    """The CLI's list-mode result: one JSON-serialisable object."""
+    return {
+        "location": {"city": city, "lat": lat, "lon": lon, "radius": radius},
+        "query": query,
+        "total": len(nodes),
+        "events": nodes,
+    }
+
+
 def print_events(nodes, city, lat, lon, radius, query):
-    print(f"location: {city} ({lat}, {lon}), radius {radius} mi, query: {query if query != '*' else '<all>'}")
-    print(f"total matching: {len(nodes)} (fetched)")
-    print()
-    for n in nodes:
-        venue = n.get("venue")
-        venue_s = sanitize(f"{venue['name']} ({venue['city']})") if venue else "online/unknown"
-        print(f"- {sanitize(n['title'])}")
-        print(f"    {sanitize(n['dateTime'])}  [{sanitize(n['eventType'])}]  {sanitize(n['group']['name'])} "
-              f"({sanitize(n['group']['urlname'])})  rsvps:{n['rsvps']['totalCount']}")
-        print(f"    {venue_s}")
+    """Print the list-mode result as pretty JSON on stdout."""
+    print(json.dumps(
+        build_list_payload(nodes, city, lat, lon, radius, query),
+        ensure_ascii=False, indent=2,
+    ))
 
 
 def dump_country(filt, radius, cap, country):
@@ -199,10 +217,12 @@ def dump_country(filt, radius, cap, country):
     out_path = OUT_DIR / f"mtp_events_{country}_{ts}.json"
     out_path.write_text(json.dumps(list(seen.values()), ensure_ascii=False, indent=2), encoding="utf-8")
 
-    for name, total, got in summary:
-        print(f"{name}: {total} matching, {got} new in-country unique")
-    print(f"\ntotal unique events in {country.upper()}: {len(seen)}")
-    print(f"wrote: {out_path}")
+    summary = {
+        "total": sum(total for _, total, _ in summary),
+        "new": len(seen),
+        "file": str(out_path),
+    }
+    print(json.dumps(summary, ensure_ascii=False, indent=2))
 
 
 def build_parser():

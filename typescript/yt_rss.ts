@@ -6,7 +6,14 @@
 //
 //     node yt_rss.ts "https://youtube.com/@handle"    # handle to a feed
 //     node yt_rss.ts "https://youtube.com/channel/UC..." # already an id
-//     node yt_rss.ts "https://youtube.com/@handle" --fetch
+//     node yt_rss.ts "https://youtube.com/@handle" --fetch # also fetch the feed
+//
+// Every CLI result is printed as JSON (pretty, indent 2):
+//
+//   {"channel_url": ..., "channel_id": "UC...", "feed_url": ...}
+//
+// With --fetch the feed is read too and the videos it lists are added as a
+// "videos" array of {video_id, title, published, link}.
 //
 // Also importable:
 //
@@ -120,13 +127,42 @@ const USAGE = `usage: node yt_rss.ts <channel-url> [--fetch]
 
 Convert a YouTube channel, user or @handle URL into its official RSS feed URL.
 
-  --fetch   also fetch and print the feed XML
+  --fetch   also fetch the feed and add the listed videos to the output
+
+Output is always JSON: {"channel_url", "channel_id", "feed_url"} and, with
+--fetch, a "videos" array.
 
 examples:
   node yt_rss.ts "https://youtube.com/@handle"
   node yt_rss.ts "https://www.youtube.com/channel/UC..." --fetch`;
 
 const HANDLES = new Set(['--fetch', '-f', '--help', '-h']);
+
+/** One video off the feed, reduced to the fields it publishes. */
+interface FeedVideo {
+  video_id: string;
+  title: string;
+  published: string;
+  link: string;
+}
+
+/** Every <entry> in a feed body, as video records. */
+function parseVideos(xml: string): FeedVideo[] {
+  return [...xml.matchAll(/<entry>([\s\S]*?)<\/entry>/g)].map((m) => {
+    const block = m[1] as string;
+    const first = (re: RegExp): string => {
+      const hit = re.exec(block);
+      return hit ? hit[1] ?? '' : '';
+    };
+    return {
+      video_id: first(/<yt:videoId>([\s\S]*?)<\/yt:videoId>/),
+      title: first(/<title>([\s\S]*?)<\/title>/),
+      published: first(/<published>([\s\S]*?)<\/published>/),
+      link: first(/<link[^>]*rel="alternate"[^>]*href="([^"]+)"/) ||
+        first(/<link[^>]*href="([^"]+)"/),
+    };
+  });
+}
 
 export async function main(argv: string[] = process.argv.slice(2)): Promise<void> {
   const url = argv.find((token) => !HANDLES.has(token));
@@ -140,11 +176,16 @@ export async function main(argv: string[] = process.argv.slice(2)): Promise<void
   if (!channelId) die('Could not determine the channel ID from that URL.');
 
   const rssUrl = rssForChannel(channelId);
-  console.log(rssUrl);
+  const out: Record<string, unknown> = {
+    channel_url: url,
+    channel_id: channelId,
+    feed_url: rssUrl,
+  };
 
   if (argv.includes('--fetch') || argv.includes('-f')) {
-    console.log(await fetchPage(rssUrl));
+    out.videos = parseVideos(await fetchPage(rssUrl));
   }
+  console.log(JSON.stringify(out, null, 2));
 }
 
 const entry = process.argv[1];

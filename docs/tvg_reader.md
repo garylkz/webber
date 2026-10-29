@@ -25,7 +25,6 @@ python tgv_scraper.py --json                   # machine readable
 python tgv_scraper.py --workers 8              # more parallel cinemas
 python tgv_scraper.py --no-delay               # skip the polite pause
 ```
-
 Narrow a schedule down:
 
 ```bash
@@ -209,8 +208,11 @@ delay with `--no-delay` only if you have a reason to.
 ## TypeScript
 
 Every Python script has a TypeScript port under `typescript/`, same CLI flags and
-same output. They run directly on Node 22.6+ — types are stripped at load, so
-there is no build step and no dependencies.
+same JSON output. The TypeScript CLIs always print JSON (pretty, indent 2) and
+there is no `--json` flag: every branch is machine readable. Warnings and errors
+go to stderr. Seat maps come out as JSON too, sections, rows, seats and the
+availability counts, never a drawing. They run directly on Node 22.6+ - types are
+stripped at load, so there is no build step and no dependencies.
 
 ```bash
 cd typescript
@@ -218,13 +220,15 @@ node tgv_scraper.ts                          # today, every cinema
 node tgv_scraper.ts BU0 --seats              # one cinema, seats left
 node tgv_scraper.ts BU0 --seat-map --time 13:30
 node tgv_scraper.ts --prices --per-person
-node tgv_scraper.ts --json --movie other-mommy
+node tgv_scraper.ts --movie other-mommy
 
 node gsc_scraper.ts 235 2026-10-14 --prices   # the GSC equivalent
 node gsc_scraper.ts --movie digger
 
 node gr_scraper.ts 1123497 to-read             # Goodreads
-node mu_scrapper.ts --query python             # Meetup
+node gr_scraper.ts search "some name"          # user id lookup
+node meetup_scrapper.ts --query python         # Meetup
+node meetup_scrapper.ts --dump                 # country sweep
 node yt_rss.ts "https://youtube.com/@handle"   # YouTube RSS
 ```
 

@@ -1,15 +1,14 @@
 # webber
 
 A library of website scrapers swinging on the web: two Malaysian cinema chains
-built to be interchangeable, plus three unrelated scrapers. See [LICENSE](LICENSE)
-for licensing.
+built to be interchangeable, plus three unrelated scrapers. 
 
 | Tool | Source | Python | TypeScript |
 | --- | --- | :-: | :-: |
 | `gsc_scraper` | server-rendered HTML + booking service | ✅ | ✅ |
 | `tgv_scraper` | TGV JSON API | ✅ | ✅ |
 | `gr_scraper` | shelf RSS feed | ✅ | ✅ |
-| `mu_scrapper` | public gql2 endpoint | ✅ | ✅ |
+| `meetup_scrapper` | public gql2 endpoint | ✅ | ✅ |
 | `yt_rss` | channel RSS feed | ✅ | ✅ |
 
 Every platform is implemented in every language, and **the two implementations
@@ -48,23 +47,6 @@ step. See [TypeScript](#typescript) below.
 > Further details in `docs/tvg_reader.md` and `docs/gsc_reader.md`; specs in `docs/*_spec.md`.
 
 
-## certifi
-
-The four dependency-free Python scripts work with nothing installed *provided your
-Python has a CA store*. Some installs (Homebrew Python on macOS, slim containers)
-ship without one, and every HTTPS call then fails with `CERTIFICATE_VERIFY_FAILED`.
-If you hit that:
-
-```bash
-pip install certifi
-```
-
-They pick up `certifi`'s bundle automatically when it is importable. That is the only
-situation where you need it, and it is not a hard requirement. `gr_scraper.py` and
-`mu_scrapper.py` need `requests`, which bundles its own CA store, so they are
-unaffected. The TypeScript implementations have no such issue: TLS trust comes
-from the Node runtime.
-
 ## Tests
 
 ```bash
@@ -88,9 +70,6 @@ functions over the fixtures under `python/tests/fixtures/`, mirroring the Python
 ones, so those fixtures are the natural starting point. Their output has been
 checked against the Python ones for all six record types and is byte-identical
 from the same saved bodies.
-
-If the live run fails with a TLS error, run it with a Python that has `certifi` (see
-above), e.g. `python3 -m pytest -m live` instead of the venv one.
 
 Offline tests never touch the network. Both modules expose their parsers as pure
 functions over saved bodies: `tgv_scraper.py` has `parse_day()`, `parse_cinemas()`,

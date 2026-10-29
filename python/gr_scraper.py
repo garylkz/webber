@@ -16,6 +16,11 @@ shelves, and review text.
 Run with no arguments to scrape a default user's read shelf. Run `search
 <name>` to look up a user ID by people search first. IDs also appear in
 profile URLs as /user/show/{id}-{slug}.
+
+The CLI prints JSON on stdout and nothing else: with no arguments a JSON
+object {"user", "shelf", "pages", "count", "file", "books"} (the same
+books array is also written to the file), and `search` a JSON array of
+user ids. Usage and network errors go to stderr.
 """
 
 import json
@@ -90,33 +95,43 @@ def find_user(session, name):
 def main():
     session = requests.Session()
 
+    def fail(message):
+        """Usage and user errors go to stderr; stdout carries JSON only."""
+        print(message, file=sys.stderr)
+        sys.exit(1)
+
     if len(sys.argv) > 1 and sys.argv[1] == "search":
         if len(sys.argv) != 3:
-            print("Usage: gr_scraper.py search <name>")
-            sys.exit(1)
+            fail("Usage: gr_scraper.py search <name>")
         ids = find_user(session, sys.argv[2])
         if not ids:
-            print("No users found.")
-            sys.exit(1)
-        for uid in ids[:10]:
-            print(uid)
+            fail("No users found.")
+        print(json.dumps(ids, ensure_ascii=False, indent=2))
         return
 
     uid = sys.argv[1] if len(sys.argv) > 1 else DEFAULT_USER_ID
     shelf = sys.argv[2] if len(sys.argv) > 2 else "read"
     if not uid.isdigit():
-        print("Usage: gr_scraper.py <numeric-user-id> [shelf]")
-        sys.exit(1)
+        fail("Usage: gr_scraper.py <numeric-user-id> [shelf]")
 
     books, pages = scrape(session, uid, shelf)
-    print(f"Fetched {len(books)} unique books from user {uid} shelf '{shelf}' ({pages} page(s)).")
 
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     output_path = OUT_DIR / f"gr_books_{uid}_{shelf}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(books, f, ensure_ascii=False, indent=2)
 
-    print(f"Saved {len(books)} books to {output_path}")
+    print(json.dumps(
+        {
+            "user": uid,
+            "shelf": shelf,
+            "pages": pages,
+            "count": len(books),
+            "file": str(output_path),
+            "books": books,
+        },
+        ensure_ascii=False, indent=2,
+    ))
 
 
 if __name__ == "__main__":

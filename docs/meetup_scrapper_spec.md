@@ -1,11 +1,11 @@
-# Meetup Scraper — Specification
+# Meetup Scraper - Specification
 
 Events from Meetup's unauthenticated frontend GraphQL endpoint. This document
 describes what each function does. Nothing here is specific to a language or
 runtime.
 
-Available in [Python](../python/mu_scrapper.py) and
-[TypeScript](../typescript/mu_scrapper.ts), with the same behaviour.
+Available in [Python](../python/meetup_scrapper.py) and
+[TypeScript](../typescript/meetup_scrapper.ts), with the same behaviour.
 
 > The filename is misspelled. It says `scrapper` rather than `scraper`, and that
 > is the name both implementations have always carried, so the spec is named to
@@ -20,11 +20,11 @@ The CLI is the same in both languages. Substitute the runner and the extension:
 
 ```bash
 cd python        # or: cd typescript
-python mu_scrapper.py                                  # nearby events near KL
-python mu_scrapper.py --query python --radius 10
-python mu_scrapper.py --event-type ONLINE
-python mu_scrapper.py --country sg --city "Singapore" --lat 1.3521 --lon 103.8198
-python mu_scrapper.py --start-date 2026-08-20 --end-date 2026-09-20 --dump
+python meetup_scrapper.py                                  # nearby events near KL
+python meetup_scrapper.py --query python --radius 10
+python meetup_scrapper.py --event-type ONLINE
+python meetup_scrapper.py --country sg --city "Singapore" --lat 1.3521 --lon 103.8198
+python meetup_scrapper.py --start-date 2026-08-20 --end-date 2026-09-20 --dump
 ```
 
 `--dump` is how you get a whole country rather than one radius. For Malaysia it
@@ -32,8 +32,9 @@ sweeps 17 city anchors, dedupes by event id and drops anything whose venue is
 outside the country, which is what stops a radius search from filling up with
 Singapore. Other countries get a single anchor, the one you pass.
 
-Event titles and venue names are set by whoever created the event and go straight
-to your terminal, so they are stripped of escape sequences before printing.
+Event titles and venue names are set by whoever created the event. The default
+mode prints the raw gql2 nodes as-is, and the human-facing error lines, which
+carry Meetup's own messages, go through `sanitize` before they reach stderr.
 
 Imported. Three filter fields are **required**, though every argument that builds
 one marks them optional: `query` (`"*"` for all events), `lat` and `lon`. Meetup
@@ -41,7 +42,7 @@ rejects a filter missing any of the three, so a city name on its own is not
 enough.
 
 ```python
-import mu_scrapper as mu
+import meetup_scrapper as meetup
 
 filt = {"query": "*", "country": "my", "city": "Kuala Lumpur",
         "lat": 3.139, "lon": 101.6869, "radius": 25}
@@ -51,7 +52,7 @@ events = mu.dump_country({"query": "*", "country": "my",
 ```
 
 ```ts
-import { searchEvents, dumpCountry } from './mu_scrapper.ts';
+import { searchEvents, dumpCountry } from './meetup_scrapper.ts';
 
 const filter = { query: '*', country: 'my', city: 'Kuala Lumpur', lat: 3.139,
                  lon: 101.6869, radius: 25 };
@@ -117,7 +118,7 @@ and the city name only ranks the results within it.
 
 One GraphQL document, posted to `https://www.meetup.com/gql2` as
 `{query, variables}`. It asks for `eventSearch` and selects exactly the fields
-listed above — nothing more, because every field is one Meetup has to join for
+listed above - nothing more, because every field is one Meetup has to join for
 and the endpoint is unauthenticated.
 
 There is no login and no API key. That is the entire basis of this tool: the
@@ -159,8 +160,8 @@ search centred anywhere only returns what that radius reaches.
 - **Any other country radiates from one anchor**, the one given on the command
   line. There is no built-in list for anywhere else.
 - **Each anchor paginates** until the cap or the end.
-- **Events are deduped by id.** The anchors overlap — an event in Johor Bahru is
-  within range of more than one of them — and the id is the identity. Without
+- **Events are deduped by id.** The anchors overlap - an event in Johor Bahru is
+  within range of more than one of them - and the id is the identity. Without
   this the sweep returns the same evening's meetup seventeen times.
 - **Every event is then checked against the country**, and the ones outside it
   dropped. This is what stops a Malaysian sweep from filling with Singaporean
@@ -187,34 +188,59 @@ this discards it.
 where the timestamp is `YYYYMMDD_HHMMSS`. The file name keeps `mtp`, the prefix of
 the two scripts this one was merged from. `out/` is git-ignored.
 
-The default mode prints to the terminal instead:
+The default mode prints one JSON object to the terminal instead:
 
+```json
+{
+  "location": {"city": "Kuala Lumpur", "lat": 3.139, "lon": 101.6869, "radius": 25},
+  "query": "*",
+  "total": 5,
+  "events": [
+    {
+      "id": "...",
+      "title": "Event Title",
+      "dateTime": "2026-10-18T19:00:00+08:00",
+      "eventType": "PHYSICAL",
+      "group": {"name": "Group Name", "urlname": "group-urlname"},
+      "rsvps": {"totalCount": 2},
+      "venue": {"name": "Venue Name", "city": "Petaling Jaya", "country": "my"},
+      "eventUrl": "...",
+      "status": "...",
+      "isOnline": false
+    }
+  ]
+}
 ```
-location: Kuala Lumpur (3.139, 101.6869), radius 25 mi, query: <all>
-total matching: 5 (fetched)
 
-- Event Title
-    2026-10-18T19:00:00+08:00  [PHYSICAL]  Group Name (group-urlname)  rsvps:2
-    Venue Name (Petaling Jaya)
+`total` is **how many were fetched, not how many matched**, and `events` carries
+the raw gql2 nodes untouched. Meetup's own `totalCount` is available from the
+same call and is usually larger; the sweep prints it summed in `total` of its
+summary instead.
+
+The `--dump` mode writes the same out/ file it always did and prints a JSON
+summary to stdout rather than the old per-anchor lines:
+
+```json
+{"total": 0, "new": 0, "file": "out/mtp_events_my_20261018_190000.json"}
 ```
 
-The count printed is **how many were fetched, not how many matched**. Meetup's own
-`totalCount` is available from the same call and is usually larger; the sweep
-prints it per anchor instead, since a single total would not add up across
-seventeen searches that overlap.
+`total` is the sum of Meetup's own `totalCount` across the anchors, `new` is the
+number of unique in-country events kept, and `file` is where they were written.
 
 ---
 
 ## Safety
 
-`sanitize` strips ANSI escape sequences and control characters from event titles,
-venue names and group names before they are printed.
+`sanitize` strips ANSI escape sequences and control characters from untrusted
+text before it is printed. The default mode puts the raw gql2 nodes into its JSON
+output as-is, and the error lines that carry Meetup's own messages through to
+stderr go through `sanitize` first.
 
-This is not cosmetic. Event titles and venue names are set by whoever created the
-event, and they go straight to a terminal. An escape sequence in one would
-otherwise be executed by the terminal — clearing the screen, repositioning the
-cursor, or setting a colour that corrupts everything printed after it. Anything
-untrusted that reaches a terminal goes through this first.
+This is not cosmetic. Titles and error messages come from other people, and they
+reach a terminal stderr. An escape sequence in one would otherwise be executed by
+the terminal - clearing the screen, repositioning the cursor, or setting a colour
+that corrupts everything printed after it. Anything untrusted that reaches a
+terminal goes through this first.
 
 ---
 

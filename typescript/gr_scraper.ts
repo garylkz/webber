@@ -215,7 +215,7 @@ export async function main(argv: string[] = process.argv.slice(2)): Promise<void
     if (argv.length !== 2) die('Usage: node gr_scraper.ts search <name>');
     const ids = await findUser(argv[1] as string);
     if (!ids.length) die('No users found.');
-    for (const id of ids.slice(0, 10)) console.log(id);
+    console.log(JSON.stringify(ids.slice(0, 10), null, 2));
     return;
   }
 
@@ -224,15 +224,13 @@ export async function main(argv: string[] = process.argv.slice(2)): Promise<void
   if (!/^\d+$/.test(userId)) die('Usage: node gr_scraper.ts <numeric-user-id> [shelf]');
 
   const { books, pages } = await scrape(userId, shelf);
-  console.log(
-    `Fetched ${books.length} unique books from user ${userId} ` +
-      `shelf '${shelf}' (${pages} page(s)).`,
-  );
 
   await mkdir(OUT_DIR, { recursive: true });
   const path = join(OUT_DIR, `gr_books_${userId}_${shelf}_${timestamp()}.json`);
   await writeFile(path, JSON.stringify(books, null, 2), 'utf8');
-  console.log(`Saved ${books.length} books to ${path}`);
+  console.log(
+    JSON.stringify({ user: userId, shelf, pages, count: books.length, file: path, books }, null, 2),
+  );
 }
 
 const entry = process.argv[1];

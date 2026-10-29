@@ -14,11 +14,16 @@ Single file, standard library only. No install, no dependencies.
     python gsc_scraper.py --dates                  # dates that have sessions
     python gsc_scraper.py --movie digger           # one film, every cinema
     python gsc_scraper.py --detail munafik-melawan-iblis
-    python gsc_scraper.py --json                   # machine readable
     python gsc_scraper.py 235 --seats              # add seat availability
     python gsc_scraper.py 235 --prices             # add ticket prices
     python gsc_scraper.py 235 --seat-map --time 10:50AM
     python gsc_scraper.py --no-delay               # skip the polite pause
+
+Every result branch prints JSON on stdout: pretty, utf-8,
+ensure_ascii=False, and nothing else on stdout. Progress, warnings and
+errors go to stderr. The seat map is JSON too: sections, rows, seats and
+availability, same data the ASCII drawing conveyed (`render_seat_plan`
+still draws the text version for callers who want it).
 
 Also importable:
 
@@ -2669,7 +2674,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(
         description="Showtimes, prices and seat maps for GSC Cinemas Malaysia.",
         epilog=(
-            "examples:  python gsc_scraper.py --json    "
+            "examples:  python gsc_scraper.py 235    "
             "python gsc_scraper.py 235 2026-10-14 --prices    "
             "python gsc_scraper.py --movie digger"
         ),
@@ -2686,18 +2691,17 @@ def main() -> None:
     parser.add_argument("--movie", metavar="SLUG", help="every session of one film")
     parser.add_argument("--detail", metavar="SLUG",
                         help="the website's full record for one film")
-    parser.add_argument("--region", help="with --cinemas, only this region")
-    parser.add_argument("--city", help="with --cinemas, only this town")
+    parser.add_argument("--region", help="with --cinemas or --movie, only this region")
+    parser.add_argument("--city", help="with --cinemas or --movie, only this town")
     parser.add_argument("--from", dest="earliest", metavar="HH:MM",
                         help="only showtimes at or after this time")
     parser.add_argument("--until", dest="latest", metavar="HH:MM",
                         help="only showtimes at or before this time")
     parser.add_argument("--format", metavar="CODES",
                         help="only these hall formats, e.g. imax or imax,4dx")
-    parser.add_argument("--json", action="store_true", help="print JSON")
     parser.add_argument("--seats", action="store_true", help="include seat availability")
     parser.add_argument("--seat-map", action="store_true",
-                        help="draw the seat map for one session (needs a cinema and --time)")
+                        help="the seat map for one session as JSON (needs a cinema and --time)")
     parser.add_argument("--prices", action="store_true",
                         help="include ticket prices (one extra call per session)")
     parser.add_argument("--per-person", action="store_true",
@@ -2712,23 +2716,16 @@ def main() -> None:
     throttle = Throttle(delay)
     net = {"delay": delay, "throttle": throttle}
 
+    def dump(value) -> None:
+        """The CLI's one stdout path: pretty JSON, nothing else."""
+        print(json.dumps(value, indent=2, ensure_ascii=False))
+
     if args.regions:
-        found = regions(**net)
-        if args.json:
-            print(json.dumps(found, indent=2, ensure_ascii=False))
-        else:
-            print()
-            for key, label in found.items():
-                print(f"  {key:16} {label}")
+        dump(regions(**net))
         return
 
     if args.dates:
-        found = business_dates(**net)
-        if args.json:
-            print(json.dumps(found, indent=2, ensure_ascii=False))
-        else:
-            print(f"\ndates with sessions: {len(found)}\n")
-            print("  " + "  ".join(found))
+        dump(business_dates(**net))
         return
 
     if args.cinemas:
@@ -2737,34 +2734,15 @@ def main() -> None:
             outlets = by_region(outlets, args.region)
         if args.city:
             outlets = by_city(outlets, args.city)
-        if args.json:
-            print(json.dumps([c.to_dict() for c in outlets], indent=2, ensure_ascii=False))
-        else:
-            label = f" in {args.region or args.city}" if (args.region or args.city) else ""
-            print(f"\ncinemas{label}: {len(outlets)} outlets\n")
-            show_cinemas(outlets)
+        dump([c.to_dict() for c in outlets])
         return
 
     if args.movies:
-        found = movies(**net)
-        if args.json:
-            print(json.dumps([m.to_dict() for m in found], indent=2, ensure_ascii=False))
-        else:
-            print(f"\ncatalogue: {len(found)} films\n")
-            for i, m in enumerate(found, 1):
-                formats = ", ".join(m.experiences) or "-"
-                print(f"{i:2}. {m.title} [{m.id}]")
-                print(f"    {', '.join(m.genre) or '-'} | {m.runtime or 'TBA'} min "
-                      f"| {m.rating or 'unrated'} | {formats}")
+        dump([m.to_dict() for m in movies(**net)])
         return
 
     if args.detail:
-        found = detail(args.detail, delay=delay, throttle=throttle)
-        if args.json:
-            print(json.dumps(found.to_dict(), indent=2, ensure_ascii=False))
-            return
-        for key, value in found.to_dict().items():
-            print(f"{key:18} {value}")
+        dump(detail(args.detail, delay=delay, throttle=throttle).to_dict())
         return
 
     if args.movie:
@@ -2798,14 +2776,7 @@ def main() -> None:
         found = movie(args.movie, movie_on, seats=args.seats, prices=args.prices,
                       cinema_ids=cinema_ids, workers=args.workers,
                       after=args.earliest, before=args.latest, formats=args.format, **net)
-        if args.json:
-            print(json.dumps([{"cinema_id": cid, **m.to_dict()} for cid, m in found],
-                             indent=2, ensure_ascii=False))
-        else:
-            where = "every cinema" if cinema_ids is None else f"{len(cinema_ids)} cinema(s)"
-            print(f"\n{args.movie} on {normalise_date(movie_on)}, {where}: {len(found)} cinemas\n")
-            for cid, m in found:
-                show_movies([m], f"{m.cinema_name or cid} [{cid}]", args.per_person)
+        dump([{"cinema_id": cid, **m.to_dict()} for cid, m in found])
         return
 
     if args.seat_map:
@@ -2824,27 +2795,28 @@ def main() -> None:
         ]
         if not matches:
             raise SystemExit(f"no session at {args.time} on {when} at {target.name}")
-        for film, showtime in matches:
-            plan = seat_plan(target.id, showtime, **net)
-            print(f"\n{target.name} [{target.id}] {when} {showtime.time} "
-                  f"{showtime.hall or ''} {film.title} (session {showtime.session_id})")
-            print(render_seat_plan(plan))
+        dump([
+            {
+                "cinema_id": target.id,
+                "cinema_name": target.name,
+                "date": when,
+                "time": showtime.time,
+                "time_text": showtime.time_text,
+                "hall": showtime.hall,
+                "movie": film.title,
+                "session_id": showtime.session_id,
+                "seat_plan": seat_plan(target.id, showtime, **net).to_dict(),
+            }
+            for film, showtime in matches
+        ])
         return
 
     if args.listing or args.all:
         names = list(LISTINGS) if args.all else [args.listing or "now-showing"]
-        if args.json:
-            print(
-                json.dumps(
-                    {name: [m.to_dict() for m in listing(name, delay=delay)]
-                     for name in names},
-                    indent=2,
-                    ensure_ascii=False,
-                )
-            )
-            return
-        for name in names:
-            show_listing(listing(name, delay=delay), name)
+        dump(
+            {name: [m.to_dict() for m in listing(name, delay=delay)]
+             for name in names}
+        )
         return
 
     if args.cinema:
@@ -2855,17 +2827,12 @@ def main() -> None:
         # screening.
         found = day(target.id, when, seats=args.seats, prices=args.prices,
                     after=args.earliest, before=args.latest, formats=args.format, **net)
-        if args.json:
-            print(json.dumps([m.to_dict() for m in found], indent=2, ensure_ascii=False))
-        else:
-            print(f"\n{target.name} [{target.id}] {when}: {len(found)} movies\n")
-            show_movies(found, None, args.per_person)
+        dump([m.to_dict() for m in found])
         return
 
     # No arguments at all: the website's front page listing, which is what a
-    # bare invocation has always meant here. A national schedule sweep is one
-    # request per outlet, so that has to be asked for.
-    show_listing(listing("now-showing", delay=delay), "now-showing")
+    # bare invocation has always meant here.
+    dump({"now-showing": [m.to_dict() for m in listing("now-showing", delay=delay)]})
 
 
 if __name__ == "__main__":

@@ -11,10 +11,13 @@
 //     node tgv_scraper.ts --cinemas --region klangvalley
 //     node tgv_scraper.ts --dates                      # dates that have sessions
 //     node tgv_scraper.ts --movie other-mommy          # one movie, every cinema
-//     node tgv_scraper.ts --json                       # machine readable
 //     node tgv_scraper.ts --seats                      # add seat availability
 //     node tgv_scraper.ts --no-delay                   # skip the polite pause
 //     npx tsc --noEmit tgv_scraper.ts                  # optional type check
+//
+// Every CLI result is printed as JSON (pretty, indent 2); warnings and errors
+// go to stderr. The seat map comes out as JSON data too: sections, rows, seats
+// and the availability counts, not a drawing.
 //
 // Also importable:
 //
@@ -2710,7 +2713,6 @@ interface CliArgs {
   cinemas: boolean;
   regions: boolean;
   dates: boolean;
-  json: boolean;
   seats: boolean;
   seatMap: boolean;
   prices: boolean;
@@ -2721,7 +2723,7 @@ interface CliArgs {
 }
 
 const FLAGS = new Set([
-  '--cinemas', '--regions', '--dates', '--json', '--seats', '--seat-map',
+  '--cinemas', '--regions', '--dates', '--seats', '--seat-map',
   '--prices', '--per-person', '--raw-columns', '--no-delay', '--help', '-h',
 ]);
 const VALUED = new Set(['--movie', '--region', '--from', '--until', '--format', '--workers', '--time']);
@@ -2740,7 +2742,6 @@ const ARG_KEYS: Record<string, keyof CliArgs> = {
   '--cinemas': 'cinemas',
   '--regions': 'regions',
   '--dates': 'dates',
-  '--json': 'json',
   '--seats': 'seats',
   '--prices': 'prices',
   '--help': 'help',
@@ -2762,7 +2763,6 @@ function parseArgs(argv: string[]): CliArgs {
     cinemas: false,
     regions: false,
     dates: false,
-    json: false,
     seats: false,
     seatMap: false,
     prices: false,
@@ -2811,9 +2811,8 @@ Showtimes for TGV Cinemas Malaysia.
   --from HH:MM            only showtimes at or after this time
   --until HH:MM           only showtimes at or before this time
   --format CODES          only these hall formats, e.g. deluxe or deluxe,indulge
-  --json                  print JSON
   --seats                 include seat availability
-  --seat-map              draw the seat map for one session (needs a cinema, a date and --time)
+  --seat-map              give the seat map for one session as JSON (needs a cinema, a date and --time)
   --prices                include ticket prices (one extra call per showtime)
   --per-person            with --prices, quote per person instead of per ticket
   --workers N             parallel cinema requests
@@ -2841,34 +2840,20 @@ export async function main(argv: string[] = process.argv.slice(2)): Promise<void
 
   if (args.regions) {
     const found = await regions({ ...net, throttle });
-    if (args.json) printJson(found);
-    else {
-      console.log();
-      for (const [key, label] of Object.entries(found).sort((a, b) => a[1].localeCompare(b[1]))) {
-        console.log(`  ${key.padEnd(16)} ${label}`);
-      }
-    }
+    printJson(found);
     return;
   }
 
   if (args.dates) {
     const found = await businessDates({ ...net, throttle });
-    if (args.json) printJson(found);
-    else {
-      console.log(`\ndates with sessions: ${found.length}\n`);
-      console.log('  ' + found.join('  '));
-    }
+    printJson(found);
     return;
   }
 
   if (args.cinemas) {
     let outlets = await cinemas({ ...net, throttle });
     if (args.region) outlets = byRegion(outlets, args.region);
-    if (args.json) printJson(outlets.map((c) => c.toDict()));
-    else {
-      console.log(`\ncinemas${args.region ? ` in ${args.region}` : ''}: ${outlets.length} outlets\n`);
-      showCinemas(outlets);
-    }
+    printJson(outlets.map((c) => c.toDict()));
     return;
   }
 
@@ -2914,15 +2899,7 @@ export async function main(argv: string[] = process.argv.slice(2)): Promise<void
       formats: args.format,
       ...net,
     });
-    if (args.json) {
-      printJson(found.map(({ cinemaId, movie: m }) => ({ cinema_id: cinemaId, ...m.toDict() })));
-    } else {
-      const where = cinemaIds === null ? 'every cinema' : `${cinemaIds.length} cinema(s)`;
-      console.log(`\n${args.movie} on ${normaliseDate(movieOn)}, ${where}: ${found.length} cinemas\n`);
-      for (const { cinemaId, movie: m } of found) {
-        showMovies([m], `${m.cinemaName || cinemaId} [${cinemaId}]`, args.perPerson);
-      }
-    }
+    printJson(found.map(({ cinemaId, movie: m }) => ({ cinema_id: cinemaId, ...m.toDict() })));
     return;
   }
 
@@ -2936,11 +2913,7 @@ export async function main(argv: string[] = process.argv.slice(2)): Promise<void
     if (!matches.length) die(`no session at ${wanted} on ${when} at ${target.name}`);
     for (const [film, showtime] of matches) {
       const plan = await seatPlan(target.id, showtime, { ...net, throttle });
-      console.log(
-        `\n${target.name} [${target.id}] ${when} ${showtime.time} ` +
-          `${showtime.hall || ''} ${film.title} (session ${showtime.sessionId})`
-      );
-      console.log(renderSeatPlan(plan, { align: !args.rawColumns }));
+      printJson(plan.toDict());
     }
     return;
   }
@@ -2959,11 +2932,7 @@ export async function main(argv: string[] = process.argv.slice(2)): Promise<void
       formats: args.format,
       ...net,
     });
-    if (args.json) printJson(movies.map((m) => m.toDict()));
-    else {
-      console.log(`\n${target.name} [${target.id}] ${on}: ${movies.length} movies\n`);
-      showMovies(movies, null, args.perPerson);
-    }
+    printJson(movies.map((m) => m.toDict()));
     return;
   }
 
@@ -2976,18 +2945,11 @@ export async function main(argv: string[] = process.argv.slice(2)): Promise<void
     formats: args.format,
     ...net,
   });
-  if (args.json) {
-    printJson(
-      Object.fromEntries(
-        Object.entries(everything).map(([cid, ms]) => [cid, ms.map((m) => m.toDict())])
-      )
-    );
-  } else {
-    const entries = Object.entries(everything);
-    const total = entries.reduce((sum, [, ms]) => sum + ms.length, 0);
-    console.log(`\n${on}: ${entries.length} cinemas, ${total} movie slots\n`);
-    showSchedule(everything, args.perPerson);
-  }
+  printJson(
+    Object.fromEntries(
+      Object.entries(everything).map(([cid, ms]) => [cid, ms.map((m) => m.toDict())])
+    )
+  );
 }
 
 const entry = process.argv[1];

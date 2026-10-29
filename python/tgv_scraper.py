@@ -10,7 +10,6 @@ Single file, standard library only. No install, no dependencies.
     python tgv_scraper.py --cinemas --region klangvalley
     python tgv_scraper.py --dates                  # dates that have sessions
     python tgv_scraper.py --movie other-mommy      # one movie, every cinema
-    python tgv_scraper.py --json                   # machine readable
     python tgv_scraper.py --seats                  # add seat availability
     python tgv_scraper.py --no-delay               # skip the polite pause
 
@@ -41,6 +40,12 @@ Times: TGV returns showtimes as naive local strings such as
 "2026-10-11T17:45:00". They are Malaysia wall-clock and are attached to a fixed
 UTC+08:00 offset here. Malaysia has no daylight saving, so the offset is always
 +08:00.
+
+Every CLI branch prints JSON on stdout as its only output: pretty and
+ensure_ascii=False. Seat availability comes as data (areas, rows, seats,
+states) instead of an ascii drawing, and `render_seat_plan` still draws
+the text version for callers who want it. Progress and errors go to
+stderr. The importable API is unchanged.
 """
 
 from __future__ import annotations
@@ -2232,10 +2237,9 @@ def main() -> None:
                         help="only showtimes at or before this time")
     parser.add_argument("--format", metavar="CODES",
                         help="only these hall formats, e.g. deluxe or deluxe,indulge")
-    parser.add_argument("--json", action="store_true", help="print JSON")
     parser.add_argument("--seats", action="store_true", help="include seat availability")
     parser.add_argument("--seat-map", action="store_true",
-                        help="draw the seat map for one session (needs a cinema, "
+                        help="the seat map for one session as JSON (needs a cinema, "
                              "a date and --time)")
     parser.add_argument("--prices", action="store_true",
                         help="include ticket prices (one extra call per showtime)")
@@ -2245,7 +2249,7 @@ def main() -> None:
     parser.add_argument("--time", metavar="HH:MM",
                         help="with --seat-map, which session to draw")
     parser.add_argument("--raw-columns", action="store_true",
-                        help="with --seat-map, draw TGV's per-row columns "
+                        help="with --seat-map, keep TGV's per-row columns "
                              "instead of aligning seats by number")
     parser.add_argument("--no-delay", action="store_true", help="skip the polite pause")
     args = parser.parse_args()
@@ -2254,35 +2258,23 @@ def main() -> None:
     throttle = Throttle(delay)
     net = {"delay": delay, "throttle": throttle}
 
+    def dump(value) -> None:
+        """The CLI's one stdout path: pretty JSON, nothing else."""
+        print(json.dumps(value, indent=2, ensure_ascii=False))
+
     if args.regions:
-        found = regions(**{**net, "throttle": throttle})
-        if args.json:
-            print(json.dumps(found, indent=2, ensure_ascii=False))
-        else:
-            print()
-            for key, label in sorted(found.items(), key=lambda kv: kv[1]):
-                print(f"  {key:16} {label}")
+        dump(regions(**{**net, "throttle": throttle}))
         return
 
     if args.dates:
-        found = business_dates(**{**net, "throttle": throttle})
-        if args.json:
-            print(json.dumps(found, indent=2, ensure_ascii=False))
-        else:
-            print(f"\ndates with sessions: {len(found)}\n")
-            print("  " + "  ".join(found))
+        dump(business_dates(**{**net, "throttle": throttle}))
         return
 
     if args.cinemas:
         outlets = cinemas(**{**net, "throttle": throttle})
         if args.region:
             outlets = by_region(outlets, args.region)
-        if args.json:
-            print(json.dumps([c.to_dict() for c in outlets], indent=2, ensure_ascii=False))
-        else:
-            label = f" in {args.region}" if args.region else ""
-            print(f"\ncinemas{label}: {len(outlets)} outlets\n")
-            show_cinemas(outlets)
+        dump([c.to_dict() for c in outlets])
         return
 
     if args.movie:
@@ -2318,14 +2310,7 @@ def main() -> None:
         found = movie(args.movie, movie_on, seats=args.seats, prices=args.prices,
                       cinema_ids=cinema_ids, workers=args.workers,
                       after=args.earliest, before=args.latest, formats=args.format, **net)
-        if args.json:
-            print(json.dumps([{"cinema_id": cid, **m.to_dict()} for cid, m in found],
-                             indent=2, ensure_ascii=False))
-        else:
-            where = "every cinema" if cinema_ids is None else f"{len(cinema_ids)} cinema(s)"
-            print(f"\n{args.movie} on {normalise_date(movie_on)}, {where}: {len(found)} cinemas\n")
-            for cid, m in found:
-                show_movies([m], f"{m.cinema_name or cid} [{cid}]", args.per_person)
+        dump([{"cinema_id": cid, **m.to_dict()} for cid, m in found])
         return
 
     if args.seat_map:
@@ -2342,11 +2327,23 @@ def main() -> None:
         ]
         if not matches:
             raise SystemExit(f"no session at {wanted} on {when} at {target.name}")
+        plan_kwargs = {**net, "throttle": throttle}
+        rows = []
         for film, showtime in matches:
-            plan = seat_plan(target.id, showtime, **{**net, "throttle": throttle})
-            print(f"\n{target.name} [{target.id}] {when} {showtime.time} "
-                  f"{showtime.hall or ''} {film.title} (session {showtime.session_id})")
-            print(render_seat_plan(plan, align=not args.raw_columns))
+            plan = seat_plan(target.id, showtime, **plan_kwargs)
+            if not args.raw_columns:
+                plan = align_by_number(plan)
+            rows.append({
+                "cinema_id": target.id,
+                "cinema_name": target.name,
+                "date": when,
+                "time": showtime.time,
+                "hall": showtime.hall,
+                "movie": film.title,
+                "session_id": showtime.session_id,
+                "seat_plan": plan.to_dict(),
+            })
+        dump(rows)
         return
 
     on = normalise_date(args.date)
@@ -2357,23 +2354,13 @@ def main() -> None:
         # narrowing after the fact still pays for every discarded screening.
         movies = day(target.id, on, seats=args.seats, prices=args.prices,
                      after=args.earliest, before=args.latest, formats=args.format, **net)
-        if args.json:
-            print(json.dumps([m.to_dict() for m in movies], indent=2, ensure_ascii=False))
-        else:
-            print(f"\n{target.name} [{target.id}] {on}: {len(movies)} movies\n")
-            show_movies(movies, None, args.per_person)
+        dump([m.to_dict() for m in movies])
         return
 
     everything = schedule(on=on, seats=args.seats, prices=args.prices,
                           workers=args.workers, after=args.earliest,
                           before=args.latest, formats=args.format, **net)
-    if args.json:
-        print(json.dumps({cid: [m.to_dict() for m in movies] for cid, movies in everything.items()},
-                         indent=2, ensure_ascii=False))
-    else:
-        total = sum(len(movies) for movies in everything.values())
-        print(f"\n{on}: {len(everything)} cinemas, {total} movie slots\n")
-        show_schedule(everything, args.per_person)
+    dump({cid: [m.to_dict() for m in movies] for cid, movies in everything.items()})
 
 
 if __name__ == "__main__":

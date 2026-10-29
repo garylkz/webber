@@ -4,21 +4,31 @@
 // Single file, zero dependencies, no build step. Node 22.6+ (developed against
 // Node 24 LTS) runs this directly: Node strips the types at load time.
 //
-//     node mu_scrapper.ts                                  # nearby events near KL
-//     node mu_scrapper.ts --query python                   # keyword filter
-//     node mu_scrapper.ts --radius 10 --event-type ONLINE
-//     node mu_scrapper.ts --country sg --city "Singapore" --lat 1.3521 --lon 103.8198
-//     node mu_scrapper.ts --start-date 2026-08-20 --end-date 2026-09-20 --dump
+//     node meetup_scrapper.ts                                  # nearby events near KL
+//     node meetup_scrapper.ts --query python                   # keyword filter
+//     node meetup_scrapper.ts --radius 10 --event-type ONLINE
+//     node meetup_scrapper.ts --country sg --city "Singapore" --lat 1.3521 --lon 103.8198
+//     node meetup_scrapper.ts --start-date 2026-08-20 --end-date 2026-09-20 --dump
 //
 // Also importable:
 //
-//     import { searchEvents, dumpCountry } from './mu_scrapper.ts';
+//     import { searchEvents, dumpCountry } from './meetup_scrapper.ts';
 //     const { nodes } = await searchEvents({ country: 'my', city: 'Kuala Lumpur' }, 50, 20);
 //
 // Two modes. The default lists nearby upcoming events; --dump sweeps geo anchors
 // across a whole country and writes the deduped result to out/. Defaults are
 // Kuala Lumpur, Malaysia (country code "my") and a 25 mile radius, which covers
 // KL and the close parts of Selangor.
+//
+// Every CLI result is printed as JSON (pretty, indent 2). Warnings and errors
+// go to stderr. The default mode prints:
+//
+//   {"location": {"city": ..., "lat": ..., "lon": ..., "radius": ...},
+//    "query": ..., "total": N, "events": [ ...gql2 event nodes... ]}
+//
+// --dump keeps writing the JSON file and prints:
+//
+//   {"total": N, "new": M, "file": "out/mtp_events_...json"}
 
 import { mkdir, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
@@ -242,7 +252,24 @@ export function parseDate(value: string | Date, end = false): string {
   return parsed.toISOString();
 }
 
-/** Print a list of events the way the default mode does. */
+/** The CLI's list-mode result: one JSON-serialisable object. */
+export function buildListPayload(
+  nodes: EventNode[],
+  city: string,
+  lat: number,
+  lon: number,
+  radius: number,
+  query: string,
+): Record<string, unknown> {
+  return {
+    location: { city, lat, lon, radius },
+    query,
+    total: nodes.length,
+    events: nodes,
+  };
+}
+
+/** Print the list-mode result as pretty JSON on stdout. */
 export function printEvents(
   nodes: EventNode[],
   city: string,
@@ -251,33 +278,7 @@ export function printEvents(
   radius: number,
   query: string,
 ): void {
-  console.log(
-    `location: ${city} (${lat}, ${lon}), radius ${radius} mi, ` +
-      `query: ${query !== '*' ? query : '<all>'}`,
-  );
-  console.log(`total matching: ${nodes.length} (fetched)`);
-  console.log();
-
-  for (const node of nodes) {
-    const venue = node.venue;
-    const venueText = venue
-      ? sanitize(`${venue.name} (${venue.city})`)
-      : 'online/unknown';
-    console.log(`- ${sanitize(node.title)}`);
-    console.log(
-      `    ${sanitize(node.dateTime)}  [${sanitize(node.eventType)}]  ` +
-        `${sanitize(node.group.name)} (${sanitize(node.group.urlname)})  ` +
-        `rsvps:${node.rsvps.totalCount}`,
-    );
-    console.log(`    ${venueText}`);
-  }
-}
-
-/** One anchor's result: what to print, and what it kept. */
-interface AnchorSummary {
-  name: string;
-  total: number;
-  got: number;
+  console.log(JSON.stringify(buildListPayload(nodes, city, lat, lon, radius, query), null, 2));
 }
 
 /**
@@ -286,6 +287,9 @@ interface AnchorSummary {
  * The anchors overlap, so the same event comes back from several of them. Ids
  * are the dedupe key: the same meetup seen from George Town and from Kuala Lumpur
  * is one event with one id.
+ *
+ * Writes the kept events to out/ and prints the CLI's summary JSON
+ * ("total", "new", "file"), then returns the events.
  */
 export async function dumpCountry(
   filter: EventFilter,
@@ -298,7 +302,7 @@ export async function dumpCountry(
       ? ANCHORS
       : ([['', filter.lat ?? 0, filter.lon ?? 0]] as Array<[string, number, number]>);
   const seen = new Map<string, EventNode>();
-  const summary: AnchorSummary[] = [];
+  let matched = 0;
 
   for (const [name, lat, lon] of anchors) {
     const anchorFilter: EventFilter = { ...filter, lat, lon, radius };
@@ -324,7 +328,7 @@ export async function dumpCountry(
       cursor = page.pageInfo.endCursor;
     }
 
-    summary.push({ name: name || `${lat.toFixed(4)},${lon.toFixed(4)}`, total, got: collected.length });
+    matched += total;
   }
 
   const events = [...seen.values()];
@@ -332,11 +336,8 @@ export async function dumpCountry(
   const outPath = join(OUT_DIR, `mtp_events_${country}_${timestamp()}.json`);
   await writeFile(outPath, JSON.stringify(events, null, 2), 'utf8');
 
-  for (const { name, total, got } of summary) {
-    console.log(`${name}: ${total} matching, ${got} new in-country unique`);
-  }
-  console.log(`\ntotal unique events in ${country.toUpperCase()}: ${events.length}`);
-  console.log(`wrote: ${outPath}`);
+  const summary = { total: matched, new: events.length, file: outPath };
+  console.log(JSON.stringify(summary, null, 2));
 
   return events;
 }
@@ -439,7 +440,7 @@ function parseArgs(argv: string[]): CliArgs {
   return args;
 }
 
-const USAGE = `usage: node mu_scrapper.ts [options]
+const USAGE = `usage: node meetup_scrapper.ts [options]
 
 Scrape Meetup events from the public gql2 endpoint. No login, no API key.
 
@@ -459,10 +460,10 @@ Scrape Meetup events from the public gql2 endpoint. No login, no API key.
   --dump              country-wide scan over geo anchors, written to out/
 
 examples:
-  node mu_scrapper.ts
-  node mu_scrapper.ts --query python --radius 10
-  node mu_scrapper.ts --country sg --city "Singapore" --lat 1.3521 --lon 103.8198
-  node mu_scrapper.ts --start-date 2026-08-20 --end-date 2026-09-20 --dump`;
+  node meetup_scrapper.ts
+  node meetup_scrapper.ts --query python --radius 10
+  node meetup_scrapper.ts --country sg --city "Singapore" --lat 1.3521 --lon 103.8198
+  node meetup_scrapper.ts --start-date 2026-08-20 --end-date 2026-09-20 --dump`;
 
 export async function main(argv: string[] = process.argv.slice(2)): Promise<void> {
   const args = parseArgs(argv);

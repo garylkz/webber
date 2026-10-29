@@ -15,11 +15,14 @@
 //     node gsc_scraper.ts --dates                  // dates that have sessions
 //     node gsc_scraper.ts --movie digger           // one film, every cinema
 //     node gsc_scraper.ts --detail munafik-melawan-iblis
-//     node gsc_scraper.ts --json                   // machine readable
 //     node gsc_scraper.ts 235 --seats              // add seat availability
 //     node gsc_scraper.ts 235 --prices             // add ticket prices
 //     node gsc_scraper.ts 235 --seat-map --time 10:50AM
 //     node gsc_scraper.ts --no-delay               // skip the polite pause
+//
+// Every CLI result is printed as JSON (pretty, indent 2); warnings and errors
+// go to stderr. The seat map comes out as JSON data too: sections, rows, seats
+// and the service's availability block, not a drawing.
 //
 // Also importable:
 //
@@ -3434,7 +3437,6 @@ interface CliArgs {
   earliest: string | null;
   latest: string | null;
   format: string | null;
-  json: boolean;
   seats: boolean;
   seatMap: boolean;
   prices: boolean;
@@ -3464,7 +3466,6 @@ const FLAGS: Record<string, keyof CliArgs> = {
   '--dates': 'dates',
   '--regions': 'regions',
   '--all': 'all',
-  '--json': 'json',
   '--seats': 'seats',
   '--seat-map': 'seatMap',
   '--prices': 'prices',
@@ -3490,7 +3491,6 @@ function parseArgs(argv: string[]): CliArgs {
     earliest: null,
     latest: null,
     format: null,
-    json: false,
     seats: false,
     seatMap: false,
     prices: false,
@@ -3545,9 +3545,8 @@ Showtimes, prices and seat maps for GSC Cinemas Malaysia.
   --from HH:MM            only showtimes at or after this time
   --until HH:MM           only showtimes at or before this time
   --format CODES          only these hall formats, e.g. imax or imax,4dx
-  --json                  print JSON
   --seats                 include seat availability
-  --seat-map              draw the seat map for one session (needs a cinema and --time)
+  --seat-map              give the seat map for one session as JSON (needs a cinema and --time)
   --prices                include ticket prices (one extra call per session)
   --per-person            with --prices, quote per person instead of per ticket
   --workers N             parallel cinema requests
@@ -3555,7 +3554,6 @@ Showtimes, prices and seat maps for GSC Cinemas Malaysia.
   --no-delay              skip the polite pause
 
 examples:
-  node gsc_scraper.ts --json
   node gsc_scraper.ts 235 2026-10-14 --prices
   node gsc_scraper.ts --movie digger`;
 
@@ -3574,23 +3572,13 @@ export async function main(argv: string[] = process.argv.slice(2)): Promise<void
 
   if (args.regions) {
     const found = await regions(net);
-    if (args.json) printJson(found);
-    else {
-      console.log();
-      for (const [key, label] of Object.entries(found)) {
-        console.log(`  ${key.padEnd(16)} ${label}`);
-      }
-    }
+    printJson(found);
     return;
   }
 
   if (args.dates) {
     const found = await businessDates(net);
-    if (args.json) printJson(found);
-    else {
-      console.log(`\ndates with sessions: ${found.length}\n`);
-      console.log(`  ${found.join('  ')}`);
-    }
+    printJson(found);
     return;
   }
 
@@ -3598,41 +3586,19 @@ export async function main(argv: string[] = process.argv.slice(2)): Promise<void
     let outlets = await cinemas(net);
     if (args.region) outlets = byRegion(outlets, args.region);
     if (args.city) outlets = byCity(outlets, args.city);
-    if (args.json) printJson(outlets.map((c) => c.toDict()));
-    else {
-      const where = args.region || args.city;
-      console.log(`\ncinemas${where ? ` in ${where}` : ''}: ${outlets.length} outlets\n`);
-      showCinemas(outlets);
-    }
+    printJson(outlets.map((c) => c.toDict()));
     return;
   }
 
   if (args.movies) {
     const found = await movies(net);
-    if (args.json) printJson(found.map((m) => m.toDict()));
-    else {
-      console.log(`\ncatalogue: ${found.length} films\n`);
-      found.forEach((m, index) => {
-        const formats = m.experiences.join(', ') || '-';
-        console.log(`${String(index + 1).padStart(2)}. ${m.title} [${m.id}]`);
-        console.log(
-          `    ${m.genre.join(', ') || '-'} | ${m.runtime ?? 'TBA'} min | ` +
-            `${m.rating ?? 'unrated'} | ${formats}`,
-        );
-      });
-    }
+    printJson(found.map((m) => m.toDict()));
     return;
   }
 
   if (args.detail) {
     const found = await detail(args.detail, net);
-    if (args.json) {
-      printJson(found.toDict());
-      return;
-    }
-    for (const [key, value] of Object.entries(found.toDict())) {
-      console.log(`${key.padEnd(18)} ${String(value)}`);
-    }
+    printJson(found.toDict());
     return;
   }
 
@@ -3676,17 +3642,7 @@ export async function main(argv: string[] = process.argv.slice(2)): Promise<void
       before: args.latest,
       formats: args.format,
     });
-    if (args.json) {
-      printJson(found.map(({ cinemaId, movie: m }) => ({ cinema_id: cinemaId, ...m.toDict() })));
-    } else {
-      const where = cinemaIds === null ? 'every cinema' : `${cinemaIds.length} cinema(s)`;
-      console.log(
-        `\n${args.movie} on ${normaliseDate(movieOn)}, ${where}: ${found.length} cinemas\n`,
-      );
-      for (const { cinemaId, movie: m } of found) {
-        showMovies([m], `${m.cinemaName || cinemaId} [${cinemaId}]`, args.perPerson);
-      }
-    }
+    printJson(found.map(({ cinemaId, movie: m }) => ({ cinema_id: cinemaId, ...m.toDict() })));
     return;
   }
 
@@ -3704,24 +3660,16 @@ export async function main(argv: string[] = process.argv.slice(2)): Promise<void
     if (!matches.length) die(`no session at ${args.time} on ${when} at ${target.name}`);
     for (const [film, showtime] of matches) {
       const plan = await seatPlan(target.id, showtime, net);
-      console.log(
-        `\n${target.name} [${target.id}] ${when} ${showtime.time} ` +
-          `${showtime.hall ?? ''} ${film.title} (session ${showtime.sessionId})`,
-      );
-      console.log(renderSeatPlan(plan));
+      printJson(plan.toDict());
     }
     return;
   }
 
   if (args.listing || args.all) {
     const names = args.all ? Object.keys(LISTINGS) : [args.listing ?? 'now-showing'];
-    if (args.json) {
-      const out: Record<string, unknown[]> = {};
-      for (const name of names) out[name] = (await listing(name, net)).map((m) => m.toDict());
-      printJson(out);
-      return;
-    }
-    for (const name of names) showListing(await listing(name, net), name);
+    const out: Record<string, unknown[]> = {};
+    for (const name of names) out[name] = (await listing(name, net)).map((m) => m.toDict());
+    printJson(out);
     return;
   }
 
@@ -3739,18 +3687,14 @@ export async function main(argv: string[] = process.argv.slice(2)): Promise<void
       before: args.latest,
       formats: args.format,
     });
-    if (args.json) printJson(found.map((m) => m.toDict()));
-    else {
-      console.log(`\n${target.name} [${target.id}] ${when}: ${found.length} movies\n`);
-      showMovies(found, null, args.perPerson);
-    }
+    printJson(found.map((m) => m.toDict()));
     return;
   }
 
   // No arguments at all: the website's front page listing, which is what a bare
   // invocation has always meant here. A national schedule sweep is one request per
   // outlet, so that has to be asked for.
-  showListing(await listing('now-showing', net), 'now-showing');
+  printJson((await listing('now-showing', net)).map((m) => m.toDict()));
 }
 
 const entry = process.argv[1];

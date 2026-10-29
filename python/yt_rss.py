@@ -3,6 +3,12 @@
 
 Usage:
     python yt_rss.py <channel-url> [--fetch]
+
+Prints a JSON object on stdout as its only output:
+    {"channel_url": ..., "channel_id": ..., "feed_url": ...}
+
+With --fetch the feed is fetched and the result gains a "videos" key
+holding the entries of the feed. Errors go to stderr.
 """
 
 import argparse
@@ -12,6 +18,7 @@ import sys
 import urllib.error
 import urllib.parse
 import urllib.request
+import xml.etree.ElementTree as ET
 
 FEEDS_URL = "https://www.youtube.com/feeds/videos.xml"
 ALLOWED_SCHEMES = {"http", "https"}
@@ -73,10 +80,30 @@ def channel_id_from_url(url: str) -> str | None:
     return max(set(ids), key=ids.count)
 
 
+def parse_feed(xml: str) -> list[dict]:
+    """A feeds/videos.xml Atom body -> [{video_id, title, url, published}]."""
+    atom = "{http://www.w3.org/2005/Atom}"
+    yt = "{http://www.youtube.com/xml/schemas/2015}"
+    videos = []
+    try:
+        root = ET.fromstring(xml)
+    except ET.ParseError:
+        return []
+    for entry in root.findall(f"{atom}entry"):
+        link = entry.find(f"{atom}link")
+        videos.append({
+            "video_id": (entry.findtext(f"{yt}videoId") or "").strip(),
+            "title": (entry.findtext(f"{atom}title") or "").strip(),
+            "url": (link.get("href") or "").strip() if link is not None else "",
+            "published": (entry.findtext(f"{atom}published") or "").strip(),
+        })
+    return videos
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("url", help="YouTube channel URL (channel, user, or @handle)")
-    parser.add_argument("--fetch", action="store_true", help="Also fetch and print the feed XML")
+    parser.add_argument("--fetch", action="store_true", help="Also fetch the feed and add its videos")
     args = parser.parse_args()
 
     channel_id = channel_id_from_url(args.url)
@@ -84,13 +111,19 @@ def main() -> None:
         raise SystemExit("Could not determine the channel ID from that URL.")
 
     rss_url = rss_for_channel(channel_id)
-    print(rss_url)
+    result = {
+        "channel_url": args.url,
+        "channel_id": channel_id,
+        "feed_url": rss_url,
+    }
 
     if args.fetch:
         try:
-            print(fetch_page(rss_url))
+            result["videos"] = parse_feed(fetch_page(rss_url))
         except urllib.error.HTTPError as e:
             raise SystemExit(f"Feed fetch failed: HTTP {e.code}") from e
+
+    print(json.dumps(result, ensure_ascii=False, indent=2))
 
 
 if __name__ == "__main__":
