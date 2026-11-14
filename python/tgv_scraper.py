@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Showtimes for TGV Cinemas Malaysia, read straight from TGV's own JSON API.
 
-Single file, standard library only. No install, no dependencies.
+Single file. Needs `requests`, nothing else.
 
     python tgv_scraper.py                          # today, every cinema
     python tgv_scraper.py BU0                      # one cinema, today
@@ -51,19 +51,17 @@ stderr. The importable API is unchanged.
 from __future__ import annotations
 
 import argparse
-import gzip
 import json
 import re
-import ssl
 import sys
 import threading
 import time
-import urllib.error
-import urllib.request
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass, field
 from datetime import date as Date
 from datetime import datetime, timedelta, timezone
+
+import requests
 
 BASE = "https://api.tgv.com.my"
 SITE = "https://www.tgv.com.my"
@@ -216,25 +214,6 @@ def normalise_date(value: str | Date | None) -> str:
     raise SystemExit(f"bad date {value!r}, expected YYYY-MM-DD")
 
 
-def _ssl() -> ssl.SSLContext:
-    """TLS context, using certifi's CA bundle if the system lacks one.
-
-    Some Python installs (homebrew on macOS, slim containers) ship without a
-    usable cert store, which makes every HTTPS call fail. certifi is used when
-    it happens to be importable, but it is not required.
-    """
-    context = ssl.create_default_context()
-    try:
-        import certifi
-    except ImportError:
-        return context
-    try:
-        context.load_verify_locations(certifi.where())
-    except OSError:
-        pass
-    return context
-
-
 class Throttle:
     """Spaces requests out so a pool of workers still hits the site politely.
 
@@ -283,24 +262,18 @@ def request(path: str, payload: dict | None = None, timeout: float = 25.0,
         data = json.dumps(payload).encode("utf-8")
         headers["Content-Type"] = "application/json"
 
-    req = urllib.request.Request(url, data=data, headers=headers)
     try:
-        with urllib.request.urlopen(req, timeout=timeout, context=_ssl()) as response:
-            body = response.read()
-            if response.headers.get("Content-Encoding") == "gzip":
-                body = gzip.decompress(body)
-    except urllib.error.HTTPError as exc:
-        detail = exc.read().decode("utf-8", "replace")[:300]
-        raise SystemExit(f"HTTP {exc.code} from {path}: {detail}") from exc
-    except ssl.SSLCertVerificationError as exc:
-        raise SystemExit(
-            "TLS verification failed: this Python has no usable CA store.\n"
-            "  fix: pip install certifi"
-        ) from exc
-    except urllib.error.URLError as exc:
-        if isinstance(exc.reason, ssl.SSLError):
-            raise SystemExit(f"TLS error talking to api.tgv.com.my: {exc.reason}") from exc
-        raise SystemExit(f"network error talking to api.tgv.com.my: {exc.reason}") from exc
+        response = requests.request(
+            "GET" if data is None else "POST", url, data=data, headers=headers, timeout=timeout
+        )
+    except requests.exceptions.SSLError as exc:
+        raise SystemExit(f"TLS error talking to api.tgv.com.my: {exc}") from exc
+    except requests.RequestException as exc:
+        raise SystemExit(f"network error talking to api.tgv.com.my: {exc}") from exc
+    body = response.content
+    if not response.ok:
+        detail = body.decode("utf-8", "replace")[:300]
+        raise SystemExit(f"HTTP {response.status_code} from {path}: {detail}")
 
     try:
         return json.loads(body.decode("utf-8", "replace"))

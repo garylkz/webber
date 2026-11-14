@@ -20,14 +20,15 @@ is the newest article. --count M is how many articles to print. Without
 articles in the feed, and next_start is the --start for the next batch; when
 next_start is past total, there are no more articles.
 
-Uses only the standard library and curl.
+Uses the requests library to fetch the feed.
 """
 
 import json
-import subprocess
 import sys
 import xml.etree.ElementTree as ET
 from email.utils import parsedate_to_datetime
+
+import requests
 
 FEED_URL = "https://www.rockpapershotgun.com/feed"
 OUT_FILE = "/tmp/rps-articles.json"
@@ -35,19 +36,18 @@ TIMEOUT = 30
 
 
 def fetch_feed():
-    """Fetch the feed XML with curl, which uses the system certificates."""
+    """Fetch the feed XML as bytes, or None after printing why it failed."""
     try:
-        result = subprocess.run(
-            ["curl", "-sSL", "--fail", "-m", str(TIMEOUT), "-A", "Mozilla/5.0", FEED_URL],
-            capture_output=True,
+        response = requests.get(
+            FEED_URL, timeout=TIMEOUT, headers={"User-Agent": "Mozilla/5.0"}
         )
-    except OSError as error:
+    except requests.RequestException as error:
         print(f"Error fetching Rock Paper Shotgun: {error}")
         return None
-    if result.returncode != 0:
-        print(f"Error fetching Rock Paper Shotgun: {result.stderr.decode().strip()}")
+    if not response.ok:
+        print(f"Error fetching Rock Paper Shotgun: HTTP {response.status_code}")
         return None
-    return result.stdout
+    return response.content
 
 
 def parse_articles(xml_bytes):

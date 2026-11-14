@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Showtimes, ticket prices and seat maps for GSC Cinemas Malaysia.
 
-Single file, standard library only. No install, no dependencies.
+Single file. Needs `requests`, nothing else.
 
     python gsc_scraper.py                          # movies now showing
     python gsc_scraper.py coming-soon
@@ -75,21 +75,19 @@ See `TicketType`.
 from __future__ import annotations
 
 import argparse
-import gzip
 import json
 import re
-import ssl
 import sys
 import threading
 import time
-import urllib.error
 import urllib.parse
-import urllib.request
 import xml.etree.ElementTree as ET
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass, field
 from datetime import date as Date
 from datetime import datetime, timedelta, timezone
+
+import requests
 
 # The public website.
 SITE = "https://www.gsc.com.my"
@@ -399,25 +397,6 @@ def clock_candidates(value: str) -> tuple[str, ...]:
 # --------------------------------------------------------------------------
 
 
-def _ssl() -> ssl.SSLContext:
-    """TLS context, using certifi's CA bundle if the system lacks one.
-
-    Some Python installs (homebrew on macOS, slim containers) ship without a
-    usable cert store, which makes every HTTPS call fail. certifi is used when
-    it happens to be importable, but it is not required.
-    """
-    context = ssl.create_default_context()
-    try:
-        import certifi
-    except ImportError:
-        return context
-    try:
-        context.load_verify_locations(certifi.where())
-    except OSError:
-        pass
-    return context
-
-
 class Throttle:
     """Spaces requests out so a pool of workers still hits the site politely.
 
@@ -440,11 +419,18 @@ class Throttle:
         time.sleep(max(0.0, slot - now))
 
 
-def _decode(response, path: str) -> str:
-    body = response.read()
-    if response.headers.get("Content-Encoding") == "gzip":
-        body = gzip.decompress(body)
-    return body.decode("utf-8", "replace")
+def _get(url: str, headers: dict, timeout: float) -> requests.Response:
+    """GET a URL, turning network and TLS failures into a readable exit."""
+    try:
+        return requests.get(url, headers=headers, timeout=timeout)
+    except requests.exceptions.SSLError as exc:
+        raise SystemExit(f"TLS error talking to gsc.com.my: {exc}") from exc
+    except requests.RequestException as exc:
+        raise SystemExit(f"network error talking to gsc.com.my: {exc}") from exc
+
+
+def _body(response: requests.Response) -> str:
+    return response.content.decode("utf-8", "replace")
 
 
 def fetch(path: str, timeout: float = 20.0, delay: float = 0.5, throttle=None) -> str:
@@ -457,28 +443,15 @@ def fetch(path: str, timeout: float = 20.0, delay: float = 0.5, throttle=None) -
         throttle.wait()
     elif delay:
         time.sleep(delay)  # be polite, this is someone's live site
-    request = urllib.request.Request(
+    response = _get(
         f"{SITE}{path}",
-        headers={"User-Agent": UA, "Accept": "text/html,*/*;q=0.8", "Accept-Language": "en"},
+        {"User-Agent": UA, "Accept": "text/html,*/*;q=0.8", "Accept-Language": "en"},
+        timeout,
     )
-    try:
-        with urllib.request.urlopen(request, timeout=timeout, context=_ssl()) as response:
-            html = _decode(response, path)
-    except urllib.error.HTTPError as exc:
-        if exc.code == 404:
-            raise SystemExit(f"not found: {path}") from exc
-        raise
-    except ssl.SSLCertVerificationError as exc:
-        raise SystemExit(
-            "TLS verification failed: this Python has no usable CA store.\n"
-            "  fix: pip install certifi"
-        ) from exc
-    except urllib.error.URLError as exc:
-        if isinstance(exc.reason, ssl.SSLError):
-            raise SystemExit(
-                f"TLS error talking to gsc.com.my: {exc.reason}\n  fix: pip install certifi"
-            ) from exc
-        raise SystemExit(f"network error talking to gsc.com.my: {exc.reason}") from exc
+    if response.status_code == 404:
+        raise SystemExit(f"not found: {path}")
+    response.raise_for_status()
+    html = _body(response)
     # Unknown pages sometimes come back 200 with a meta refresh to /not-found.
     if "not-found" in html[:400]:
         raise SystemExit(f"not found: {path}")
@@ -505,31 +478,21 @@ def request(path: str, params: dict | None = None, timeout: float = 25.0,
         url = f"{base}?{urllib.parse.urlencode(params or {})}" if params is not None else base
         accept = "text/xml, application/xml, */*"
 
-    req = urllib.request.Request(
+    response = _get(
         url,
-        headers={
+        {
             "User-Agent": UA,
             "Accept": accept,
             "Accept-Language": "en-MY,en;q=0.9",
             "Origin": BOOKING,
             "Referer": f"{BOOKING}/",
         },
+        timeout,
     )
-    try:
-        with urllib.request.urlopen(req, timeout=timeout, context=_ssl()) as response:
-            return _decode(response, url)
-    except urllib.error.HTTPError as exc:
-        detail = exc.read().decode("utf-8", "replace")[:300]
-        raise SystemExit(f"HTTP {exc.code} from {path}: {detail}") from exc
-    except ssl.SSLCertVerificationError as exc:
-        raise SystemExit(
-            "TLS verification failed: this Python has no usable CA store.\n"
-            "  fix: pip install certifi"
-        ) from exc
-    except urllib.error.URLError as exc:
-        if isinstance(exc.reason, ssl.SSLError):
-            raise SystemExit(f"TLS error talking to gsc.com.my: {exc.reason}") from exc
-        raise SystemExit(f"network error talking to gsc.com.my: {exc.reason}") from exc
+    if not response.ok:
+        detail = _body(response)[:300]
+        raise SystemExit(f"HTTP {response.status_code} from {path}: {detail}")
+    return _body(response)
 
 
 def xml_of(body: str, path: str) -> ET.Element:

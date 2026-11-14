@@ -15,10 +15,10 @@ import argparse
 import json
 import re
 import sys
-import urllib.error
 import urllib.parse
-import urllib.request
 import xml.etree.ElementTree as ET
+
+import requests
 
 FEEDS_URL = "https://www.youtube.com/feeds/videos.xml"
 ALLOWED_SCHEMES = {"http", "https"}
@@ -50,9 +50,10 @@ def normalize_url(url: str) -> str:
 
 
 def fetch_page(url: str, timeout: int = 30) -> str:
-    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-    with urllib.request.urlopen(req, timeout=timeout) as resp:
-        return resp.read().decode("utf-8", errors="replace")
+    """Fetch one page as text. Raises requests.HTTPError on a non-2xx status."""
+    resp = requests.get(url, headers={"User-Agent": "Mozilla/5.0"}, timeout=timeout)
+    resp.raise_for_status()
+    return resp.content.decode("utf-8", errors="replace")
 
 
 def channel_id_from_url(url: str) -> str | None:
@@ -67,7 +68,7 @@ def channel_id_from_url(url: str) -> str | None:
     page_url = normalize_url(url)
     try:
         html = fetch_page(page_url)
-    except urllib.error.URLError as e:
+    except requests.RequestException as e:
         raise SystemExit(f"Failed to fetch {page_url}: {e}") from e
 
     ids = CHANNEL_ID_RE.findall(html)
@@ -120,8 +121,10 @@ def main() -> None:
     if args.fetch:
         try:
             result["videos"] = parse_feed(fetch_page(rss_url))
-        except urllib.error.HTTPError as e:
-            raise SystemExit(f"Feed fetch failed: HTTP {e.code}") from e
+        except requests.HTTPError as e:
+            raise SystemExit(f"Feed fetch failed: HTTP {e.response.status_code}") from e
+        except requests.RequestException as e:
+            raise SystemExit(f"Feed fetch failed: {e}") from e
 
     print(json.dumps(result, ensure_ascii=False, indent=2))
 
