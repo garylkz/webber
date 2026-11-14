@@ -2,9 +2,6 @@
 
 from __future__ import annotations
 
-import json
-import shutil
-import subprocess
 from pathlib import Path
 
 import pytest
@@ -13,7 +10,6 @@ import northport_scraper as northport
 from northport_scraper import parse_booking, parse_rows
 
 FIXTURES = Path(__file__).parent / "fixtures"
-TS_SCRAPER = Path(__file__).resolve().parents[2] / "typescript" / "northport_scraper.ts"
 
 
 def body(name: str) -> str:
@@ -83,24 +79,3 @@ def test_post_form_http_error_exits(monkeypatch):
     monkeypatch.setattr(northport._session, "post", lambda *a, **k: Resp())
     with pytest.raises(SystemExit):
         northport.get_by_bl("X")
-
-
-@pytest.mark.skipif(shutil.which("node") is None, reason="node not installed")
-def test_typescript_parsers_match():
-    script = f"""
-      import * as f from {json.dumps(TS_SCRAPER.as_uri())};
-      import {{ readFileSync }} from 'node:fs';
-      const read = (n) => readFileSync({json.dumps(str(FIXTURES))} + '/' + n, 'utf8');
-      console.log(JSON.stringify([
-        f.parseRows(read('northport_container.html')),
-        f.parseBooking(read('northport_booking.html')),
-      ]));
-    """
-    out = subprocess.run(
-        ["node", "--input-type=module", "-e", script],
-        capture_output=True, text=True, check=True,
-    ).stdout
-    assert json.loads(out) == [
-        parse_rows(body("northport_container.html")),
-        parse_booking(body("northport_booking.html")),
-    ]

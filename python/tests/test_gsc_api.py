@@ -706,15 +706,15 @@ def test_the_output_shape_is_pinned(record, expected):
     """One format, deliberately frozen.
 
     A consumer reads either scraper's output with the same code, so a field
-    added to one and not the other is a break. The TypeScript port emits these
-    same key sets; changing one side means changing all three.
+    added to one and not the other is a break; changing one side means
+    changing both.
     """
     for module in (gsc, tgv):
         assert set(record(module).to_dict()) == expected, module.__name__
 
 
-def test_the_three_implementations_agree_on_the_key_count():
-    """The numbers the TypeScript port was checked against."""
+def test_the_key_counts_are_pinned():
+    """The number of keys each record emits."""
     assert len(gsc.Movie(id="1", title="x").to_dict()) == 28
     assert len(gsc.Cinema(id="1", name="x").to_dict()) == 18
     assert len(gsc.Showtime(session_id="1", movie_id="2", cinema_id="3", start=None).to_dict()) == 23

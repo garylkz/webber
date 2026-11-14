@@ -3,8 +3,6 @@
 from __future__ import annotations
 
 import json
-import shutil
-import subprocess
 from pathlib import Path
 
 import pytest
@@ -21,7 +19,6 @@ from fourd_scraper import (
 )
 
 FIXTURES = Path(__file__).parent / "fixtures"
-TS_SCRAPER = Path(__file__).resolve().parents[2] / "typescript" / "fourd_scraper.ts"
 KEYS = {
     "operator", "draw_no", "draw_date", "draw_day", "first", "second",
     "third", "special", "consolation", "official",
@@ -229,36 +226,6 @@ def test_save_json_matches_cli_output(tmp_path):
     assert path.read_text(encoding="utf-8") == fourd.to_json(draws) + "\n"
     saved = json.loads(path.read_text(encoding="utf-8"))["draws"]
     assert [(d["draw_date"], d["operator"]) for d in saved][:2] == [("2026-10-25", "magnum"), ("2026-10-25", "damacai")]
-
-
-# --------------------------------------------------------------- parity ----
-
-
-@pytest.mark.skipif(shutil.which("node") is None, reason="node not installed")
-def test_typescript_parsers_match():
-    script = f"""
-      import * as f from {json.dumps(TS_SCRAPER.as_uri())};
-      import {{ readFileSync }} from 'node:fs';
-      const read = (n) => readFileSync({json.dumps(str(FIXTURES))} + '/' + n, 'utf8').replace(/^\\uFEFF/, '');
-      const draws = [
-        ...f.parseMagnum(read('fourd_magnum_past.json')),
-        ...f.parseMagnum(read('fourd_magnum_latest.json')),
-        f.parseDamacai(read('fourd_damacai_20261025.json')),
-        f.parseDamacai(read('fourd_damacai_20050101.json')),
-      ];
-      console.log(JSON.stringify(f.sortDraws(draws).map((d) => d.toDict())));
-    """
-    out = subprocess.run(
-        ["node", "--input-type=module", "-e", script],
-        capture_output=True, text=True, check=True,
-    ).stdout
-    draws = [
-        *parse_magnum(body("fourd_magnum_past.json")),
-        *parse_magnum(body("fourd_magnum_latest.json")),
-        parse_damacai(body("fourd_damacai_20261025.json")),
-        parse_damacai(body("fourd_damacai_20050101.json")),
-    ]
-    assert json.loads(out) == [d.to_dict() for d in sort_draws(draws)]
 
 
 # ----------------------------------------------------------------- live ----
