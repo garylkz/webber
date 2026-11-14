@@ -1,22 +1,28 @@
-# YouTube RSS Scraper — Specification
+---
+id: youtube
+type: module-design
+status: draft
+title: YouTube RSS Scraper
+parent: webber-architecture
+---
+
+# YouTube RSS Scraper: Specification
 
 A YouTube channel URL turned into that channel's official RSS feed URL. This
-document describes what each function does. Nothing here is specific to a language
-or runtime.
+document describes what each function does.
 
-Available in [Python](../python/yt_rss.py) and
-[TypeScript](../typescript/yt_rss.ts), with the same behaviour.
+Implemented in [youtube_rss.py](youtube_rss.py).
 
 ---
 
 ## Usage
 
-The CLI is the same in both languages. Substitute the runner and the extension:
+The CLI:
 
 ```bash
-cd python        # or: cd typescript
-python yt_rss.py "https://youtube.com/@handle"
-python yt_rss.py "https://youtube.com/@handle" --fetch
+cd lib/youtube
+python youtube_rss.py "https://youtube.com/@handle"
+python youtube_rss.py "https://youtube.com/@handle" --fetch
 ```
 
 A `/channel/UC...` URL carries its own id and needs no request. A handle does not,
@@ -25,17 +31,10 @@ so that is the one case where a page is fetched, and the id is read out of it.
 Imported:
 
 ```python
-import yt_rss as yt
+import youtube_rss as yt
 
 feed = yt.rss_for_channel("UC...")
 id_ = yt.channel_id_from_url("https://youtube.com/@handle")
-```
-
-```ts
-import { rssForChannel, channelIdFromUrl } from './yt_rss.ts';
-
-const feed = rssForChannel('UC...');
-const id = await channelIdFromUrl('https://youtube.com/@handle');
 ```
 
 ---
@@ -54,16 +53,16 @@ const id = await channelIdFromUrl('https://youtube.com/@handle');
 
 | Function | Returns | Description |
 |---|---|---|
-| `rssForChannel(channelId)` | `str` | The feed URL for a channel id. No network. |
-| `channelIdFromUrl(url)` | `str` or `null` | The channel id for any YouTube channel URL, fetching the page when the URL does not carry one. |
-| `normaliseUrl(url)` | `str` | Forces https and refuses anything that is not a YouTube URL. No network. |
-| `fetchPage(url, timeout?)` | `str` | Fetches one page as text. |
+| `rss_for_channel(channel_id)` | `str` | The feed URL for a channel id. No network. |
+| `channel_id_from_url(url)` | `str` or `None` | The channel id for any YouTube channel URL, fetching the page when the URL does not carry one. |
+| `normalize_url(url)` | `str` | Forces https and refuses anything that is not a YouTube URL. No network. |
+| `fetch_page(url, timeout=30)` | `str` | Fetches one page as text. |
 
 ---
 
 ## Resolving a URL
 
-`channelIdFromUrl` takes one of three shapes:
+`channel_id_from_url` takes one of three shapes:
 
 | Input | How it resolves |
 |---|---|
@@ -96,7 +95,7 @@ one avoids a request.
 
 ## Safety
 
-`normaliseUrl` refuses anything that is not an http or https URL on a YouTube
+`normalize_url` refuses anything that is not an http or https URL on a YouTube
 host, and this is the reason the tool will not fetch an arbitrary address.
 
 - A **bare host** is given an `https://` prefix, so `youtube.com/@x` works.
@@ -112,12 +111,20 @@ The host list is checked after lower-casing and dropping a trailing dot, so
 
 ## Output
 
-`rssForChannel` builds the feed URL from the id alone. It is not verified against
+`rss_for_channel` builds the feed URL from the id alone. It is not verified against
 the live feed, so a syntactically valid but non-existent id produces a URL that
 404s when followed. `--fetch` is what confirms the feed resolves.
 
-The CLI prints the feed URL on its own line, then prints the feed body if
-`--fetch` was passed.
+The CLI prints one JSON object:
+
+```json
+{"channel_url": "...", "channel_id": "UC...", "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UC..."}
+```
+
+With `--fetch` it also fetches the feed and adds `videos`, each with
+`video_id`, `title`, `url` and `published`, newest first as the feed lists them.
+
+How an agent uses it is in [SKILL.md](SKILL.md).
 
 ---
 
@@ -138,9 +145,6 @@ The CLI prints the feed URL on its own line, then prints the feed body if
 
 **This scraper is not in the shared contract** that the two cinema scrapers hold
 to. It has no counterpart on either of them: it resolves a URL and stops, where
-they query a site and return records. What the two implementations do share is
-the refusal rules above, and those are the part worth checking when porting.
+they query a site and return records.
 
-The type of `channelIdFromUrl` is the one real difference between the two: Python
-returns `None`, TypeScript returns `null`. Everything else about the pair is
-identical, including which id wins when a page offers several.
+`channel_id_from_url` returns `None` when the page yields no channel id.

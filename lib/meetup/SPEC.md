@@ -1,30 +1,31 @@
+---
+id: meetup
+type: module-design
+status: draft
+title: Meetup Scraper
+parent: webber-architecture
+---
+
 # Meetup Scraper - Specification
 
 Events from Meetup's unauthenticated frontend GraphQL endpoint. This document
-describes what each function does. Nothing here is specific to a language or
-runtime.
+describes what each function does.
 
-Available in [Python](../python/meetup_scrapper.py) and
-[TypeScript](../typescript/meetup_scrapper.ts), with the same behaviour.
-
-> The filename is misspelled. It says `scrapper` rather than `scraper`, and that
-> is the name both implementations have always carried, so the spec is named to
-> match rather than to be correct. Fixing it would break every command that
-> invokes the tool.
+Implemented in [meetup_scraper.py](meetup_scraper.py).
 
 ---
 
 ## Usage
 
-The CLI is the same in both languages. Substitute the runner and the extension:
+The CLI:
 
 ```bash
-cd python        # or: cd typescript
-python meetup_scrapper.py                                  # nearby events near KL
-python meetup_scrapper.py --query python --radius 10
-python meetup_scrapper.py --event-type ONLINE
-python meetup_scrapper.py --country sg --city "Singapore" --lat 1.3521 --lon 103.8198
-python meetup_scrapper.py --start-date 2026-08-20 --end-date 2026-09-20 --dump
+cd lib/meetup
+python meetup_scraper.py                                  # nearby events near KL
+python meetup_scraper.py --query python --radius 10
+python meetup_scraper.py --event-type ONLINE
+python meetup_scraper.py --country sg --city "Singapore" --lat 1.3521 --lon 103.8198
+python meetup_scraper.py --start-date 2026-08-20 --end-date 2026-09-20 --dump
 ```
 
 `--dump` is how you get a whole country rather than one radius. For Malaysia it
@@ -42,23 +43,13 @@ rejects a filter missing any of the three, so a city name on its own is not
 enough.
 
 ```python
-import meetup_scrapper as meetup
+import meetup_scraper as mu
 
 filt = {"query": "*", "country": "my", "city": "Kuala Lumpur",
         "lat": 3.139, "lon": 101.6869, "radius": 25}
 nodes, total = mu.search_events(filt, 50, 20)
-events = mu.dump_country({"query": "*", "country": "my",
-                          "lat": 3.139, "lon": 101.6869}, 500, 500, "my")
-```
-
-```ts
-import { searchEvents, dumpCountry } from './meetup_scrapper.ts';
-
-const filter = { query: '*', country: 'my', city: 'Kuala Lumpur', lat: 3.139,
-                 lon: 101.6869, radius: 25 };
-const { nodes, totalCount } = await searchEvents(filter, 50, 20);
-const events = await dumpCountry(
-  { query: '*', country: 'my', lat: 3.139, lon: 101.6869 }, 500, 500, 'my');
+mu.dump_country({"query": "*", "country": "my",
+                 "lat": 3.139, "lon": 101.6869}, 500, 500, "my")
 ```
 
 ---
@@ -90,10 +81,10 @@ Two, and they are different jobs rather than two settings of one.
 
 | Function | Returns | Description |
 |---|---|---|
-| `searchEvents(filter, first, maxResults)` | `{nodes, totalCount}` | Paginate one anchor. `totalCount` is Meetup's own figure, which is usually larger than what was fetched. |
-| `dumpCountry(filter, radius, cap, country)` | the events kept | Sweep every anchor, keep in-country events, dedupe, write. |
-| `inCountry(venue, code)` | `bool` | Whether a venue is in a country. Falls back to a bounding box when Meetup omits the country. |
-| `parseDate(value, end?)` | `str` | Accept `YYYY-MM-DD` or a full ISO datetime, return an ISO string with an offset. |
+| `search_events(filt, first, max_results)` | `(nodes, total_count)` | Paginate one anchor. `total_count` is Meetup's own figure, which is usually larger than what was fetched. |
+| `dump_country(filt, radius, cap, country)` | `None` | Sweep every anchor, keep in-country events, dedupe, write, and print the JSON summary. |
+| `in_country(venue, code)` | `bool` | Whether a venue is in a country. Falls back to a bounding box when Meetup omits the country. |
+| `parse_date(value, end=False)` | `str` | Accept `YYYY-MM-DD` or a full ISO datetime, return an ISO string with an offset. |
 | `sanitize(text)` | `str` | Strip escape sequences and control characters from untrusted text. |
 
 ### Required filter fields
@@ -270,9 +261,7 @@ to. It has no counterpart on either of them and does not need one: it reads one
 site, and it returns its own event shape rather than the `Movie`/`Cinema`/
 `Showtime` records that contract pins.
 
-The two implementations agree on the printed output and on the dedupe rule. The
-one thing to know when comparing runs is that **a sweep is not deterministic
+The one thing to know when comparing runs is that **a sweep is not deterministic
 across runs**: Meetup re-ranks events between calls, so two sweeps minutes apart
-can differ by a couple of events. The Python implementation compared against
-itself differs by the same amount, so a difference between the two is worth
-looking at, and a difference between either and an earlier run of itself is not.
+can differ by a couple of events. A difference between a run and an earlier run
+of itself is not worth chasing.

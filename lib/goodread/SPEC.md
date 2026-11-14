@@ -1,46 +1,44 @@
-# Goodreads Scraper — Specification
+---
+id: goodread
+type: module-design
+status: draft
+title: Goodreads Scraper
+parent: webber-architecture
+---
+
+# Goodreads Scraper: Specification
 
 A user's bookshelf, read through the public RSS endpoint Goodreads left open after
 retiring its official API. This document describes what each function does.
-Nothing here is specific to a language or runtime.
 
-Available in [Python](../python/gr_scraper.py) and
-[TypeScript](../typescript/gr_scraper.ts), with the same behaviour.
+Implemented in [goodread_scraper.py](goodread_scraper.py).
 
 ---
 
 ## Usage
 
-The CLI is the same in both languages. Substitute the runner and the extension:
+The CLI:
 
 ```bash
-cd python        # or: cd typescript
-python gr_scraper.py                                  # a default user's read shelf
-python gr_scraper.py search <name>                    # look up a user id first
-python gr_scraper.py 12345678 to-read                 # a user id and a shelf
+cd lib/goodread
+python goodread_scraper.py                                  # a default user's read shelf
+python goodread_scraper.py search <name>                    # look up a user id first
+python goodread_scraper.py 12345678 to-read                 # a user id and a shelf
 ```
 
 Output is written to `out/gr_books_{id}_{shelf}_{timestamp}.json`. Pages are
 fetched 200 at a time until one comes back empty, and duplicates are dropped by
 review GUID rather than by title, since one book can sit on two shelves.
 
-Imported, both languages take the same two calls. The Python one takes a
-`requests` session first; the TypeScript one carries its own connection:
+Imported, it takes two calls, each with a `requests` session first:
 
 ```python
 import requests
-import gr_scraper as gr
+import goodread_scraper as gr
 
 session = requests.Session()
 books, pages = gr.scrape(session, "1123497", "read")
 ids = gr.find_user(session, "tim clark")
-```
-
-```ts
-import { scrape, findUser } from './gr_scraper.ts';
-
-const { books, pages } = await scrape('1123497', 'read');
-const ids = await findUser('tim clark');
 ```
 
 ---
@@ -50,7 +48,7 @@ const ids = await findUser('tim clark');
 | Term | Meaning |
 |---|---|
 | **User id** | Goodreads' numeric id for a person, as it appears in a profile URL: `/user/show/{id}-{slug}`. It is what a shelf query needs. |
-| **Shelf** | One of a user's book lists. Three are standard — `read`, `currently-reading`, `to-read` — and a user can create their own. |
+| **Shelf** | One of a user's book lists. Three are standard (`read`, `currently-reading`, `to-read`), and a user can create their own. |
 | **Review** | One entry on a shelf: a book, the user's rating, dates and review text. It is the unit that is scraped and deduplicated. |
 | **GUID** | The review's own permalink, e.g. `https://www.goodreads.com/review/show/654641581`. It is the identity of a row. |
 
@@ -60,22 +58,16 @@ const ids = await findUser('tim clark');
 
 | Function | Returns | Description |
 |---|---|---|
-| `scrape(userId, shelf)` | `{books, pages}` | Every review on a user's shelf, and how many pages it took. Paginates until a page comes back empty. |
-| `findUser(name)` | `list[str]` | The user ids a name matches, via the public people search. Sorted, so the order is stable. |
-| `parseItem(raw)` | `Book` | One `<item>` block from the feed, as a record. No network. |
+| `scrape(session, uid, shelf="read")` | `(books, pages)` | Every review on a user's shelf, and how many pages it took. Paginates until a page comes back empty. |
+| `find_user(session, name)` | `list[str]` | The user ids a name matches, via the public people search. Sorted, so the order is stable. |
+| `parse_item(raw)` | `dict` | One `<item>` block from the feed, as a record. No network. |
 
-The Python implementation takes a `requests` session as its first argument on
-both network calls, so one connection is reused across every page; the
-TypeScript one carries its own and has no such argument.
+Both network calls take a `requests` session as their first argument, so one
+connection is reused across every page:
 
 ```python
 books, pages = gr.scrape(session, "1123497", "read")
 ids = gr.find_user(session, "tim clark")
-```
-
-```ts
-const { books, pages } = await scrape('1123497', 'read');
-const ids = await findUser('tim clark');
 ```
 
 ---
@@ -85,7 +77,7 @@ const ids = await findUser('tim clark');
 `scrape` walks the feed a page at a time:
 
 ```
-/review/list_rss/{userId}?shelf={shelf}&per_page=200&page={n}
+/review/list_rss/{uid}?shelf={shelf}&per_page=200&page={n}
 ```
 
 - **The page size is capped at 200.** Goodreads ignores anything larger, so asking
@@ -108,8 +100,7 @@ shelf page at `/review/list/{id}` requires one.
 
 Every field below is read out of the item's description block, which Goodreads
 renders as HTML of `key: value<br>` pairs. The keys are kept as they appear rather
-than renamed, so the JSON this writes can be diffed against the other
-implementation's.
+than renamed.
 
 | Field | Meaning |
 |---|---|
@@ -142,7 +133,7 @@ rounded by a caller that was not told what it was.
 `scrape` returns its records in the order the feed listed them, which is
 Goodreads' own ordering and is not stable between runs for a changing shelf.
 
-The CLI writes them to `out/gr_books_{userId}_{shelf}_{timestamp}.json`, where the
+The CLI writes them to `out/gr_books_{uid}_{shelf}_{timestamp}.json`, where the
 timestamp is `YYYYMMDD_HHMMSS` at the moment of writing, so successive runs do not
 overwrite each other. `out/` is git-ignored.
 
@@ -168,6 +159,4 @@ printed will be zero, not a failure.
 
 **This scraper is not in the shared contract** that the two cinema scrapers hold
 to. It has no counterpart on either of them and does not need one: it reads one
-site, so there is nothing to be interchangeable with. The TypeScript port emits
-the same keys and produces byte-identical files, which is the same standard of
-parity, just without the second site to prove it against.
+site, so there is nothing to be interchangeable with.

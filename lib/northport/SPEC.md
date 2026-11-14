@@ -1,22 +1,27 @@
+---
+id: northport
+type: module-design
+status: draft
+title: Northport Enquiry Scraper
+parent: webber-architecture
+---
+
 # Northport Enquiry Scraper: Specification
 
 Container, bill of lading, vessel and booking enquiries against Northport's
 e-NP2 CAS-N4 portal (Port Klang, Navis N4 data). This document describes what
-each function does. Nothing here is specific to a language or runtime.
+each function does.
 
-Available in [Python](../python/northport_scraper.py) and
-[TypeScript](../typescript/northport_scraper.ts), with the same behaviour and
-byte-identical output. Python needs `requests`; TypeScript has no
-dependencies.
+Implemented in [northport_scraper.py](northport_scraper.py).
 
 ---
 
 ## Usage
 
-The CLI is the same in both languages. Substitute the runner and the extension:
+The CLI:
 
 ```bash
-cd python        # or: cd typescript
+cd lib/northport
 python northport_scraper.py container ABCD1234567
 python northport_scraper.py bl SOMEBL123
 python northport_scraper.py vessel MV-EXAMPLE
@@ -29,12 +34,6 @@ Imported:
 import northport_scraper as northport
 
 row = northport.get_by_container("ABCD1234567")
-```
-
-```ts
-import { getByContainer } from './northport_scraper.ts';
-
-const row = await getByContainer('ABCD1234567');
 ```
 
 ---
@@ -56,16 +55,14 @@ The CLI prints the object with indent 2.
 
 | Function | Returns | Description |
 |---|---|---|
-| `getByContainer(no)` | rows | One container. |
-| `getByBl(no)` | rows | One bill of lading. |
-| `getByVessel(scnOrName)` | rows | One vessel, by SCN or name. |
-| `getByBooking(ref)` | rows + `Containers` | One booking and its container list. |
-| `postForm(endpoint, field, value)` | `str` | The raw HTML fragment for one enquiry. |
-| `parseRows(html)` | rows | Pure. A fragment's `Label : value` rows. |
-| `parseBooking(html)` | rows + `Containers` | Pure. A booking fragment. |
-| `toJson(result)` | `str` | Pure. The CLI's output. |
-
-In Python the names are snake_case (`get_by_container`, `parse_rows`, ...).
+| `get_by_container(container_no)` | rows | One container. |
+| `get_by_bl(bl_no)` | rows | One bill of lading. |
+| `get_by_vessel(scn_or_vessel_name)` | rows | One vessel, by SCN or name. |
+| `get_by_booking(booking_ref)` | rows + `Containers` | One booking and its container list. |
+| `post_form(endpoint, field, value)` | `str` | The raw HTML fragment for one enquiry. |
+| `parse_rows(html)` | rows | Pure. A fragment's `Label : value` rows. |
+| `parse_booking(html)` | rows + `Containers` | Pure. A booking fragment. |
+| `to_json(result)` | `str` | Pure. The CLI's output. |
 
 ---
 

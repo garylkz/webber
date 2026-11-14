@@ -1,8 +1,16 @@
-# GSC Scraper — Specification
+---
+id: gsc
+type: module-design
+status: draft
+title: GSC Scraper
+parent: webber-architecture
+references: [tgv]
+---
+
+# GSC Scraper: Specification
 
 Movies, showtimes, ticket prices and seat maps for GSC Cinemas Malaysia. This
-document describes what each function does. Nothing here is specific to a
-language or runtime.
+document describes what each function does.
 
 GSC has no public JSON API, and everything behind its "Buy Tickets" button was
 long assumed to be unreachable. It is not. The website is a Nuxt app whose
@@ -23,17 +31,24 @@ the way a browser calls them. It speaks **XML**, not JSON.
 So this scraper reads two sources: the website for the editorial listings and a
 movie's credits, and the booking service for everything a session needs.
 
+**The website is read as server-rendered HTML, not JSON.** It has no JSON API:
+its `static/movie-lists.json` is not deployed, and the Nuxt state bundle is
+about 8.6 MB of obfuscated JavaScript. A rendered page is about 57 KB and far
+more stable.
+
+How an agent runs the scraper is in [SKILL.md](SKILL.md).
+
 ---
 
 ## Usage
 
-Both languages expose the same CLI and the same importable functions. For the
-cinema pair the commands are identical; substitute `python` / `.py` for `node`
-/ `.ts`: `gsc_scraper` takes `cinema` / `date` / `--movie` / `--seats` /
-`--seat-map` / `--prices`; `tgv_scraper` takes `BU0` / `--cinemas` /
-`--movie` / `--seats`. The specs (`docs/gsc_spec.md`, `docs/tvg_spec.md`)
-describe the behaviour once; this section confirms the language-neutral
-interface exists in both implementations.
+The CLIs and the importable functions live in
+[gsc_scraper.py](gsc_scraper.py) and
+[tgv_scraper.py](../tgv/tgv_scraper.py):
+`gsc_scraper` takes `cinema` / `date` / `--movie` /
+`--seats` / `--seat-map` / `--prices`; `tgv_scraper` takes `BU0` /
+`--cinemas` / `--movie` / `--seats`. The specs (`lib/gsc/SPEC.md`,
+`lib/tgv/SPEC.md`) describe the behaviour once.
 
 ---
 
@@ -64,7 +79,7 @@ interface exists in both implementations.
 | `getShowTimesByLocation_ParentChild_V2` | `locationid`, `oprndate` | One cinema, one date: the whole day. |
 | `getHallSeatStatus` | `locationid`, `hallid`, `showdate`, `showtime` | One hall: the seat grid, the counts, and what is still sellable. |
 | `getTicketPricingEpaySpecialV5` | `locationid`, `hallid`, `filmid`, `showdate`, `showtime` | Ticket types and prices for one session. |
-| `GetCSOAllLocationV2` | — | The outlet directory. Reached through the booking app's proxy, as JSON. |
+| `GetCSOAllLocationV2` | none | The outlet directory. Reached through the booking app's proxy, as JSON. |
 
 Two of these are worth calling out because they shape the API above them:
 
@@ -79,12 +94,12 @@ Two of these are worth calling out because they shape the API above them:
 
 | Function | Returns | Description |
 |---|---|---|
-| `listing(name)` | `Movie[]` | The website's shelf by name: `now-showing`, `coming-soon` or `advance-sales`. Fails on an unknown name, listing the valid ones. |
-| `parse_listing(html)` | `Movie[]` | Pulls every movie card out of saved listing HTML. No network. |
+| `listing(name)` | `list[Movie]` | The website's shelf by name: `now-showing`, `coming-soon` or `advance-sales`. Fails on an unknown name, listing the valid ones. |
+| `parse_listing(html)` | `list[Movie]` | Pulls every movie card out of saved listing HTML. No network. |
 | `detail(slug)` | `Movie` | The website's full record for one film: synopsis, director, cast, trailer, release date. |
 | `parse_detail(html, slug)` | `Movie` | Reads one film's detail page from saved HTML. No network. |
-| `movies()` | `Movie[]` | The booking service's whole catalogue, one record per film. One request. |
-| `parse_movies(xml)` | `Movie[]` | The same, from a saved payload. No network. |
+| `movies()` | `list[Movie]` | The booking service's whole catalogue, one record per film. One request. |
+| `parse_movies(xml)` | `list[Movie]` | The same, from a saved payload. No network. |
 | `fetch(path)` | HTML | Fetches one website page and returns it as text, for parsing yourself. |
 | `request(path, params)` | text | Calls one booking-service endpoint and returns the raw body. |
 
@@ -100,14 +115,14 @@ TGV equivalent would mean guessing.
 
 | Function | Returns | Description |
 |---|---|---|
-| `cinemas()` | `Cinema[]` | Every outlet in Malaysia, sorted by name. One request. |
-| `cinemas(with_details=False)` | `Cinema[]` | The lighter list. One request either way; the details are what the second one adds. |
-| `parse_cinemas(payload, directory?)` | `Cinema[]` | The directory payload. No network. |
-| `parse_cinemas_page(html)` | `Cinema[]` | The website's outlet page. No network. |
+| `cinemas()` | `list[Cinema]` | Every outlet in Malaysia, sorted by name. One request. |
+| `cinemas(with_details=False)` | `list[Cinema]` | The lighter list. One request either way; the details are what the second one adds. |
+| `parse_cinemas(payload, directory?)` | `list[Cinema]` | The directory payload. No network. |
+| `parse_cinemas_page(html)` | `list[Cinema]` | The website's outlet page. No network. |
 | `join_directories(outlets, directory)` | `int` | Merges the two on name. No network. |
-| `by_city(outlets, city)` | `Cinema[]` | Narrows an outlet list to one town. |
-| `by_region(outlets, region)` | `Cinema[]` | Narrows to one region, by key or label. |
-| `filter_cinemas(outlets, where)` | `Cinema[]` | Either of the two above, whichever matches. |
+| `by_city(outlets, city)` | `list[Cinema]` | Narrows an outlet list to one town. |
+| `by_region(outlets, region)` | `list[Cinema]` | Narrows to one region, by key or label. |
+| `filter_cinemas(outlets, where)` | `list[Cinema]` | Either of the two above, whichever matches. |
 | `find_cinema(outlets, needle)` | `Cinema` | Looks up one outlet by id, slug or name. Fails if the name is ambiguous, listing the candidates. |
 | `regions()` | `{key: label}` | Every region. Derived from the directory, one request. |
 
@@ -154,11 +169,11 @@ the directory.
 
 | Function | Returns | Description |
 |---|---|---|
-| `day(cinema_id, date?, seats?, prices?, after?, before?, formats?)` | `Movie[]` | Every film and session at one outlet on one date. |
-| `schedule(cinema_ids?, date?, ...)` | `{cinema_id: Movie[]}` | The same across many outlets, in parallel. With no ids given, every outlet is swept. |
-| `movie(slug_or_title, date?, ...)` | `[(cinema_id, Movie)]` | Every session of one film. Fails if it has none. |
-| `business_dates()` | `date[]` | Every date the service will answer for. One request, the catalogue. |
-| `cinema_experiences(cinema_id, date?)` | `{code: label}` | One outlet's hall formats, read off its day payload. |
+| `day(cinema_id, on?, seats?, prices?, after?, before?, formats?)` | `list[Movie]` | Every film and session at one outlet on one date. |
+| `schedule(cinema_ids?, on?, ...)` | `{cinema_id: list[Movie]}` | The same across many outlets, in parallel. With no ids given, every outlet is swept. |
+| `movie(slug_or_title, on?, ...)` | `[(cinema_id, Movie)]` | Every session of one film. Fails if it has none. |
+| `business_dates()` | `list[str]` | Every date the service will answer for. One request, the catalogue. |
+| `cinema_experiences(cinema_id, on?)` | `{code: label}` | One outlet's hall formats, read off its day payload. |
 
 A film is matched by id, by slug, by exact title, or by a loose form that
 ignores a bracketed format prefix, because one film exists under several titles
@@ -176,7 +191,7 @@ afterwards would still pay for every screening that was thrown away.
 
 | Function | Returns | Description |
 |---|---|---|
-| `tickets(cinema_id, showtime)` | `TicketType[]` | Every ticket type on one session. One request. The lowest-level pricing call. |
+| `tickets(cinema_id, showtime)` | `list[TicketType]` | Every ticket type on one session. One request. The lowest-level pricing call. |
 | `session_prices(showtime)` | the showtime | Prices one screening and nothing else. Mutates and returns the showtime, so its price fields read the same afterwards. |
 | `seat_status(cinema_id, showtimes)` | `{session_id: counts}` | Remaining seats for one or more sessions. One request each. |
 | `seat_plan(cinema_id, showtime)` | `SeatPlan` | The full seat map for one session, aisles included. One request. |
@@ -195,9 +210,9 @@ rather than a missing screening.
 | Function | Description |
 |---|---|
 | `filter_times(movies, after?, before?)` | Keeps only showtimes inside an inclusive time window. The window is anchored on the **business date**, not the calendar day, so `--from 18:00` still catches a 00:15 show filed under yesterday. |
-| `filter_formats(movies, formats?)` | Keeps only showtimes in the named hall formats. Comma-separated. Case-insensitive; an unknown format matches nothing. |
+| `filter_formats(movies, wanted?)` | Keeps only showtimes in the named hall formats. Comma-separated. Case-insensitive; an unknown format matches nothing. |
 | `normalise_date(value?)` | Accepts several date formats and a date object; returns `YYYY-MM-DD`. Defaults to today, Malaysia time. |
-| `parse_clock(value)` | `'18:00'` or `'1800'` → `[18, 0]`. |
+| `parse_clock(value)` | `'18:00'` or `'1800'` → `(18, 0)`. |
 | `looks_like_date(value)` | True when a value is shaped like a date rather than an outlet name. |
 | `looks_like_clock(value)` | True for `HH:MM` or `h:mmAM`/`PM`. |
 | `clock_candidates(value)` | Every spelling of one `--time` value worth matching, in both 24- and 12-hour form. |
@@ -343,9 +358,6 @@ different job with different terms.
 
 ## The shared contract
 
-Both scrapers in this repo expose the same function names and emit the same
-JSON keys, so one consumer reads either site's output. This document and
-[`tgv_spec.md`](tgv_spec.md) describe the shared surface once each, with the
-differences listed where they occur. The Python offline suite pins the key sets, and the
-TypeScript ports under `typescript/` emit the same six sets and produce
-byte-identical records from the same saved bodies.
+This scraper is one side of the cinema contract (see `webber-architecture`).
+The shared names and the deliberate asymmetries are listed once, in
+`tgv`'s "The shared contract" section ([`tgv/SPEC.md`](../tgv/SPEC.md)).

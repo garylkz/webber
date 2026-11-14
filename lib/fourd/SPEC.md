@@ -1,22 +1,26 @@
+---
+id: fourd
+type: module-design
+status: draft
+title: 4D Results Scraper
+parent: webber-architecture
+---
+
 # 4D Results Scraper: Specification
 
 Malaysian 4D draw results, read from the operators' own sites. This document
-describes what each function does. Nothing here is specific to a language or
-runtime.
+describes what each function does.
 
-Available in [Python](../python/fourd_scraper.py) and
-[TypeScript](../typescript/fourd_scraper.ts), with the same behaviour and
-byte-identical output. Python needs `requests`; TypeScript has no
-dependencies.
+Implemented in [fourd_scraper.py](fourd_scraper.py).
 
 ---
 
 ## Usage
 
-The CLI is the same in both languages. Substitute the runner and the extension:
+The CLI:
 
 ```bash
-cd python        # or: cd typescript
+cd lib/fourd
 python fourd_scraper.py                       # latest draw, every operator
 python fourd_scraper.py 2026-10-25            # one draw date
 python fourd_scraper.py --recent 10           # the last 10 draw dates
@@ -30,7 +34,8 @@ A date, `--recent`, `--from` and `--all` are alternatives; give at most one.
 `--to` needs `--from`. `--operator` and `--out` combine with any of them.
 
 `--out FILE` writes exactly what would have gone to stdout, creating the folder
-if needed, and prints `saved N draws to FILE` on stderr instead. (`out/` is
+if needed, and prints a JSON summary on stdout instead:
+`{"draws": N, "file": "FILE"}`. (`out/` is
 already in webber's `.gitignore`.)
 
 Imported:
@@ -42,15 +47,6 @@ draws = fourd.draws_on("2026-10-25")
 history = fourd.recent(20)
 year = fourd.between("2024-01-01", "2024-12-31")
 fourd.save_json(fourd.fetch_all(), "out/fourd_all.json")
-```
-
-```ts
-import { drawsOn, recent } from './fourd_scraper.ts';
-
-const draws = await drawsOn('2026-10-25');
-const history = await recent(20);
-const year = await between('2024-01-01', '2024-12-31');
-saveJson(await fetchAll(), 'out/fourd_all.json');
 ```
 
 ---
@@ -84,7 +80,7 @@ Neither covered source takes an API key or a login.
 
 ## Record
 
-`toDict()` / `to_dict()` emit the same snake_case keys in both languages:
+`to_dict()` emits these snake_case keys:
 
 | Key | Type | Notes |
 |---|---|---|
@@ -110,24 +106,24 @@ Cai on the same date.
 
 | Function | Returns | Description |
 |---|---|---|
-| `drawsOn(date, operators?)` | `Draw[]` | Every chosen operator's draw on exactly that date. Empty on a non-draw day. |
-| `latest(operators?)` | `Draw[]` | Each operator's most recent published draw. |
-| `recent(count, operators?)` | `Draw[]` | The last `count` draw dates, every chosen operator. |
-| `between(start, end, operators?)` | `Draw[]` | Every draw from `start` to `end`, both inclusive. |
-| `magnumBetween(start, end)` | `Draw[]` | Every Magnum draw in the range, in one request. |
-| `fetchAll(operators?, progress?)` | `Draw[]` | Every draw each operator still publishes: `between` from Magnum's first draw to today. |
-| `toJson(draws)` | `str` | Pure. The CLI's output: `{"draws": [...]}`, newest first, indent 2. |
-| `saveJson(draws, path)` | path | Writes `toJson` plus a newline to a file, creating its folder. |
-| `magnumDraw(date)` | `Draw` or `null` | One Magnum draw. |
-| `magnumRecent(count, onOrBefore?)` | `Draw[]` | The last `count` Magnum draws on or before a date. |
-| `magnumLatest()` | `Draw` or `null` | Magnum's newest draw. |
-| `damacaiDraw(date)` | `Draw` or `null` | One Da Ma Cai draw. |
-| `damacaiLatest(today?)` | `Draw` or `null` | Walks back up to 7 days for Da Ma Cai's newest draw. |
-| `parseMagnum(body)` | `Draw[]` | Pure. A Magnum results body, newest first. |
-| `parseDamacai(body)` | `Draw` or `null` | Pure. A Da Ma Cai draw blob. |
-| `parseDamacaiLink(body)` | `str` | Pure. The signed blob URL out of `/callpassresult`. |
-| `normaliseDate(value)` | `str` | Pure. `YYYY-MM-DD`, `YYYYMMDD` or `DD/MM/YYYY` to `YYYY-MM-DD`. |
-| `sortDraws(draws)` | `Draw[]` | Pure. Newest date first, then operator order. |
+| `draws_on(day, operators=OPERATORS)` | `list[Draw]` | Every chosen operator's draw on exactly that date. Empty on a non-draw day. |
+| `latest(operators=OPERATORS)` | `list[Draw]` | Each operator's most recent published draw. |
+| `recent(count, operators=OPERATORS, progress=None)` | `list[Draw]` | The last `count` draw dates, every chosen operator. |
+| `between(start, end, operators=OPERATORS, progress=None)` | `list[Draw]` | Every draw from `start` to `end`, both inclusive. |
+| `magnum_between(start, end)` | `list[Draw]` | Every Magnum draw in the range, in one request. |
+| `fetch_all(operators=OPERATORS, progress=None)` | `list[Draw]` | Every draw each operator still publishes: `between` from Magnum's first draw to today. |
+| `to_json(draws)` | `str` | Pure. The CLI's output: `{"draws": [...]}`, newest first, indent 2. |
+| `save_json(draws, path)` | `Path` | Writes `to_json` plus a newline to a file, creating its folder. |
+| `magnum_draw(day)` | `Draw` or `None` | One Magnum draw. |
+| `magnum_recent(count, on_or_before=None)` | `list[Draw]` | The last `count` Magnum draws on or before a date. |
+| `magnum_latest()` | `Draw` or `None` | Magnum's newest draw. |
+| `damacai_draw(day)` | `Draw` or `None` | One Da Ma Cai draw. |
+| `damacai_latest(today=None)` | `Draw` or `None` | Walks back up to 7 days for Da Ma Cai's newest draw. |
+| `parse_magnum(body)` | `list[Draw]` | Pure. A Magnum results body, newest first. |
+| `parse_damacai(body)` | `Draw` or `None` | Pure. A Da Ma Cai draw blob. |
+| `parse_damacai_link(body)` | `str` | Pure. The signed blob URL out of `/callpassresult`. |
+| `normalise_date(value)` | `str` | Pure. `YYYY-MM-DD`, `YYYYMMDD` or `DD/MM/YYYY` to `YYYY-MM-DD`. |
+| `sort_draws(draws)` | `list[Draw]` | Pure. Newest date first, then operator order. |
 
 ---
 
@@ -139,11 +135,11 @@ Cai on the same date.
 |---|---|
 | `GET /results/latest` | A one-element array: the newest draw. |
 | `GET /results/past/between-dates/null/{YYYY-MM-DD}/{n}` | The last `n` draws on or before the date, newest first. |
-| `GET /results/past/between-dates/{from}/{to}/{n}` | Up to `n` draws in the range, both ends inclusive, newest first. `magnumBetween` passes the number of days in the range, which can never be fewer than the draws in it. |
+| `GET /results/past/between-dates/{from}/{to}/{n}` | Up to `n` draws in the range, both ends inclusive, newest first. `magnum_between` passes the number of days in the range, which can never be fewer than the draws in it. |
 | `GET /draw-dates/available-for-year` | Upcoming draw dates. Not used. |
 
 The date must be ISO. Any other shape gets `[]` with a 200, not an error.
-`magnumDraw` asks for one draw on or before the date and keeps it only if the
+`magnum_draw` asks for one draw on or before the date and keeps it only if the
 date matches, which is how a non-draw day comes back empty.
 
 ### Da Ma Cai
@@ -155,7 +151,7 @@ Two requests per draw:
    the header the site answers "Page Not Found" with a 200. The site's own page
    sends that fixed value on every call.
 2. `GET` the link. It is a read-only signed URL valid for about an hour. A
-   date with no draw is a `404 BlobNotFound`, which becomes `null`.
+   date with no draw is a `404 BlobNotFound`, which becomes `None`.
 
 The link endpoint answers for any date, so it says nothing about whether a draw
 happened; only the blob does. The blob may start with a UTF-8 BOM.
@@ -183,13 +179,13 @@ Da Ma Cai is then asked for each of them. Consequences:
 - Before 1 Jan 2005 Da Ma Cai has no data, so dates before that are skipped
   without a request and a range reaching back further holds Magnum alone there.
 
-`recent`, `between` and `fetchAll` take an optional `progress(done, total)`
+`recent`, `between` and `fetch_all` take an optional `progress(done, total)`
 callback, called after each Da Ma Cai date. The CLI uses it to print
 `damacai: N/M dates` on stderr every 50 dates.
 
 ### Bulk
 
-`--all` (or `fetchAll()`) is the whole archive. Measured in October 2026:
+`--all` (or `fetch_all()`) is the whole archive. Measured in October 2026:
 
 | Part | Size | Time |
 |---|---|---|
@@ -223,7 +219,6 @@ rule it out.
 
 ## Notes
 
-**Not in the shared contract** that the two cinema scrapers hold to. Its own
-parity is checked by `python/tests/test_fourd.py`, which runs the TypeScript
-parsers over the same fixtures under Node and compares the records with the
-Python ones, and pins the record's key set.
+**Not in the shared contract** that the two cinema scrapers hold to. Its parsers
+are checked by `lib/fourd/test_fourd.py` over saved fixtures, and that suite
+pins the record's key set.
