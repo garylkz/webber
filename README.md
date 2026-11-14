@@ -10,7 +10,8 @@ built to be interchangeable, plus three unrelated scrapers.
 | `gr_scraper` | shelf RSS feed | ✅ | ✅ |
 | `meetup_scrapper` | public gql2 endpoint | ✅ | ✅ |
 | `yt_rss` | channel RSS feed | ✅ | ✅ |
-| `fourd_scraper` | Magnum 4D + Da Ma Cai result JSON | ✅ | ✅ |
+| `fourd_scraper` | Magnum 4D + Da Ma Cai | ✅ | ✅ |
+| `northport_scraper` | Northport e-NP2 CAS-N4 enquiry (HTML fragments) | ✅ | ✅ |
 
 Every platform is implemented in every language, and **the two implementations
 are interchangeable**: same source, same CLI flags, same output. The parsers
@@ -36,9 +37,9 @@ session token**. GSC's is an ASP.NET service at `epaymentapi.gsc.com.my` that sp
 XML; TGV's is a JSON API at `api.tgv.com.my`. Both are called the way a browser
 calls them, anonymously.
 
-All six are single-file. The two cinema scrapers and `yt_rss` are standard
+All seven are single-file. The two cinema scrapers and `yt_rss` are standard
 library only. The Goodreads and Meetup scrapers came in from upstream and still
-use `requests`, and `fourd_scraper` uses it too; their TypeScript ports use
+use `requests`, and `fourd_scraper` and `northport_scraper` use it too; their TypeScript ports use
 `fetch` and need nothing.
 
 **Every one of these has a TypeScript port under `typescript/`.** The ports
