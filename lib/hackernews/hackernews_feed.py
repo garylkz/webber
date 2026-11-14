@@ -11,7 +11,7 @@ Output is one JSON object:
 Every story keeps both its url and its comments_url. The agent that runs this
 script reads the JSON and replies with each title, url, and comments_url.
 
-Usage: hn-feed.py [--page N]   (default: --page 1)
+Usage: hackernews_feed.py [--page N]   (default: --page 1)
 
 Hacker News shows 30 stories on each page. The script prints only the first 10
 of them.

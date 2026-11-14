@@ -12,7 +12,7 @@ Output is one JSON object:
 Every article keeps both its url and its comments_url. The agent that runs this
 script reads the JSON and replies with each title, url, and comments_url.
 
-Usage: rps-feed.py [--start N] [--count M]   (default: every article)
+Usage: rps_feed.py [--start N] [--count M]   (default: every article)
 
 The feed is sorted newest first. --start N is the position to begin at, where 1
 is the newest article. --count M is how many articles to print. Without
@@ -97,7 +97,7 @@ def parse_args(argv):
     The default start is 1. The default count is None, which means every article.
     """
     usage = (
-        "Usage: rps-feed.py [--start N] [--count M], where N and M are 1 or more"
+        "Usage: rps_feed.py [--start N] [--count M], where N and M are 1 or more"
         " (1 is the newest article; without --count, every article is shown)."
     )
     values = {"--start": 1, "--count": None}

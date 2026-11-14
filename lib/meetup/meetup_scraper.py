@@ -28,11 +28,11 @@ supports: query, country, city, state, zip, lat/lon, radius, eventType
 (PHYSICAL|ONLINE|HYBRID), isHappeningNow, and a start/end date range.
 
 Examples:
-  python meetup_scrapper.py                          # nearby upcoming events near KL
-  python meetup_scrapper.py --query python           # keyword filter
-  python meetup_scrapper.py --radius 10 --event-type ONLINE
-  python meetup_scrapper.py --country sg --city "Singapore" --lat 1.3521 --lon 103.8198
-  python meetup_scrapper.py --start-date 2026-08-20 --end-date 2026-09-20 --dump
+  python meetup_scraper.py                          # nearby upcoming events near KL
+  python meetup_scraper.py --query python           # keyword filter
+  python meetup_scraper.py --radius 10 --event-type ONLINE
+  python meetup_scraper.py --country sg --city "Singapore" --lat 1.3521 --lon 103.8198
+  python meetup_scraper.py --start-date 2026-08-20 --end-date 2026-09-20 --dump
 """
 
 import argparse
@@ -52,7 +52,7 @@ URL = "https://www.meetup.com/gql2"
 TIMEOUT = 20
 DELAY = 0.3
 PAGE = 50
-OUT_DIR = Path(__file__).resolve().parent / "out"
+OUT_DIR = Path(__file__).resolve().parents[2] / "out"  # repo-root out/
 
 DEFAULT = {"city": "Kuala Lumpur", "country": "my", "lat": 3.139, "lon": 101.6869}
 DEFAULT_LIST_RADIUS = 25

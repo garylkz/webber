@@ -2,7 +2,7 @@
 """Convert a YouTube channel URL into its RSS feed URL.
 
 Usage:
-    python yt_rss.py <channel-url> [--fetch]
+    python youtube_rss.py <channel-url> [--fetch]
 
 Prints a JSON object on stdout as its only output:
     {"channel_url": ..., "channel_id": ..., "feed_url": ...}
