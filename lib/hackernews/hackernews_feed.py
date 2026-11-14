@@ -22,6 +22,7 @@ Uses the requests library to fetch the front page and parse the HTML.
 import argparse
 import json
 import re
+import sys
 from html import unescape
 
 import requests
@@ -30,6 +31,12 @@ HN_BASE = "https://news.ycombinator.com"
 OUT_FILE = "/tmp/hn-stories.json"
 TIMEOUT = (10, 30)
 MAX_STORIES = 10
+
+
+def fail(message, status=1):
+    """Print an error as JSON on stdout, where the agent reads, and exit."""
+    print(json.dumps({"error": message}, ensure_ascii=False))
+    sys.exit(status)
 
 
 def fetch_hacker_news(page=1):
@@ -42,12 +49,10 @@ def fetch_hacker_news(page=1):
             headers={"User-Agent": "hacker-news-script/1.0"},
         )
     except requests.RequestException as error:
-        print(f"Error fetching Hacker News: {error}")
-        return None
+        fail(f"Error fetching Hacker News: {error}")
 
     if not response.ok:
-        print(f"Error fetching Hacker News: HTTP {response.status_code}")
-        return None
+        fail(f"Error fetching Hacker News: HTTP {response.status_code}")
 
     return response.text
 
@@ -94,13 +99,11 @@ def main():
 
     html = fetch_hacker_news(page)
     if not html:
-        print("Could not fetch HTML from Hacker News.")
-        return
+        fail("Could not fetch HTML from Hacker News.")
 
     stories = parse_stories(html)[:MAX_STORIES]
     if not stories:
-        print("No stories found or an error occurred while parsing.")
-        return
+        fail("No stories found or an error occurred while parsing.")
 
     text = format_output(stories, page)
     # Persist the exact text so a wrong URL in the reply can be fixed by

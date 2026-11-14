@@ -348,7 +348,7 @@ def main(argv: list[str] | None = None) -> None:
     parser.add_argument("--to", dest="end", metavar="DATE", help="with --from, the last date (default: today)")
     parser.add_argument("--all", action="store_true", help="every draw ever published (slow for Da Ma Cai)")
     parser.add_argument("--operator", choices=(*OPERATORS, "all"), default="all", help="one operator only")
-    parser.add_argument("--out", metavar="FILE", help="write the JSON to this file instead of stdout")
+    parser.add_argument("--out", metavar="FILE", help="write the JSON to this file; stdout gets a JSON summary")
     args = parser.parse_args(argv)
 
     operators = OPERATORS if args.operator == "all" else (args.operator,)
@@ -388,7 +388,7 @@ def main(argv: list[str] | None = None) -> None:
 
     if args.out:
         path = save_json(draws, args.out)
-        print(f"saved {len(draws)} draws to {path}", file=sys.stderr)
+        print(json.dumps({"draws": len(draws), "file": str(path)}))
     else:
         print(to_json(draws))
 

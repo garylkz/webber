@@ -35,18 +35,22 @@ OUT_FILE = "/tmp/rps-articles.json"
 TIMEOUT = 30
 
 
+def fail(message, status=1):
+    """Print an error as JSON on stdout, where the agent reads, and exit."""
+    print(json.dumps({"error": message}, ensure_ascii=False))
+    sys.exit(status)
+
+
 def fetch_feed():
-    """Fetch the feed XML as bytes, or None after printing why it failed."""
+    """Fetch the feed XML as bytes; on failure, report it and exit."""
     try:
         response = requests.get(
             FEED_URL, timeout=TIMEOUT, headers={"User-Agent": "Mozilla/5.0"}
         )
     except requests.RequestException as error:
-        print(f"Error fetching Rock Paper Shotgun: {error}")
-        return None
+        fail(f"Error fetching Rock Paper Shotgun: {error}")
     if not response.ok:
-        print(f"Error fetching Rock Paper Shotgun: HTTP {response.status_code}")
-        return None
+        fail(f"Error fetching Rock Paper Shotgun: HTTP {response.status_code}")
     return response.content
 
 
@@ -106,8 +110,7 @@ def parse_args(argv):
     while args:
         flag = args.pop(0)
         if flag not in values or flag in seen or not args or not args[0].isdigit() or int(args[0]) < 1:
-            print(usage)
-            sys.exit(2)
+            fail(usage, status=2)
         values[flag] = int(args.pop(0))
         seen.add(flag)
     return values["--start"], values["--count"]
@@ -118,22 +121,18 @@ def main():
 
     xml_bytes = fetch_feed()
     if not xml_bytes:
-        print("Could not fetch the feed from Rock Paper Shotgun.")
-        return
+        fail("Could not fetch the feed from Rock Paper Shotgun.")
     try:
         articles = parse_articles(xml_bytes)
     except ET.ParseError as error:
-        print(f"Error parsing the feed: {error}")
-        return
+        fail(f"Error parsing the feed: {error}")
     if not articles:
-        print("No articles found or an error occurred while parsing.")
-        return
+        fail("No articles found or an error occurred while parsing.")
 
     articles = sorted(articles, key=lambda a: a["published"], reverse=True)
     total = len(articles)
     if start > total:
-        print(f"No articles at position {start}; the feed has {total}.")
-        return
+        fail(f"No articles at position {start}; the feed has {total}.")
     end = total if count is None else start - 1 + count
     articles = articles[start - 1 : end]
     text = format_output(articles, start, total)
