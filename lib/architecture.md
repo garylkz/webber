@@ -122,7 +122,7 @@ The two **feed listers**, `hacker_news_feed.py` and `rps_feed.py`, share one con
 - Tests marked `live` hit the real sites (`pytest -m live`). They pick dates from
   the site's own list of trading days, because a cinema's national run rolls over
   around midnight Malaysia time.
-- `goodreads`, `meetup`, `youtube`, `hacker-news` and `rps` have
+- `goodreads`, `meetup`, `hacker-news` and `rps` have
   no offline tests.
 
 ## Known limitations

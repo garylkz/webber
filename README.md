@@ -12,7 +12,7 @@ and for AI agents.
 | `lib/northport/` | `northport_enquiry.py` | Northport container, B/L, vessel and booking enquiries |
 | `lib/meetup/` | `meetup_events.py` | Meetup events near a city or across a country |
 | `lib/goodreads/` | `goodreads_shelf.py` | A Goodreads user's shelf |
-| `lib/youtube/` | `youtube_rss.py` | A YouTube channel's RSS feed URL |
+| `lib/youtube/` | `youtube_rss.py`, `youtube_channel.py` | A YouTube channel's RSS feed URL, and a channel found by name |
 | `lib/hacker-news/` | `hacker_news_feed.py`, `hacker_news_comments.sh` | Hacker News front page and comment threads |
 | `lib/rps/` | `rps_feed.py`, `rps_article.py` | Rock Paper Shotgun feed and articles |
 | `lib/air-quality/` | `air_quality_report.py` | Air quality of a place, with the official Malaysian reading |

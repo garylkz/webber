@@ -2,16 +2,19 @@
 id: youtube
 type: module-design
 status: draft
-title: YouTube RSS Scraper
+title: YouTube Tools
 parent: webber-architecture
 ---
 
-# YouTube RSS Scraper: Specification
+# YouTube Tools: Specification
 
-A YouTube channel URL turned into that channel's official RSS feed URL. This
-document describes what each function does.
+Two scripts about YouTube channels. This document describes what each function
+does.
 
-Implemented in [youtube_rss.py](youtube_rss.py).
+- [youtube_rss.py](youtube_rss.py) turns a channel URL into the channel's
+  official RSS feed URL.
+- [youtube_channel.py](youtube_channel.py) finds a channel by a creator's
+  name. Its section is at the end of this document.
 
 ---
 
@@ -148,3 +151,68 @@ to. It has no counterpart on either of them: it resolves a URL and stops, where
 they query a site and return records.
 
 `channel_id_from_url` returns `None` when the page yields no channel id.
+
+---
+
+## youtube_channel.py
+
+A creator's name turned into one YouTube channel, or the close candidates when
+the match is not clear. It started as the owner's global `yt-channel.sh` agent
+script and was moved here in Python.
+
+```bash
+lib/.venv/bin/python lib/youtube/youtube_channel.py "alex meyers"
+lib/.venv/bin/python lib/youtube/youtube_channel.py "科學漫聊"
+```
+
+```json
+{"status": "found", "name": "Alex Meyers", "channel": "@AlexMeyersVids",
+ "subscribers": "3.92M subscribers", "url": "https://www.youtube.com/@AlexMeyersVids"}
+{"status": "ambiguous", "query": "alex",
+ "candidates": [{"name": "alex ♡", "channel": "@Alexalexalexalexalexalexalex", "subscribers": "1.18M subscribers"}]}
+```
+
+`channel` is the @handle, or the UC channel id when the channel has no handle,
+and `url` follows it. When nothing comes close the script prints
+`No channel found for "<name>".` on stderr and exits 1.
+
+### The clear-match rule
+
+1. One request: YouTube's search with its channels-only filter. The channel
+   results are read out of the page's `ytInitialData`, and the first five are
+   kept.
+2. A result is **close** when its name or handle, with case, spaces and
+   punctuation removed, contains the query or is contained in it.
+3. The close result with the most subscribers is **found** when its name or
+   handle equals the query and it has at least 5 times the subscribers of every
+   other close result. Otherwise the close results come back as **ambiguous**,
+   most subscribers first, and the caller asks the person which one.
+
+Traditional and Simplified Chinese count as the same: `科學漫聊` matches
+`科学漫聊`. The script asks macOS's own Hant-Hans transform through
+`osascript`, only when a text holds Chinese. On another system the step is
+skipped and the texts are compared as written. This is a local call, not an
+HTTP request, so the rule that every request goes through `requests` holds.
+
+### Functions
+
+- `search_page(name)`: the search HTML, with `requests`.
+- `parse_channels(html)`: every channel result, in page order. Pure.
+- `simplified_chinese(texts)`: `{text: Simplified form}` on macOS, else `{}`.
+- `subscriber_count(text)`: `"3.93M subscribers"` as `3930000.0`.
+- `choose(query, channels, simplified)`: the rule above. Pure.
+- `find_channel(name)`: the whole run.
+
+### Known limit
+
+YouTube's ranking of the first five results changes between requests. A
+channel just outside them, such as a big namesake, can be missed, and then a
+smaller exact match can clear the five-times lead. `alex` is an example: some
+searches return it as ambiguous and some as found. The global script behaved
+the same way.
+
+### Testing
+
+`test_youtube.py` runs `parse_channels` and `choose` over a real search for
+"alex meyers" in `fixtures/`, cut down to its channel results, and over small
+made-up lists for the ambiguous, Chinese and no-match cases.
