@@ -1,5 +1,5 @@
 ---
-id: googlemaps
+id: google-maps
 type: module-design
 status: draft
 title: Google Maps Link Expander
@@ -12,14 +12,14 @@ A short Google Maps link (`maps.app.goo.gl/...`) turned into a full
 `google.com/maps/place` link. It started as the owner's global `google-map.sh`
 agent script and was moved here in Python.
 
-Implemented in [googlemaps_link.py](googlemaps_link.py).
+Implemented in [google_maps_link.py](google_maps_link.py).
 
 ---
 
 ## Usage
 
 ```bash
-lib/.venv/bin/python lib/googlemaps/googlemaps_link.py "https://maps.app.goo.gl/XXXX"
+lib/.venv/bin/python lib/google-maps/google_maps_link.py "https://maps.app.goo.gl/XXXX"
 ```
 
 ## Output
@@ -54,6 +54,6 @@ lib/.venv/bin/python lib/googlemaps/googlemaps_link.py "https://maps.app.goo.gl/
 
 ## Testing
 
-`test_googlemaps.py` runs `classify` over each kind of redirect, the host
+`test_google_maps.py` runs `classify` over each kind of redirect, the host
 check, and the path-only redirect with `requests.head` replaced. Nothing in it
 touches the network.

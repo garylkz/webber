@@ -1,4 +1,4 @@
-"""Offline tests for northport_scraper.py - run against saved enquiry fragments."""
+"""Offline tests for northport_enquiry.py - run against saved enquiry fragments."""
 
 from __future__ import annotations
 
@@ -6,8 +6,8 @@ from pathlib import Path
 
 import pytest
 
-import northport_scraper as northport
-from northport_scraper import parse_booking, parse_rows
+import northport_enquiry as northport
+from northport_enquiry import parse_booking, parse_rows
 
 FIXTURES = Path(__file__).parent / "fixtures"
 

@@ -11,7 +11,7 @@ parent: webber-architecture
 Malaysian 4D draw results, read from the operators' own sites. This document
 describes what each function does.
 
-Implemented in [fourd_scraper.py](fourd_scraper.py).
+Implemented in [fourd_results.py](fourd_results.py).
 
 ---
 
@@ -21,13 +21,13 @@ The CLI:
 
 ```bash
 cd lib/fourd
-python fourd_scraper.py                       # latest draw, every operator
-python fourd_scraper.py 2026-10-25            # one draw date
-python fourd_scraper.py --recent 10           # the last 10 draw dates
-python fourd_scraper.py --operator magnum     # one operator only
-python fourd_scraper.py --from 2024-01-01 --to 2024-12-31   # any past range
-python fourd_scraper.py --from 2026-10-01     # from a date up to today
-python fourd_scraper.py --all --out out/fourd_all.json   # every draw, to a file
+python fourd_results.py                       # latest draw, every operator
+python fourd_results.py 2026-10-25            # one draw date
+python fourd_results.py --recent 10           # the last 10 draw dates
+python fourd_results.py --operator magnum     # one operator only
+python fourd_results.py --from 2024-01-01 --to 2024-12-31   # any past range
+python fourd_results.py --from 2026-10-01     # from a date up to today
+python fourd_results.py --all --out out/fourd_all.json   # every draw, to a file
 ```
 
 A date, `--recent`, `--from` and `--all` are alternatives; give at most one.
@@ -41,7 +41,7 @@ already in webber's `.gitignore`.)
 Imported:
 
 ```python
-import fourd_scraper as fourd
+import fourd_results as fourd
 
 draws = fourd.draws_on("2026-10-25")
 history = fourd.recent(20)

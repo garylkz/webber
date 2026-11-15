@@ -2,12 +2,12 @@
 """Malaysian 4D draw results from the operators' own sites.
 
 Usage:
-    python fourd_scraper.py                     # latest draw, every operator
-    python fourd_scraper.py 2026-10-25          # one draw date
-    python fourd_scraper.py --recent 10         # the last 10 draw dates
-    python fourd_scraper.py --from 2024-01-01 --to 2024-12-31   # a date range
-    python fourd_scraper.py --operator magnum   # one operator only
-    python fourd_scraper.py --all --out all.json   # every draw ever, saved to a file
+    python fourd_results.py                     # latest draw, every operator
+    python fourd_results.py 2026-10-25          # one draw date
+    python fourd_results.py --recent 10         # the last 10 draw dates
+    python fourd_results.py --from 2024-01-01 --to 2024-12-31   # a date range
+    python fourd_results.py --operator magnum   # one operator only
+    python fourd_results.py --all --out all.json   # every draw ever, saved to a file
 
 Prints a JSON object on stdout as its only output:
     {"draws": [{"operator", "draw_no", "draw_date", "draw_day", "first",

@@ -1,6 +1,6 @@
 #!/bin/sh
 #Fetch a Hacker News comment thread and print it as one JSON object.
-#Usage: hackernews_comments.sh <item url | item id>
+#Usage: hacker_news_comments.sh <item url | item id>
 #The JSON holds the id, title, points, url, comments_url, the number of
 #top-level comments, how many comments are shown, the depth limit, and the
 #comment tree: each comment has its text and its replies. When the only
@@ -18,11 +18,11 @@ item=
 while [ $# -gt 0 ]; do
   case "$1" in
     -h|--help) sed -n '2,8s/^#//p' "$0"; exit 0 ;;
-    -?*) echo "hackernews_comments: unknown option: $1" >&2; exit 2 ;;
+    -?*) echo "hacker_news_comments: unknown option: $1" >&2; exit 2 ;;
     *) item=$1; shift ;;
   esac
 done
-[ -n "$item" ] || { echo "Usage: hackernews_comments.sh <item url | item id>" >&2; exit 2; }
+[ -n "$item" ] || { echo "Usage: hacker_news_comments.sh <item url | item id>" >&2; exit 2; }
 
 #Accept an item url or a bare item id.
 id=$(printf '%s\n' "$item" | sed -n 's/.*id=\([0-9][0-9]*\).*/\1/p' | sed -n 1p)

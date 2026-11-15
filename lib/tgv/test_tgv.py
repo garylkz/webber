@@ -1,4 +1,4 @@
-"""Offline tests for tgv_scraper.py - run against saved copies of the live API replies."""
+"""Offline tests for tgv_cinema.py - run against saved copies of the live API replies."""
 
 from __future__ import annotations
 
@@ -8,8 +8,8 @@ from pathlib import Path
 
 import pytest
 
-import tgv_scraper as tgv
-from tgv_scraper import (
+import tgv_cinema as tgv
+from tgv_cinema import (
     Cinema,
     Movie,
     Seat,

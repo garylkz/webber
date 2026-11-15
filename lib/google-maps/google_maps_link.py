@@ -2,7 +2,7 @@
 """Expand a short Google Maps link into a full google.com/maps/place link.
 
 Usage:
-    python googlemaps_link.py https://maps.app.goo.gl/XXXX
+    python google_maps_link.py https://maps.app.goo.gl/XXXX
 
 Prints a JSON object on stdout as its only output:
     {"short_url": ..., "url": ..., "kind": ...}

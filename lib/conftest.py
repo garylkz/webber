@@ -1,4 +1,4 @@
-"""Put every tool folder on sys.path so tests can `import gsc_scraper`.
+"""Put every tool folder on sys.path so tests can `import gsc_cinema`.
 
 Each tool lives in its own folder under lib/ (lib/gsc/, lib/tgv/, ...). A test
 imports its own tool and, for the cinema contract, the other chain's scraper too.

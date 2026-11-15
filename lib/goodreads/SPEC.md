@@ -1,5 +1,5 @@
 ---
-id: goodread
+id: goodreads
 type: module-design
 status: draft
 title: Goodreads Scraper
@@ -11,7 +11,7 @@ parent: webber-architecture
 A user's bookshelf, read through the public RSS endpoint Goodreads left open after
 retiring its official API. This document describes what each function does.
 
-Implemented in [goodread_scraper.py](goodread_scraper.py).
+Implemented in [goodreads_shelf.py](goodreads_shelf.py).
 
 ---
 
@@ -20,10 +20,10 @@ Implemented in [goodread_scraper.py](goodread_scraper.py).
 The CLI:
 
 ```bash
-cd lib/goodread
-python goodread_scraper.py                                  # a default user's read shelf
-python goodread_scraper.py search <name>                    # look up a user id first
-python goodread_scraper.py 12345678 to-read                 # a user id and a shelf
+cd lib/goodreads
+python goodreads_shelf.py                                  # a default user's read shelf
+python goodreads_shelf.py search <name>                    # look up a user id first
+python goodreads_shelf.py 12345678 to-read                 # a user id and a shelf
 ```
 
 Output is written to `out/gr_books_{id}_{shelf}_{timestamp}.json`. Pages are
@@ -34,7 +34,7 @@ Imported, it takes two calls, each with a `requests` session first:
 
 ```python
 import requests
-import goodread_scraper as gr
+import goodreads_shelf as gr
 
 session = requests.Session()
 books, pages = gr.scrape(session, "1123497", "read")

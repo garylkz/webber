@@ -3,21 +3,21 @@
 
 Single file. Needs `requests`, nothing else.
 
-    python gsc_scraper.py                          # movies now showing
-    python gsc_scraper.py coming-soon
-    python gsc_scraper.py advance-sales
-    python gsc_scraper.py --all                    # every listing, counted
-    python gsc_scraper.py --movies                 # the booking catalogue
-    python gsc_scraper.py 235                      # one cinema, today
-    python gsc_scraper.py 235 2026-10-14           # one cinema, one date
-    python gsc_scraper.py --cinemas                # every outlet
-    python gsc_scraper.py --dates                  # dates that have sessions
-    python gsc_scraper.py --movie digger           # one film, every cinema
-    python gsc_scraper.py --detail munafik-melawan-iblis
-    python gsc_scraper.py 235 --seats              # add seat availability
-    python gsc_scraper.py 235 --prices             # add ticket prices
-    python gsc_scraper.py 235 --seat-map --time 10:50AM
-    python gsc_scraper.py --no-delay               # skip the polite pause
+    python gsc_cinema.py                          # movies now showing
+    python gsc_cinema.py coming-soon
+    python gsc_cinema.py advance-sales
+    python gsc_cinema.py --all                    # every listing, counted
+    python gsc_cinema.py --movies                 # the booking catalogue
+    python gsc_cinema.py 235                      # one cinema, today
+    python gsc_cinema.py 235 2026-10-14           # one cinema, one date
+    python gsc_cinema.py --cinemas                # every outlet
+    python gsc_cinema.py --dates                  # dates that have sessions
+    python gsc_cinema.py --movie digger           # one film, every cinema
+    python gsc_cinema.py --detail munafik-melawan-iblis
+    python gsc_cinema.py 235 --seats              # add seat availability
+    python gsc_cinema.py 235 --prices             # add ticket prices
+    python gsc_cinema.py 235 --seat-map --time 10:50AM
+    python gsc_cinema.py --no-delay               # skip the polite pause
 
 Every result branch prints JSON on stdout: pretty, utf-8,
 ensure_ascii=False, and nothing else on stdout. Progress, warnings and
@@ -27,7 +27,7 @@ still draws the text version for callers who want it).
 
 Also importable:
 
-    import gsc_scraper as gsc
+    import gsc_cinema as gsc
     gsc.listing("now-showing")
     gsc.movies()
     gsc.cinemas()
@@ -2637,9 +2637,9 @@ def main() -> None:
     parser = argparse.ArgumentParser(
         description="Showtimes, prices and seat maps for GSC Cinemas Malaysia.",
         epilog=(
-            "examples:  python gsc_scraper.py 235    "
-            "python gsc_scraper.py 235 2026-10-14 --prices    "
-            "python gsc_scraper.py --movie digger"
+            "examples:  python gsc_cinema.py 235    "
+            "python gsc_cinema.py 235 2026-10-14 --prices    "
+            "python gsc_cinema.py --movie digger"
         ),
     )
     parser.add_argument("cinema", nargs="?", help="cinema id, slug or name (default: now showing)")

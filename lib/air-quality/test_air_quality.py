@@ -1,4 +1,4 @@
-"""Offline tests for airquality_report: bands, places, the nearest station and the report.
+"""Offline tests for air_quality_report: bands, places, the nearest station and the report.
 
 The fixtures are real responses for Petaling Jaya: the Open-Meteo geocoder, the
 Open-Meteo air quality API with six hours ahead, and a few APIMS stations cut
@@ -10,7 +10,7 @@ from pathlib import Path
 
 import pytest
 
-import airquality_report as a
+import air_quality_report as a
 
 FIXTURES = Path(__file__).parent / "fixtures"
 
@@ -19,9 +19,9 @@ def load(name):
     return json.loads((FIXTURES / name).read_text(encoding="utf-8"))
 
 
-GEOCODE = load("airquality_geocode_petaling_jaya.json")
-AIR = load("airquality_air_petaling_jaya.json")
-APIMS = load("airquality_apims_sample.json")
+GEOCODE = load("air_quality_geocode_petaling_jaya.json")
+AIR = load("air_quality_air_petaling_jaya.json")
+APIMS = load("air_quality_apims_sample.json")
 
 
 # --- bands -------------------------------------------------------------------

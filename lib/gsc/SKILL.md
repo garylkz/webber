@@ -9,7 +9,7 @@ Run the scraper from the webber repo root. It prints JSON on stdout and nothing
 else; progress and errors go to stderr.
 
 ```sh
-lib/.venv/bin/python lib/gsc/gsc_scraper.py <args>
+lib/.venv/bin/python lib/gsc/gsc_cinema.py <args>
 ```
 
 ## Pick the command

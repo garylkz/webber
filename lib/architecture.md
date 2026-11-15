@@ -30,14 +30,22 @@ contract's job (below), not a shared module's.
 One name per tool, used everywhere, so a tool's folder, spec, scripts, tests
 and skill can be found from any one of them.
 
-- **Folder:** the source's short name, lowercase, no separators (`gsc`,
-  `fourd`, `hackernews`, `rps`).
+- **Folder:** the source's name as people say it, lowercase (`gsc`, `fourd`,
+  `goodreads`, `rps`). A name of two words takes a hyphen (`hacker-news`,
+  `air-quality`, `google-maps`). A common short form is fine (`rps`); an
+  invented one is not.
 - **Spec id:** the folder name. The two root specs keep `webber-goal` and
   `webber-architecture`.
-- **Script:** `<folder>_<job>`, where the job says what it does:
-  `_scraper` for a library scraper (`gsc_scraper.py`), otherwise a short noun
-  (`hackernews_feed.py`, `rps_article.py`, `youtube_rss.py`). A shell script
-  ends in `.sh` (`hackernews_comments.sh`).
+- **Script:** `<source>_<output>`: the folder name with its hyphen written as
+  an underscore, since a Python module name cannot hold a hyphen, then a short
+  noun for what the script returns (`gsc_cinema.py`, `fourd_results.py`,
+  `goodreads_shelf.py`, `hacker_news_feed.py`, `air_quality_report.py`). The
+  prefix stays even inside its folder: every folder is on the import path, so
+  two `feed.py` files would collide, and a copied file still says which source
+  it reads. A shell script ends in `.sh` (`hacker_news_comments.sh`).
+- **MCP tool:** the script's name without `.py`, so a tool and its script
+  match (`fourd_results`, `rps_feed`). The `cinema_*` tools are the exception:
+  each serves both `gsc` and `tgv` through its `chain` argument.
 - **Tests:** `test_<folder>.py`, or `test_<folder>_<topic>.py` when a tool has
   several (`test_gsc_api.py`, `test_gsc_parsers.py`). Tests that hit the real
   site are `test_<folder>_live.py`.
@@ -65,9 +73,9 @@ The module specs describe only where a tool departs from them.
   third-party dependency. Nothing uses `urllib.request` or shells out to `curl`.
   One client means one way to handle errors and timeouts, and `requests` brings
   its own CA bundle, so HTTPS works on an install that has no system
-  certificate store. The exceptions are `hackernews_comments.sh` and `rps_article.py`,
+  certificate store. The exceptions are `hacker_news_comments.sh` and `rps_article.py`,
   which started as copies of the owner's global agent scripts and use `curl`
-  (see `hackernews` and `rps`).
+  (see `hacker-news` and `rps`).
 - **Errors.** Bad arguments are rejected before any request is made. A source
   that can't be reached is reported as such, never shown as an empty result.
 
@@ -87,12 +95,12 @@ No other tool takes part in this contract. Each one has its own record shape.
 
 ## Agent news tools
 
-`hackernews` and `rps` let an agent show the owner the latest items from a news
+`hacker-news` and `rps` let an agent show the owner the latest items from a news
 source and then go deeper into one (a Hacker News comment thread, a full Rock
 Paper Shotgun article). They are agent tools, not library scrapers: their
 output is for a person, through the agent, and nothing imports them.
 
-The two **feed listers**, `hackernews_feed.py` and `rps_feed.py`, share one contract:
+The two **feed listers**, `hacker_news_feed.py` and `rps_feed.py`, share one contract:
 
 - **Every item carries `title`, `url` and `comments_url`, and both URLs are
   always present.** The agent's reply shows each item with both links.
@@ -114,7 +122,7 @@ The two **feed listers**, `hackernews_feed.py` and `rps_feed.py`, share one cont
 - Tests marked `live` hit the real sites (`pytest -m live`). They pick dates from
   the site's own list of trading days, because a cinema's national run rolls over
   around midnight Malaysia time.
-- `goodread`, `meetup`, `youtube`, `hackernews` and `rps` have
+- `goodreads`, `meetup`, `youtube`, `hacker-news` and `rps` have
   no offline tests.
 
 ## Known limitations

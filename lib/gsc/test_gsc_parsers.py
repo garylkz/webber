@@ -1,4 +1,4 @@
-"""Offline tests for gsc_scraper.py - run against saved copies of the live HTML."""
+"""Offline tests for gsc_cinema.py - run against saved copies of the live HTML."""
 
 from __future__ import annotations
 
@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pytest
 
-from gsc_scraper import (
+from gsc_cinema import (
     Cinema,
     Movie,
     by_city,

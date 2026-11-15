@@ -2,10 +2,10 @@
 """Northport (Port Klang) e-NP2 CAS-N4 enquiries: container, B/L, vessel, booking.
 
 Usage:
-    python northport_scraper.py container ABCD1234567   # one container
-    python northport_scraper.py bl SOMEBL123            # one bill of lading
-    python northport_scraper.py vessel MV-EXAMPLE       # one vessel or SCN
-    python northport_scraper.py booking BOOKING123      # one booking, with its containers
+    python northport_enquiry.py container ABCD1234567   # one container
+    python northport_enquiry.py bl SOMEBL123            # one bill of lading
+    python northport_enquiry.py vessel MV-EXAMPLE       # one vessel or SCN
+    python northport_enquiry.py booking BOOKING123      # one booking, with its containers
 
 Prints a JSON object on stdout as its only output: the portal's own labels
 mapped to their values. A booking also carries "Containers", a list of

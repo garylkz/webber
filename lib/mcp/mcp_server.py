@@ -98,7 +98,7 @@ def python(script):
     return [sys.executable, str(LIB / script)]
 
 
-SCRIPT = {"gsc": "gsc/gsc_scraper.py", "tgv": "tgv/tgv_scraper.py"}
+SCRIPT = {"gsc": "gsc/gsc_cinema.py", "tgv": "tgv/tgv_cinema.py"}
 
 
 def gsc_only(args, *keys):
@@ -141,7 +141,7 @@ def build_cinema_seat_map(args):
 
 
 def build_gsc_films(args):
-    argv = python("gsc/gsc_scraper.py")
+    argv = python("gsc/gsc_cinema.py")
     if args.get("detail"):
         if args.get("listing"):
             raise ToolError("give either listing or detail, not both")
@@ -158,17 +158,17 @@ def build_fourd_results(args):
         raise ToolError("give only one of date, recent or from_date")
     if args.get("to_date") and not args.get("from_date"):
         raise ToolError("to_date needs from_date")
-    argv = python("fourd/fourd_scraper.py") + options(args, {
+    argv = python("fourd/fourd_results.py") + options(args, {
         "recent": "--recent", "from_date": "--from", "to_date": "--to", "operator": "--operator"})
     return argv + ([args["date"]] if args.get("date") else [])
 
 
 def build_northport_enquiry(args):
-    return python("northport/northport_scraper.py") + [args["kind"], args["value"]]
+    return python("northport/northport_enquiry.py") + [args["kind"], args["value"]]
 
 
 def build_meetup_events(args):
-    return python("meetup/meetup_scraper.py") + options(args, {
+    return python("meetup/meetup_events.py") + options(args, {
         "query": "--query", "country": "--country", "city": "--city", "state": "--state",
         "zip": "--zip", "lat": "--lat", "lon": "--lon", "radius": "--radius",
         "event_type": "--event-type", "happening_now": "--happening-now",
@@ -177,19 +177,19 @@ def build_meetup_events(args):
 
 
 def build_goodreads_shelf(args):
-    return python("goodread/goodread_scraper.py") + [args["user_id"], args.get("shelf") or "read"]
+    return python("goodreads/goodreads_shelf.py") + [args["user_id"], args.get("shelf") or "read"]
 
 
 def build_youtube_rss(args):
     return python("youtube/youtube_rss.py") + options(args, {"fetch": "--fetch"}) + [args["url"]]
 
 
-def build_hackernews_feed(args):
-    return python("hackernews/hackernews_feed.py") + options(args, {"page": "--page"})
+def build_hacker_news_feed(args):
+    return python("hacker-news/hacker_news_feed.py") + options(args, {"page": "--page"})
 
 
-def build_hackernews_comments(args):
-    return ["sh", str(LIB / "hackernews/hackernews_comments.sh"), args["item"]]
+def build_hacker_news_comments(args):
+    return ["sh", str(LIB / "hacker-news/hacker_news_comments.sh"), args["item"]]
 
 
 def build_rps_feed(args):
@@ -205,18 +205,18 @@ def build_rps_article(args):
     return python("rps/rps_article.py") + [args["url"]]
 
 
-def build_air_quality(args):
+def build_air_quality_report(args):
     picks = [k for k in ("place", "address", "lat") if args.get(k) is not None]
     if len(picks) > 1:
         raise ToolError("give only one of place, address or lat/lon")
     if (args.get("lat") is None) != (args.get("lon") is None):
         raise ToolError("lat and lon go together")
-    return python("airquality/airquality_report.py") + options(args, {
+    return python("air-quality/air_quality_report.py") + options(args, {
         "place": "--place", "address": "--address", "lat": "--lat", "lon": "--lon", "hours": "--hours"})
 
 
-def build_googlemaps_link(args):
-    return python("googlemaps/googlemaps_link.py") + [args["url"]]
+def build_google_maps_link(args):
+    return python("google-maps/google_maps_link.py") + [args["url"]]
 
 
 # --- running a tool ----------------------------------------------------------
@@ -358,14 +358,14 @@ async def youtube_rss(
     return await result(build_youtube_rss, locals())
 
 
-async def hackernews_feed(page: number("front page number (default: 1)") = None) -> CallToolResult:
+async def hacker_news_feed(page: number("front page number (default: 1)") = None) -> CallToolResult:
     """Top stories on one page of the Hacker News front page."""
-    return await result(build_hackernews_feed, locals())
+    return await result(build_hacker_news_feed, locals())
 
 
-async def hackernews_comments(item: needed_text("item URL or numeric item id", HN_ITEM)) -> CallToolResult:
+async def hacker_news_comments(item: needed_text("item URL or numeric item id", HN_ITEM)) -> CallToolResult:
     """One Hacker News comment thread as a tree (trimmed to a depth and a comment count)."""
-    return await result(build_hackernews_comments, locals())
+    return await result(build_hacker_news_comments, locals())
 
 
 async def rps_feed(
@@ -381,7 +381,7 @@ async def rps_article(url: needed_text("a rockpapershotgun.com article URL", RPS
     return await result(build_rps_article, locals())
 
 
-async def air_quality(
+async def air_quality_report(
     place: text("a city or district (default: Petaling Jaya)", NOT_OPTION) = None,
     address: text("a street address, narrowed down until the geocoder knows it", NOT_OPTION) = None,
     lat: Annotated[Optional[float], Field(description="latitude, with lon", ge=-90, le=90)] = None,
@@ -390,22 +390,22 @@ async def air_quality(
                                           strict=True)] = None,
 ) -> CallToolResult:
     """Air quality of a place now: US and European AQI with bands, six pollutants and advice. Inside Malaysia it adds the official reading of the nearest DOE APIMS station (official_value, official_band). Quote the bands and advice as given."""
-    return await result(build_air_quality, locals())
+    return await result(build_air_quality_report, locals())
 
 
-async def googlemaps_link(
+async def google_maps_link(
     url: needed_text("a short Google Maps link, such as https://maps.app.goo.gl/...", MAPS_SHORT),
 ) -> CallToolResult:
     """Expand a short Google Maps link into a full google.com/maps/place link. kind is place, place_id, coordinates (the pin resolves to the nearest address), query, or redirect."""
-    return await result(build_googlemaps_link, locals())
+    return await result(build_google_maps_link, locals())
 
 
 TOOLS = [
-    ("airquality", air_quality), ("googlemaps", googlemaps_link),
+    ("air-quality", air_quality_report), ("google-maps", google_maps_link),
     ("cinema", cinema_list), ("cinema", cinema_showtimes), ("cinema", cinema_seat_map), ("cinema", gsc_films),
     ("fourd", fourd_results), ("northport", northport_enquiry), ("meetup", meetup_events),
     ("goodreads", goodreads_shelf), ("youtube", youtube_rss),
-    ("hackernews", hackernews_feed), ("hackernews", hackernews_comments),
+    ("hacker-news", hacker_news_feed), ("hacker-news", hacker_news_comments),
     ("rps", rps_feed), ("rps", rps_article),
 ]
 GROUPS = sorted({group for group, _ in TOOLS})

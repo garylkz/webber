@@ -43,10 +43,10 @@ How an agent runs the scraper is in [SKILL.md](SKILL.md).
 ## Usage
 
 The CLIs and the importable functions live in
-[gsc_scraper.py](gsc_scraper.py) and
-[tgv_scraper.py](../tgv/tgv_scraper.py):
-`gsc_scraper` takes `cinema` / `date` / `--movie` /
-`--seats` / `--seat-map` / `--prices`; `tgv_scraper` takes `BU0` /
+[gsc_cinema.py](gsc_cinema.py) and
+[tgv_cinema.py](../tgv/tgv_cinema.py):
+`gsc_cinema` takes `cinema` / `date` / `--movie` /
+`--seats` / `--seat-map` / `--prices`; `tgv_cinema` takes `BU0` /
 `--cinemas` / `--movie` / `--seats`. The specs (`lib/gsc/SPEC.md`,
 `lib/tgv/SPEC.md`) describe the behaviour once.
 

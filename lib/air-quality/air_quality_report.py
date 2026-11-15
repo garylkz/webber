@@ -2,10 +2,10 @@
 """Report the air quality of a place now, and optionally of the next hours.
 
 Usage:
-    python airquality_report.py                                # Petaling Jaya
-    python airquality_report.py --place "Kuala Lumpur"
-    python airquality_report.py --address "12 Jalan SS 2/24, 47300 Petaling Jaya, Selangor"
-    python airquality_report.py --lat 3.1 --lon 101.6 --hours 6
+    python air_quality_report.py                                # Petaling Jaya
+    python air_quality_report.py --place "Kuala Lumpur"
+    python air_quality_report.py --address "12 Jalan SS 2/24, 47300 Petaling Jaya, Selangor"
+    python air_quality_report.py --lat 3.1 --lon 101.6 --hours 6
 
 Prints one JSON object on stdout as its only output. The place is geocoded
 with Open-Meteo, and its readings come from the Open-Meteo air quality API.

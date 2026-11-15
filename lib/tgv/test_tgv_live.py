@@ -1,4 +1,4 @@
-"""Live network tests for tgv_scraper.py.
+"""Live network tests for tgv_cinema.py.
 
 Skipped by default. Run them with::
 
@@ -12,7 +12,7 @@ from __future__ import annotations
 
 import pytest
 
-import tgv_scraper as tgv
+import tgv_cinema as tgv
 
 pytestmark = pytest.mark.live
 

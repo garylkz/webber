@@ -28,11 +28,11 @@ supports: query, country, city, state, zip, lat/lon, radius, eventType
 (PHYSICAL|ONLINE|HYBRID), isHappeningNow, and a start/end date range.
 
 Examples:
-  python meetup_scraper.py                          # nearby upcoming events near KL
-  python meetup_scraper.py --query python           # keyword filter
-  python meetup_scraper.py --radius 10 --event-type ONLINE
-  python meetup_scraper.py --country sg --city "Singapore" --lat 1.3521 --lon 103.8198
-  python meetup_scraper.py --start-date 2026-08-20 --end-date 2026-09-20 --dump
+  python meetup_events.py                          # nearby upcoming events near KL
+  python meetup_events.py --query python           # keyword filter
+  python meetup_events.py --radius 10 --event-type ONLINE
+  python meetup_events.py --country sg --city "Singapore" --lat 1.3521 --lon 103.8198
+  python meetup_events.py --start-date 2026-08-20 --end-date 2026-09-20 --dump
 """
 
 import argparse

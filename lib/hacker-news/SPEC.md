@@ -1,5 +1,5 @@
 ---
-id: hackernews
+id: hacker-news
 type: module-design
 title: Hacker News agent tools
 parent: webber-architecture
@@ -11,13 +11,13 @@ status: draft
 Lets an agent show the owner what is on Hacker News and what people say about
 a story. Two scripts, used in that order:
 
-- [hackernews_feed.py](hackernews_feed.py) lists the stories on one front page.
-- [hackernews_comments.sh](hackernews_comments.sh) fetches one story's comment thread, for an
+- [hacker_news_feed.py](hacker_news_feed.py) lists the stories on one front page.
+- [hacker_news_comments.sh](hacker_news_comments.sh) fetches one story's comment thread, for an
   agent to summarize.
 
 Nothing imports either one.
 
-## hackernews_feed.py
+## hacker_news_feed.py
 
 Reads the front page HTML and prints the first 10 stories of the requested page
 (`--page N`, default 1). It is a feed lister and follows that contract in
@@ -29,9 +29,9 @@ Reads the front page HTML and prints the first 10 stories of the requested page
 ```
 
 `comments_url` is the story's `item?id=` page on news.ycombinator.com, which is
-what `hackernews_comments.sh` takes. The cache copy is `/tmp/hn-stories.json`.
+what `hacker_news_comments.sh` takes. The cache copy is `/tmp/hn-stories.json`.
 
-## hackernews_comments.sh
+## hacker_news_comments.sh
 
 Takes a `comments_url` or a bare item id and prints the thread as one JSON
 object: the story's id, title, points and URLs, and a tree of comments, each

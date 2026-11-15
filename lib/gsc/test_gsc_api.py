@@ -1,4 +1,4 @@
-"""Offline tests for the GSC booking-service half of gsc_scraper.py.
+"""Offline tests for the GSC booking-service half of gsc_cinema.py.
 
 Everything here runs against saved copies of the live XML and JSON, so the
 whole suite stays offline. The parsers are pure functions over those bodies.
@@ -11,8 +11,8 @@ from pathlib import Path
 
 import pytest
 
-import gsc_scraper as gsc
-import tgv_scraper as tgv
+import gsc_cinema as gsc
+import tgv_cinema as tgv
 
 FIXTURES = Path(__file__).parent / "fixtures"
 
@@ -645,7 +645,7 @@ def test_as_list_takes_either_shape():
     assert gsc.as_list(None) == []
 
 
-# -- the shared contract with tgv_scraper --------------------------------
+# -- the shared contract with tgv_cinema --------------------------------
 
 
 @pytest.mark.parametrize(
@@ -743,8 +743,8 @@ def test_both_expose_the_same_movie_properties():
     ],
 )
 def test_both_scrapers_expose_the_same_function(name):
-    assert hasattr(gsc, name), f"gsc_scraper is missing {name}"
-    assert hasattr(tgv, name), f"tgv_scraper is missing {name}"
+    assert hasattr(gsc, name), f"gsc_cinema is missing {name}"
+    assert hasattr(tgv, name), f"tgv_cinema is missing {name}"
 
 
 @pytest.mark.parametrize(
@@ -763,8 +763,8 @@ def test_the_website_only_functions_are_gsc_only(name, why):
     Each is asserted rather than hidden, because a caller porting between the
     two should be told which names will not resolve.
     """
-    assert hasattr(gsc, name), f"gsc_scraper is missing {name}"
-    assert not hasattr(tgv, name), f"{name} should not be on tgv_scraper: {why}"
+    assert hasattr(gsc, name), f"gsc_cinema is missing {name}"
+    assert not hasattr(tgv, name), f"{name} should not be on tgv_cinema: {why}"
 
 
 @pytest.mark.parametrize(

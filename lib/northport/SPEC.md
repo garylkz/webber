@@ -12,7 +12,7 @@ Container, bill of lading, vessel and booking enquiries against Northport's
 e-NP2 CAS-N4 portal (Port Klang, Navis N4 data). This document describes what
 each function does.
 
-Implemented in [northport_scraper.py](northport_scraper.py).
+Implemented in [northport_enquiry.py](northport_enquiry.py).
 
 ---
 
@@ -22,16 +22,16 @@ The CLI:
 
 ```bash
 cd lib/northport
-python northport_scraper.py container ABCD1234567
-python northport_scraper.py bl SOMEBL123
-python northport_scraper.py vessel MV-EXAMPLE
-python northport_scraper.py booking BOOKING123
+python northport_enquiry.py container ABCD1234567
+python northport_enquiry.py bl SOMEBL123
+python northport_enquiry.py vessel MV-EXAMPLE
+python northport_enquiry.py booking BOOKING123
 ```
 
 Imported:
 
 ```python
-import northport_scraper as northport
+import northport_enquiry as northport
 
 row = northport.get_by_container("ABCD1234567")
 ```

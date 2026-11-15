@@ -37,11 +37,11 @@ relay).
   lookups (`northport`).
 - **Events:** Meetup event search near a city, or swept across a whole country
   (`meetup`).
-- **Books:** a Goodreads user's shelf (`goodread`).
+- **Books:** a Goodreads user's shelf (`goodreads`).
 - **YouTube:** a channel URL turned into its RSS feed URL (`youtube`).
 - **News:** the Hacker News front page and a story's comment thread, and the
   Rock Paper Shotgun feed and a full article, as JSON for an agent to relay
-  (`hackernews`, `rps`).
+  (`hacker-news`, `rps`).
 
 ## Principles
 

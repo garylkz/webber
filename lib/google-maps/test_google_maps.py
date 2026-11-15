@@ -1,8 +1,8 @@
-"""Offline tests for googlemaps_link: the redirect classifier and the host check."""
+"""Offline tests for google_maps_link: the redirect classifier and the host check."""
 
 import pytest
 
-import googlemaps_link as g
+import google_maps_link as g
 
 
 def test_a_place_redirect_is_kept():

@@ -1,4 +1,4 @@
-"""Offline tests for fourd_scraper.py - run against saved copies of the live replies."""
+"""Offline tests for fourd_results.py - run against saved copies of the live replies."""
 
 from __future__ import annotations
 
@@ -7,8 +7,8 @@ from pathlib import Path
 
 import pytest
 
-import fourd_scraper as fourd
-from fourd_scraper import (
+import fourd_results as fourd
+from fourd_results import (
     Draw,
     day_of,
     normalise_date,

@@ -6,17 +6,17 @@ and for AI agents.
 
 | Folder | Tool | What it reads |
 | --- | --- | --- |
-| `lib/gsc/` | `gsc_scraper.py` | GSC Cinemas: films, showtimes, seats, prices |
-| `lib/tgv/` | `tgv_scraper.py` | TGV Cinemas: the same, through the same interface |
-| `lib/fourd/` | `fourd_scraper.py` | Magnum 4D and Da Ma Cai results |
-| `lib/northport/` | `northport_scraper.py` | Northport container, B/L, vessel and booking enquiries |
-| `lib/meetup/` | `meetup_scraper.py` | Meetup events near a city or across a country |
-| `lib/goodread/` | `goodread_scraper.py` | A Goodreads user's shelf |
+| `lib/gsc/` | `gsc_cinema.py` | GSC Cinemas: films, showtimes, seats, prices |
+| `lib/tgv/` | `tgv_cinema.py` | TGV Cinemas: the same, through the same interface |
+| `lib/fourd/` | `fourd_results.py` | Magnum 4D and Da Ma Cai results |
+| `lib/northport/` | `northport_enquiry.py` | Northport container, B/L, vessel and booking enquiries |
+| `lib/meetup/` | `meetup_events.py` | Meetup events near a city or across a country |
+| `lib/goodreads/` | `goodreads_shelf.py` | A Goodreads user's shelf |
 | `lib/youtube/` | `youtube_rss.py` | A YouTube channel's RSS feed URL |
-| `lib/hackernews/` | `hackernews_feed.py`, `hackernews_comments.sh` | Hacker News front page and comment threads |
+| `lib/hacker-news/` | `hacker_news_feed.py`, `hacker_news_comments.sh` | Hacker News front page and comment threads |
 | `lib/rps/` | `rps_feed.py`, `rps_article.py` | Rock Paper Shotgun feed and articles |
-| `lib/airquality/` | `airquality_report.py` | Air quality of a place, with the official Malaysian reading |
-| `lib/googlemaps/` | `googlemaps_link.py` | A short Google Maps link expanded to a full place link |
+| `lib/air-quality/` | `air_quality_report.py` | Air quality of a place, with the official Malaysian reading |
+| `lib/google-maps/` | `google_maps_link.py` | A short Google Maps link expanded to a full place link |
 | `lib/mcp/` | `mcp_server.py` | Not a scraper: serves all of the above as MCP tools |
 
 ## Setup
@@ -26,15 +26,15 @@ python3 -m venv lib/.venv
 lib/.venv/bin/pip install requests "mcp==2.3.0"
 ```
 
-`requests` is the scrapers' only Python dependency; `mcp` is for the MCP server alone. `hackernews_comments.sh` and `rps_article.py`
-also need `curl`, and `hackernews_comments.sh` needs `jq`.
+`requests` is the scrapers' only Python dependency; `mcp` is for the MCP server alone. `hacker_news_comments.sh` and `rps_article.py`
+also need `curl`, and `hacker_news_comments.sh` needs `jq`.
 
 ## Run
 
 From the repo root, for example:
 
 ```bash
-lib/.venv/bin/python lib/gsc/gsc_scraper.py --movie digger
+lib/.venv/bin/python lib/gsc/gsc_cinema.py --movie digger
 lib/.venv/bin/python lib/youtube/youtube_rss.py "https://youtube.com/@handle"
 ```
 

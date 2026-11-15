@@ -11,7 +11,7 @@ parent: webber-architecture
 Events from Meetup's unauthenticated frontend GraphQL endpoint. This document
 describes what each function does.
 
-Implemented in [meetup_scraper.py](meetup_scraper.py).
+Implemented in [meetup_events.py](meetup_events.py).
 
 ---
 
@@ -21,11 +21,11 @@ The CLI:
 
 ```bash
 cd lib/meetup
-python meetup_scraper.py                                  # nearby events near KL
-python meetup_scraper.py --query python --radius 10
-python meetup_scraper.py --event-type ONLINE
-python meetup_scraper.py --country sg --city "Singapore" --lat 1.3521 --lon 103.8198
-python meetup_scraper.py --start-date 2026-08-20 --end-date 2026-09-20 --dump
+python meetup_events.py                                  # nearby events near KL
+python meetup_events.py --query python --radius 10
+python meetup_events.py --event-type ONLINE
+python meetup_events.py --country sg --city "Singapore" --lat 1.3521 --lon 103.8198
+python meetup_events.py --start-date 2026-08-20 --end-date 2026-09-20 --dump
 ```
 
 `--dump` is how you get a whole country rather than one radius. For Malaysia it
@@ -43,7 +43,7 @@ rejects a filter missing any of the three, so a city name on its own is not
 enough.
 
 ```python
-import meetup_scraper as mu
+import meetup_events as mu
 
 filt = {"query": "*", "country": "my", "city": "Kuala Lumpur",
         "lat": 3.139, "lon": 101.6869, "radius": 25}

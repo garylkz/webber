@@ -102,7 +102,7 @@ def main():
 
     if len(sys.argv) > 1 and sys.argv[1] == "search":
         if len(sys.argv) != 3:
-            fail("Usage: goodread_scraper.py search <name>")
+            fail("Usage: goodreads_shelf.py search <name>")
         ids = find_user(session, sys.argv[2])
         if not ids:
             fail("No users found.")
@@ -112,7 +112,7 @@ def main():
     uid = sys.argv[1] if len(sys.argv) > 1 else DEFAULT_USER_ID
     shelf = sys.argv[2] if len(sys.argv) > 2 else "read"
     if not uid.isdigit():
-        fail("Usage: goodread_scraper.py <numeric-user-id> [shelf]")
+        fail("Usage: goodreads_shelf.py <numeric-user-id> [shelf]")
 
     books, pages = scrape(session, uid, shelf)
 

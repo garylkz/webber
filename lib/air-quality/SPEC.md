@@ -1,5 +1,5 @@
 ---
-id: airquality
+id: air-quality
 type: module-design
 status: draft
 title: Air Quality Report
@@ -12,17 +12,17 @@ The air quality of a place now, and optionally of the next hours, as one JSON
 object. It started as the owner's global `air-quality.sh` agent script and was
 moved here in Python.
 
-Implemented in [airquality_report.py](airquality_report.py).
+Implemented in [air_quality_report.py](air_quality_report.py).
 
 ---
 
 ## Usage
 
 ```bash
-lib/.venv/bin/python lib/airquality/airquality_report.py                       # Petaling Jaya
-lib/.venv/bin/python lib/airquality/airquality_report.py --place "Kuala Lumpur"
-lib/.venv/bin/python lib/airquality/airquality_report.py --address "Jalan Gasing, 46000 Petaling Jaya, Selangor"
-lib/.venv/bin/python lib/airquality/airquality_report.py --lat 3.1 --lon 101.6 --hours 6
+lib/.venv/bin/python lib/air-quality/air_quality_report.py                       # Petaling Jaya
+lib/.venv/bin/python lib/air-quality/air_quality_report.py --place "Kuala Lumpur"
+lib/.venv/bin/python lib/air-quality/air_quality_report.py --address "Jalan Gasing, 46000 Petaling Jaya, Selangor"
+lib/.venv/bin/python lib/air-quality/air_quality_report.py --lat 3.1 --lon 101.6 --hours 6
 ```
 
 Give at most one of `--place`, `--address` or `--lat`/`--lon`. `--hours` is 0
@@ -82,6 +82,6 @@ appears only with `--hours`. Any reading may be `null`, and its band is then
 
 ## Testing
 
-`test_airquality.py` runs the bands, the address splitter and the three parsers
+`test_air_quality.py` runs the bands, the address splitter and the three parsers
 over real responses for Petaling Jaya in `fixtures/`. The APIMS fixture is cut
 down to the fields the parser reads, so it holds no station staff details.

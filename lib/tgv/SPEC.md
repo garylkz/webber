@@ -58,7 +58,7 @@ own quirks still stand.
 ## Usage
 
 Same CLI shape and importable interface as the paired GSC spec, implemented in
-[tgv_scraper.py](tgv_scraper.py). How an agent runs it is in
+[tgv_cinema.py](tgv_cinema.py). How an agent runs it is in
 [SKILL.md](SKILL.md).
 A Movie is read through movies() and day(); showtime.time comes back
 with a +08:00 offset; seat_plan() draws a hall; align_by_number() fixes

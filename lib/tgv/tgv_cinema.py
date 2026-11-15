@@ -3,19 +3,19 @@
 
 Single file. Needs `requests`, nothing else.
 
-    python tgv_scraper.py                          # today, every cinema
-    python tgv_scraper.py BU0                      # one cinema, today
-    python tgv_scraper.py BU0 2026-10-13           # one cinema, one date
-    python tgv_scraper.py --cinemas                # the outlet directory
-    python tgv_scraper.py --cinemas --region klangvalley
-    python tgv_scraper.py --dates                  # dates that have sessions
-    python tgv_scraper.py --movie other-mommy      # one movie, every cinema
-    python tgv_scraper.py --seats                  # add seat availability
-    python tgv_scraper.py --no-delay               # skip the polite pause
+    python tgv_cinema.py                          # today, every cinema
+    python tgv_cinema.py BU0                      # one cinema, today
+    python tgv_cinema.py BU0 2026-10-13           # one cinema, one date
+    python tgv_cinema.py --cinemas                # the outlet directory
+    python tgv_cinema.py --cinemas --region klangvalley
+    python tgv_cinema.py --dates                  # dates that have sessions
+    python tgv_cinema.py --movie other-mommy      # one movie, every cinema
+    python tgv_cinema.py --seats                  # add seat availability
+    python tgv_cinema.py --no-delay               # skip the polite pause
 
 Also importable:
 
-    import tgv_scraper as tgv
+    import tgv_cinema as tgv
     tgv.cinemas()
     tgv.regions()
     tgv.business_dates()
@@ -2193,8 +2193,8 @@ def main() -> None:
     parser = argparse.ArgumentParser(
         description="Showtimes for TGV Cinemas Malaysia.",
         epilog=(
-            "examples:  python tgv_scraper.py BU0    "
-            "python tgv_scraper.py --cinemas    python tgv_scraper.py --movie other-mommy"
+            "examples:  python tgv_cinema.py BU0    "
+            "python tgv_cinema.py --cinemas    python tgv_cinema.py --movie other-mommy"
         ),
     )
     parser.add_argument("cinema", nargs="?", help="cinema id, name or keyword (default: all cinemas)")

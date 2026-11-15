@@ -1,4 +1,4 @@
-"""Live network tests for gsc_scraper.py.
+"""Live network tests for gsc_cinema.py.
 
 Skipped by default. Run them with::
 
@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import pytest
 
-import gsc_scraper as gsc
+import gsc_cinema as gsc
 
 pytestmark = pytest.mark.live
 

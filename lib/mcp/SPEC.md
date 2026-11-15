@@ -51,7 +51,7 @@ Use the venv's Python: the server needs `mcp` and the scripts it runs need
   builds a command line for one script and runs it in a subprocess from the
   repo root. Its stdout becomes the tool result as text. The server imports no
   scraper, so the rule that no module imports another still holds, and the
-  shell script (`hackernews_comments.sh`) is served the same way as the Python ones.
+  shell script (`hacker_news_comments.sh`) is served the same way as the Python ones.
 - **The official SDK.** The protocol is the `mcp` package's `MCPServer`
   (pinned to `mcp==2.3.0`): the handshake, version negotiation, `tools/list`,
   `tools/call`, errors, stdio and streamable HTTP. Each tool is an async
@@ -63,7 +63,7 @@ Use the venv's Python: the server needs `mcp` and the scripts it runs need
   `cinema_*` tools through a `chain` argument, which the cinema contract makes
   possible. Options that only one chain has are rejected for the other.
 - **Groups.** Each tool has a group (`cinema`, `fourd`, `northport`, `meetup`,
-  `goodreads`, `youtube`, `hackernews`, `rps`, `airquality`, `googlemaps`), and `--tools` serves only the
+  `goodreads`, `youtube`, `hacker-news`, `rps`, `air-quality`, `google-maps`), and `--tools` serves only the
   named ones.
 - **Calls run on worker threads** (`anyio.to_thread`), so a slow price sweep
   does not hold up a ping or another call.
@@ -83,14 +83,14 @@ Use the venv's Python: the server needs `mcp` and the scripts it runs need
 | `fourd_results` | `fourd` with a date, `--recent` or `--from`/`--to` |
 | `northport_enquiry` | `northport` `container`, `bl`, `vessel` or `booking` |
 | `meetup_events` | `meetup` list mode |
-| `goodreads_shelf` | `goodread` with a user id and shelf |
+| `goodreads_shelf` | `goodreads` with a user id and shelf |
 | `youtube_rss` | `youtube_rss.py`, optionally `--fetch` |
-| `hackernews_feed` | `hackernews_feed.py --page` |
-| `hackernews_comments` | `hackernews_comments.sh` |
+| `hacker_news_feed` | `hacker_news_feed.py --page` |
+| `hacker_news_comments` | `hacker_news_comments.sh` |
 | `rps_feed` | `rps_feed.py --start --count` |
 | `rps_article` | `rps_article.py` |
-| `air_quality` | `airquality_report.py` with a place, an address or a point, optionally `--hours` |
-| `googlemaps_link` | `googlemaps_link.py` |
+| `air_quality_report` | `air_quality_report.py` with a place, an address or a point, optionally `--hours` |
+| `google_maps_link` | `google_maps_link.py` |
 
 Left out on purpose: the bulk modes that write files and run for a long time
 (`fourd --all`/`--out`, `meetup --dump`), and the tuning flags (`--workers`,
