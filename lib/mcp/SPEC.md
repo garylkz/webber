@@ -50,8 +50,7 @@ Use the venv's Python: the server needs `mcp` and the scripts it runs need
 - **The scripts stay the interface.** Each MCP tool checks its arguments,
   builds a command line for one script and runs it in a subprocess from the
   repo root. Its stdout becomes the tool result as text. The server imports no
-  scraper, so the rule that no module imports another still holds, and the
-  shell script (`hacker_news_comments.sh`) is served the same way as the Python ones.
+  scraper, so the rule that no module imports another still holds.
 - **The official SDK.** The protocol is the `mcp` package's `MCPServer`
   (pinned to `mcp==2.3.0`): the handshake, version negotiation, `tools/list`,
   `tools/call`, errors, stdio and streamable HTTP. Each tool is an async
@@ -93,7 +92,7 @@ Use the venv's Python: the server needs `mcp` and the scripts it runs need
 | `youtube_rss` | `youtube_rss.py`, optionally `--fetch` |
 | `youtube_channel` | `youtube_channel.py` with a creator's name |
 | `hacker_news_feed` | `hacker_news_feed.py --page` |
-| `hacker_news_comments` | `hacker_news_comments.sh` |
+| `hacker_news_comments` | `hacker_news_comments.py` |
 | `rps_feed` | `rps_feed.py --start --count` |
 | `rps_article` | `rps_article.py` |
 | `air_quality_report` | `air_quality_report.py` with a place, an address or a point, optionally `--hours` |

@@ -13,7 +13,7 @@ and for AI agents.
 | `lib/meetup/` | `meetup_events.py` | Meetup events near a city or across a country |
 | `lib/goodreads/` | `goodreads_shelf.py` | A Goodreads user's shelf |
 | `lib/youtube/` | `youtube_rss.py`, `youtube_channel.py` | A YouTube channel's RSS feed URL, and a channel found by name |
-| `lib/hacker-news/` | `hacker_news_feed.py`, `hacker_news_comments.sh` | Hacker News front page and comment threads |
+| `lib/hacker-news/` | `hacker_news_feed.py`, `hacker_news_comments.py` | Hacker News front page and comment threads |
 | `lib/rps/` | `rps_feed.py`, `rps_article.py` | Rock Paper Shotgun feed and articles |
 | `lib/air-quality/` | `air_quality_report.py` | Air quality of a place, with the official Malaysian reading |
 | `lib/google-maps/` | `google_maps_link.py` | A short Google Maps link expanded to a full place link |
@@ -26,8 +26,8 @@ python3 -m venv lib/.venv
 lib/.venv/bin/pip install requests "mcp==2.3.0"
 ```
 
-`requests` is the scrapers' only Python dependency; `mcp` is for the MCP server alone. `hacker_news_comments.sh` and `rps_article.py`
-also need `curl`, and `hacker_news_comments.sh` needs `jq`.
+`requests` is the scrapers' only Python dependency; `mcp` is for the MCP server alone. `rps_article.py`
+also needs `curl`.
 
 ## Run
 

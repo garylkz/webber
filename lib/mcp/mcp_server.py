@@ -193,7 +193,7 @@ def build_hacker_news_feed(args):
 
 
 def build_hacker_news_comments(args):
-    return ["sh", str(LIB / "hacker-news/hacker_news_comments.sh"), args["item"]]
+    return python("hacker-news/hacker_news_comments.py") + [args["item"]]
 
 
 def build_rps_feed(args):

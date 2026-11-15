@@ -12,7 +12,7 @@ Lets an agent show the owner what is on Hacker News and what people say about
 a story. Two scripts, used in that order:
 
 - [hacker_news_feed.py](hacker_news_feed.py) lists the stories on one front page.
-- [hacker_news_comments.sh](hacker_news_comments.sh) fetches one story's comment thread, for an
+- [hacker_news_comments.py](hacker_news_comments.py) fetches one story's comment thread, for an
   agent to summarize.
 
 Nothing imports either one.
@@ -29,9 +29,9 @@ Reads the front page HTML and prints the first 10 stories of the requested page
 ```
 
 `comments_url` is the story's `item?id=` page on news.ycombinator.com, which is
-what `hacker_news_comments.sh` takes. The cache copy is `/tmp/hn-stories.json`.
+what `hacker_news_comments.py` takes. The cache copy is `/tmp/hn-stories.json`.
 
-## hacker_news_comments.sh
+## hacker_news_comments.py
 
 Takes a `comments_url` or a bare item id and prints the thread as one JSON
 object: the story's id, title, points and URLs, and a tree of comments, each
@@ -49,11 +49,12 @@ with its text and its replies. It reads the Algolia HN API
 
 Errors go to stderr with a non-zero exit, unlike the feed listers.
 
-### Departures from the shared conventions
+It started as a POSIX shell copy of the owner's global `hn-comments.sh`, using
+`curl` and `jq`, and was ported to Python with `requests`. The port printed the
+same JSON as the shell script on every live thread it was checked against.
 
-- **It is a POSIX shell script that calls `curl` and `jq`, not Python with
-  `requests`.** It started as a copy of `~/.agents/scripts/hn-comments.sh`,
-  which the global `hn-comments` agent skill runs.
-- **The two copies are independent and already differ:** this one prints JSON
-  only (the global one also has a `--format text` mode). A fix made to one does
-  not reach the other.
+### Testing
+
+`test_hacker_news.py` runs the id parser, the HTML cleaner, the comment and
+depth limits and the moved-thread check, over Hacker News item 1 in
+`fixtures/` and small made-up trees. It never touches the network.

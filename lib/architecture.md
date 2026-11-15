@@ -42,7 +42,7 @@ and skill can be found from any one of them.
   `goodreads_shelf.py`, `hacker_news_feed.py`, `air_quality_report.py`). The
   prefix stays even inside its folder: every folder is on the import path, so
   two `feed.py` files would collide, and a copied file still says which source
-  it reads. A shell script ends in `.sh` (`hacker_news_comments.sh`).
+  it reads. Every script is Python.
 - **MCP tool:** the script's name without `.py`, so a tool and its script
   match (`fourd_results`, `rps_feed`). The `cinema_*` tools are the exception:
   each serves both `gsc` and `tgv` through its `chain` argument.
@@ -73,9 +73,8 @@ The module specs describe only where a tool departs from them.
   third-party dependency. Nothing uses `urllib.request` or shells out to `curl`.
   One client means one way to handle errors and timeouts, and `requests` brings
   its own CA bundle, so HTTPS works on an install that has no system
-  certificate store. The exceptions are `hacker_news_comments.sh` and `rps_article.py`,
-  which started as copies of the owner's global agent scripts and use `curl`
-  (see `hacker-news` and `rps`).
+  certificate store. The exception is `rps_article.py`, which started as a copy
+  of the owner's global agent script and uses `curl` (see `rps`).
 - **Errors.** Bad arguments are rejected before any request is made. A source
   that can't be reached is reported as such, never shown as an empty result.
 
@@ -122,8 +121,8 @@ The two **feed listers**, `hacker_news_feed.py` and `rps_feed.py`, share one con
 - Tests marked `live` hit the real sites (`pytest -m live`). They pick dates from
   the site's own list of trading days, because a cinema's national run rolls over
   around midnight Malaysia time.
-- `goodreads`, `meetup`, `hacker-news` and `rps` have
-  no offline tests.
+- `goodreads`, `meetup` and `rps` have no offline tests, and in `hacker-news`
+  only `hacker_news_comments.py` has them.
 
 ## Known limitations
 

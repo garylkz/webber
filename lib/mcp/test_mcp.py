@@ -189,7 +189,7 @@ def test_the_small_tools():
     rejects("youtube_channel", name="--help")
     assert argv("hacker_news_feed", page=2) == ["hacker-news/hacker_news_feed.py", "--page=2"]
     assert argv("hacker_news_comments", item="https://news.ycombinator.com/item?id=42") == [
-        "hacker-news/hacker_news_comments.sh", "https://news.ycombinator.com/item?id=42"]
+        "hacker-news/hacker_news_comments.py", "https://news.ycombinator.com/item?id=42"]
     assert argv("rps_feed", start=2, count=5) == ["rps/rps_feed.py", "--start", "2", "--count", "5"]
     assert argv("google_maps_link", url="https://maps.app.goo.gl/AbC") == [
         "google-maps/google_maps_link.py", "https://maps.app.goo.gl/AbC"]
