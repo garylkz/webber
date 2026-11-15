@@ -15,6 +15,8 @@ and for AI agents.
 | `lib/youtube/` | `youtube_rss.py` | A YouTube channel's RSS feed URL |
 | `lib/hackernews/` | `hackernews_feed.py`, `hackernews_comments.sh` | Hacker News front page and comment threads |
 | `lib/rps/` | `rps_feed.py`, `rps_article.py` | Rock Paper Shotgun feed and articles |
+| `lib/airquality/` | `airquality_report.py` | Air quality of a place, with the official Malaysian reading |
+| `lib/googlemaps/` | `googlemaps_link.py` | A short Google Maps link expanded to a full place link |
 | `lib/mcp/` | `mcp_server.py` | Not a scraper: serves all of the above as MCP tools |
 
 ## Setup

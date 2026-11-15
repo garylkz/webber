@@ -63,7 +63,7 @@ Use the venv's Python: the server needs `mcp` and the scripts it runs need
   `cinema_*` tools through a `chain` argument, which the cinema contract makes
   possible. Options that only one chain has are rejected for the other.
 - **Groups.** Each tool has a group (`cinema`, `fourd`, `northport`, `meetup`,
-  `goodreads`, `youtube`, `hackernews`, `rps`), and `--tools` serves only the
+  `goodreads`, `youtube`, `hackernews`, `rps`, `airquality`, `googlemaps`), and `--tools` serves only the
   named ones.
 - **Calls run on worker threads** (`anyio.to_thread`), so a slow price sweep
   does not hold up a ping or another call.
@@ -89,6 +89,8 @@ Use the venv's Python: the server needs `mcp` and the scripts it runs need
 | `hackernews_comments` | `hackernews_comments.sh` |
 | `rps_feed` | `rps_feed.py --start --count` |
 | `rps_article` | `rps_article.py` |
+| `air_quality` | `airquality_report.py` with a place, an address or a point, optionally `--hours` |
+| `googlemaps_link` | `googlemaps_link.py` |
 
 Left out on purpose: the bulk modes that write files and run for a long time
 (`fourd --all`/`--out`, `meetup --dump`), and the tuning flags (`--workers`,

@@ -67,6 +67,7 @@ def test_the_tool_names_are_pinned():
         "cinema_list", "cinema_showtimes", "cinema_seat_map", "gsc_films",
         "fourd_results", "northport_enquiry", "meetup_events", "goodreads_shelf",
         "youtube_rss", "hackernews_feed", "hackernews_comments", "rps_feed", "rps_article",
+        "air_quality", "googlemaps_link",
     ])
 
 
@@ -188,6 +189,22 @@ def test_the_small_tools():
     assert argv("hackernews_comments", item="https://news.ycombinator.com/item?id=42") == [
         "hackernews/hackernews_comments.sh", "https://news.ycombinator.com/item?id=42"]
     assert argv("rps_feed", start=2, count=5) == ["rps/rps_feed.py", "--start", "2", "--count", "5"]
+    assert argv("googlemaps_link", url="https://maps.app.goo.gl/AbC") == [
+        "googlemaps/googlemaps_link.py", "https://maps.app.goo.gl/AbC"]
+    rejects("googlemaps_link", url="https://example.com/x")
+
+
+def test_air_quality():
+    assert argv("air_quality") == ["airquality/airquality_report.py"]
+    assert argv("air_quality", place="Kuala Lumpur", hours=6) == [
+        "airquality/airquality_report.py", "--place=Kuala Lumpur", "--hours=6"]
+    assert argv("air_quality", lat=-3.5, lon=101.6) == [
+        "airquality/airquality_report.py", "--lat=-3.5", "--lon=101.6"]
+    rejects("air_quality", place="Kuala Lumpur", lat=3.1, lon=101.6)
+    rejects("air_quality", place="Kuala Lumpur", address="Jalan Gasing, Petaling Jaya")
+    rejects("air_quality", lat=3.1)
+    rejects("air_quality", hours=49)
+    rejects("air_quality", place="--note")
 
 
 # --- results -----------------------------------------------------------------

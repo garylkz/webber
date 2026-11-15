@@ -34,7 +34,8 @@ SERVER_VERSION = "0.2.0"
 TIMEOUT = 300  # seconds per tool run; the price sweeps are the slow ones
 HTTP_PORT = 8766  # 8765 is the vault's MCP server, 8000 is omlx
 INSTRUCTIONS = ("webber reads public sites (Malaysian cinemas, 4D results, Northport, Meetup, "
-                "Goodreads, YouTube, Hacker News, Rock Paper Shotgun) and returns JSON. "
+                "Goodreads, YouTube, Hacker News, Rock Paper Shotgun, air quality, Google Maps "
+                "links) and returns JSON. "
                 "Each call makes live requests.")
 
 # Patterns match the whole value, as the scripts expect.
@@ -43,6 +44,7 @@ CLOCK = r"^\d{1,2}:\d{2}$"
 NOT_OPTION = r"^[^-].*$"  # a positional value must not look like an option
 HN_ITEM = r"^(\d+|https?://news\.ycombinator\.com/item\?id=\d+.*)$"
 RPS_URL = r"^https?://(www\.)?rockpapershotgun\.com/.+$"
+MAPS_SHORT = r"^https?://(maps\.app\.goo\.gl|goo\.gl/maps)/.+$"
 
 
 class ToolError(Exception):
@@ -201,6 +203,20 @@ def build_rps_feed(args):
 
 def build_rps_article(args):
     return python("rps/rps_article.py") + [args["url"]]
+
+
+def build_air_quality(args):
+    picks = [k for k in ("place", "address", "lat") if args.get(k) is not None]
+    if len(picks) > 1:
+        raise ToolError("give only one of place, address or lat/lon")
+    if (args.get("lat") is None) != (args.get("lon") is None):
+        raise ToolError("lat and lon go together")
+    return python("airquality/airquality_report.py") + options(args, {
+        "place": "--place", "address": "--address", "lat": "--lat", "lon": "--lon", "hours": "--hours"})
+
+
+def build_googlemaps_link(args):
+    return python("googlemaps/googlemaps_link.py") + [args["url"]]
 
 
 # --- running a tool ----------------------------------------------------------
@@ -365,7 +381,27 @@ async def rps_article(url: needed_text("a rockpapershotgun.com article URL", RPS
     return await result(build_rps_article, locals())
 
 
+async def air_quality(
+    place: text("a city or district (default: Petaling Jaya)", NOT_OPTION) = None,
+    address: text("a street address, narrowed down until the geocoder knows it", NOT_OPTION) = None,
+    lat: Annotated[Optional[float], Field(description="latitude, with lon", ge=-90, le=90)] = None,
+    lon: Annotated[Optional[float], Field(description="longitude, with lat", ge=-180, le=180)] = None,
+    hours: Annotated[Optional[int], Field(description="also the US AQI of the next N hours", ge=1, le=48,
+                                          strict=True)] = None,
+) -> CallToolResult:
+    """Air quality of a place now: US and European AQI with bands, six pollutants and advice. Inside Malaysia it adds the official reading of the nearest DOE APIMS station (official_value, official_band). Quote the bands and advice as given."""
+    return await result(build_air_quality, locals())
+
+
+async def googlemaps_link(
+    url: needed_text("a short Google Maps link, such as https://maps.app.goo.gl/...", MAPS_SHORT),
+) -> CallToolResult:
+    """Expand a short Google Maps link into a full google.com/maps/place link. kind is place, place_id, coordinates (the pin resolves to the nearest address), query, or redirect."""
+    return await result(build_googlemaps_link, locals())
+
+
 TOOLS = [
+    ("airquality", air_quality), ("googlemaps", googlemaps_link),
     ("cinema", cinema_list), ("cinema", cinema_showtimes), ("cinema", cinema_seat_map), ("cinema", gsc_films),
     ("fourd", fourd_results), ("northport", northport_enquiry), ("meetup", meetup_events),
     ("goodreads", goodreads_shelf), ("youtube", youtube_rss),
