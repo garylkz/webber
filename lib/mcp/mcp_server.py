@@ -1,0 +1,412 @@
+"""An MCP server that exposes webber's tools to MCP clients over stdio or local HTTP.
+
+Usage:
+    lib/.venv/bin/python lib/mcp/mcp_server.py                     # every tool, stdio
+    lib/.venv/bin/python lib/mcp/mcp_server.py --tools cinema,fourd  # some groups
+    lib/.venv/bin/python lib/mcp/mcp_server.py --http              # http://127.0.0.1:8766/mcp
+
+Each MCP tool builds a command line for one of webber's scripts, runs it in a
+subprocess from the repo root and returns the script's JSON as the tool result.
+The scripts stay the only interface: this file imports none of them.
+
+The protocol is handled by the official `mcp` SDK (MCPServer): stdio by
+default, or streamable HTTP with --http. A tool's input schema comes from its
+typed signature and its description from its docstring. HTTP has no auth, so
+it binds to 127.0.0.1. Logs go to stderr.
+"""
+
+import argparse
+import json
+import subprocess
+import sys
+from pathlib import Path
+from typing import Annotated, Literal, Optional
+
+import anyio
+from mcp.server.mcpserver import MCPServer
+from mcp.types import CallToolResult, TextContent, ToolAnnotations
+from pydantic import Field
+
+LIB = Path(__file__).resolve().parents[1]
+REPO = LIB.parent
+SERVER_NAME = "webber"
+SERVER_VERSION = "0.2.0"
+TIMEOUT = 300  # seconds per tool run; the price sweeps are the slow ones
+HTTP_PORT = 8766  # 8765 is the vault's MCP server, 8000 is omlx
+INSTRUCTIONS = ("webber reads public sites (Malaysian cinemas, 4D results, Northport, Meetup, "
+                "Goodreads, YouTube, Hacker News, Rock Paper Shotgun) and returns JSON. "
+                "Each call makes live requests.")
+
+# Patterns match the whole value, as the scripts expect.
+DATE = r"^\d{4}-\d{2}-\d{2}$"
+CLOCK = r"^\d{1,2}:\d{2}$"
+NOT_OPTION = r"^[^-].*$"  # a positional value must not look like an option
+HN_ITEM = r"^(\d+|https?://news\.ycombinator\.com/item\?id=\d+.*)$"
+RPS_URL = r"^https?://(www\.)?rockpapershotgun\.com/.+$"
+
+
+class ToolError(Exception):
+    """A bad argument or a failed run, reported to the client as a tool error."""
+
+
+# --- argument types ----------------------------------------------------------
+# strict=True keeps "3" from passing as 3 and True from passing as 1.
+
+def text(description, pattern=None):
+    return Annotated[Optional[str], Field(description=description, pattern=pattern, strict=True)]
+
+
+def needed_text(description, pattern=None):
+    return Annotated[str, Field(description=description, pattern=pattern, strict=True)]
+
+
+def number(description):
+    return Annotated[Optional[int], Field(description=description, ge=1, strict=True)]
+
+
+def flag(description):
+    return Annotated[bool, Field(description=description, strict=True)]
+
+
+def choice(description, *values):
+    return Annotated[Optional[Literal[values]], Field(description=description)]
+
+
+Chain = Annotated[Literal["gsc", "tgv"], Field(description="cinema chain: gsc (GSC Cinemas) or tgv (TGV Cinemas)")]
+
+
+# --- command lines -----------------------------------------------------------
+
+def options(args, mapping):
+    """Turn {arg: flag} into ['--flag=value', ...] for the args that are set.
+
+    A True boolean becomes a bare flag. The `=` form keeps a value that starts
+    with a dash from being read as another option.
+    """
+    argv = []
+    for key, flag_name in mapping.items():
+        value = args.get(key)
+        if value is None or value is False:
+            continue
+        argv.append(flag_name if value is True else f"{flag_name}={value}")
+    return argv
+
+
+def python(script):
+    return [sys.executable, str(LIB / script)]
+
+
+SCRIPT = {"gsc": "gsc/gsc_scraper.py", "tgv": "tgv/tgv_scraper.py"}
+
+
+def gsc_only(args, *keys):
+    if args["chain"] != "gsc":
+        for key in keys:
+            if args.get(key) not in (None, False):
+                raise ToolError(f"{key} is only supported for chain gsc")
+
+
+def build_cinema_list(args):
+    gsc_only(args, "city")
+    if args["what"] == "movies" and args["chain"] != "gsc":
+        raise ToolError("what=movies is only supported for chain gsc")
+    if args["what"] != "cinemas" and (args.get("region") or args.get("city")):
+        raise ToolError("region and city only apply to what=cinemas")
+    return python(SCRIPT[args["chain"]]) + [f"--{args['what']}"] + options(
+        args, {"region": "--region", "city": "--city"})
+
+
+def build_cinema_showtimes(args):
+    gsc_only(args, "city", "region")
+    if (args.get("region") or args.get("city")) and not args.get("movie"):
+        raise ToolError("region and city need movie")
+    if args.get("per_person") and not args.get("prices"):
+        raise ToolError("per_person needs prices")
+    argv = python(SCRIPT[args["chain"]]) + options(args, {
+        "movie": "--movie", "region": "--region", "city": "--city",
+        "from_time": "--from", "until_time": "--until", "format": "--format",
+        "seats": "--seats", "prices": "--prices", "per_person": "--per-person",
+    })
+    return argv + [args[k] for k in ("cinema", "date") if args.get(k)]
+
+
+def build_cinema_seat_map(args):
+    if args.get("raw_columns") and args["chain"] != "tgv":
+        raise ToolError("raw_columns is only supported for chain tgv")
+    argv = python(SCRIPT[args["chain"]]) + ["--seat-map"] + options(
+        args, {"time": "--time", "raw_columns": "--raw-columns"})
+    return argv + [args[k] for k in ("cinema", "date") if args.get(k)]
+
+
+def build_gsc_films(args):
+    argv = python("gsc/gsc_scraper.py")
+    if args.get("detail"):
+        if args.get("listing"):
+            raise ToolError("give either listing or detail, not both")
+        return argv + [f"--detail={args['detail']}"]
+    listing = args.get("listing")
+    if listing == "all":
+        return argv + ["--all"]
+    return argv + ([f"--listing={listing}"] if listing else [])
+
+
+def build_fourd_results(args):
+    picks = [k for k in ("date", "recent", "from_date") if args.get(k) is not None]
+    if len(picks) > 1:
+        raise ToolError("give only one of date, recent or from_date")
+    if args.get("to_date") and not args.get("from_date"):
+        raise ToolError("to_date needs from_date")
+    argv = python("fourd/fourd_scraper.py") + options(args, {
+        "recent": "--recent", "from_date": "--from", "to_date": "--to", "operator": "--operator"})
+    return argv + ([args["date"]] if args.get("date") else [])
+
+
+def build_northport_enquiry(args):
+    return python("northport/northport_scraper.py") + [args["kind"], args["value"]]
+
+
+def build_meetup_events(args):
+    return python("meetup/meetup_scraper.py") + options(args, {
+        "query": "--query", "country": "--country", "city": "--city", "state": "--state",
+        "zip": "--zip", "lat": "--lat", "lon": "--lon", "radius": "--radius",
+        "event_type": "--event-type", "happening_now": "--happening-now",
+        "start_date": "--start-date", "end_date": "--end-date", "max": "--max",
+    })
+
+
+def build_goodreads_shelf(args):
+    return python("goodread/goodread_scraper.py") + [args["user_id"], args.get("shelf") or "read"]
+
+
+def build_youtube_rss(args):
+    return python("youtube/youtube_rss.py") + options(args, {"fetch": "--fetch"}) + [args["url"]]
+
+
+def build_hackernews_feed(args):
+    return python("hackernews/hackernews_feed.py") + options(args, {"page": "--page"})
+
+
+def build_hackernews_comments(args):
+    return ["sh", str(LIB / "hackernews/hackernews_comments.sh"), args["item"]]
+
+
+def build_rps_feed(args):
+    # rps_feed.py reads "--start N" as two words, not "--start=N".
+    argv = python("rps/rps_feed.py")
+    for key in ("start", "count"):
+        if args.get(key) is not None:
+            argv += [f"--{key}", str(args[key])]
+    return argv
+
+
+def build_rps_article(args):
+    return python("rps/rps_article.py") + [args["url"]]
+
+
+# --- running a tool ----------------------------------------------------------
+
+def run(argv):
+    """Run one script and return its stdout. A failed run raises ToolError."""
+    try:
+        done = subprocess.run(argv, cwd=REPO, stdin=subprocess.DEVNULL, capture_output=True,
+                              text=True, encoding="utf-8", timeout=TIMEOUT)
+    except subprocess.TimeoutExpired:
+        raise ToolError(f"timed out after {TIMEOUT} seconds") from None
+    except OSError as exc:
+        raise ToolError(f"could not start the tool: {exc}") from None
+    out = done.stdout.strip()
+    if done.returncode == 0 and out:
+        return out
+    # Some scripts put their error JSON on stdout, the rest on stderr.
+    reason = out or done.stderr.strip()[-2000:] or f"exited with status {done.returncode}"
+    raise ToolError(reason)
+
+
+def outcome(build, args):
+    """Build and run one command. The text of an error is JSON, the script's own when it printed one."""
+    try:
+        return CallToolResult(content=[TextContent(type="text", text=run(build(args)))], is_error=False)
+    except ToolError as exc:
+        reason = str(exc)
+        if not reason.startswith("{"):
+            reason = json.dumps({"error": reason}, ensure_ascii=False)
+        return CallToolResult(content=[TextContent(type="text", text=reason)], is_error=True)
+
+
+async def result(build, args):
+    """Run off the event loop, so a slow price sweep does not hold up a ping or another call."""
+    return await anyio.to_thread.run_sync(outcome, build, dict(args))
+
+
+# --- the tools ---------------------------------------------------------------
+# Each tool's docstring is its description; each argument's Field is its schema.
+
+async def cinema_list(
+    chain: Chain,
+    what: Annotated[Literal["cinemas", "regions", "dates", "movies"], Field(description="what to list")],
+    region: text("with what=cinemas, only this region") = None,
+    city: text("with what=cinemas, only this town (gsc only)") = None,
+) -> CallToolResult:
+    """List a Malaysian cinema chain's outlets, regions, dates that have sessions, or (GSC only) its booking catalogue of films."""
+    return await result(build_cinema_list, locals())
+
+
+async def cinema_showtimes(
+    chain: Chain,
+    cinema: text("cinema id, slug, name or keyword (from cinema_list)", NOT_OPTION) = None,
+    date: text("YYYY-MM-DD (default: today in Malaysia)", DATE) = None,
+    movie: text("film slug: every session of this film instead of one cinema's") = None,
+    region: text("with movie, only this region (gsc only)") = None,
+    city: text("with movie, only this town (gsc only)") = None,
+    from_time: text("only showtimes at or after HH:MM", CLOCK) = None,
+    until_time: text("only showtimes at or before HH:MM", CLOCK) = None,
+    format: text("only these hall formats, comma separated, e.g. imax,4dx") = None,
+    seats: flag("include seat availability") = False,
+    prices: flag("include ticket prices") = False,
+    per_person: flag("with prices, quote per person instead of per ticket") = False,
+) -> CallToolResult:
+    """Showtimes at GSC or TGV cinemas in Malaysia: one cinema's sessions on a date, or every session of one film (movie). Optional seat availability and ticket prices (prices costs one extra request per session, so narrow first)."""
+    return await result(build_cinema_showtimes, locals())
+
+
+async def cinema_seat_map(
+    chain: Chain,
+    cinema: needed_text("cinema id, slug, name or keyword", NOT_OPTION),
+    time: needed_text("the session's start time, HH:MM", CLOCK),
+    date: text("YYYY-MM-DD (default: today; tgv needs it set)", DATE) = None,
+    raw_columns: flag("tgv only: keep TGV's per-row columns instead of aligning seats") = False,
+) -> CallToolResult:
+    """The seat map of one session at a GSC or TGV cinema, as JSON."""
+    return await result(build_cinema_seat_map, locals())
+
+
+async def gsc_films(
+    listing: choice("which listing (default: now-showing)", "now-showing", "coming-soon", "advance-sales", "all") = None,
+    detail: text("film slug: the full record for this film instead") = None,
+) -> CallToolResult:
+    """GSC Cinemas' website film listings (now showing, coming soon, advance sales) or the website's full record for one film."""
+    return await result(build_gsc_films, locals())
+
+
+async def fourd_results(
+    date: text("one draw date, YYYY-MM-DD", DATE) = None,
+    recent: number("the last N draw dates") = None,
+    from_date: text("every draw from this date on, YYYY-MM-DD", DATE) = None,
+    to_date: text("with from_date, the last date (default: today)", DATE) = None,
+    operator: choice("one operator only", "magnum", "damacai", "all") = None,
+) -> CallToolResult:
+    """Malaysian 4D draw results from Magnum 4D and Da Ma Cai. With no arguments, the latest draw. Sports Toto is not covered."""
+    return await result(build_fourd_results, locals())
+
+
+async def northport_enquiry(
+    kind: Annotated[Literal["container", "bl", "vessel", "booking"], Field(description="what the value identifies")],
+    value: needed_text("container number, B/L, vessel name or SCN, or booking reference", NOT_OPTION),
+) -> CallToolResult:
+    """Northport (Port Klang) enquiry for a container, bill of lading, vessel (name or SCN) or booking. An unknown number gives an empty object."""
+    return await result(build_northport_enquiry, locals())
+
+
+async def meetup_events(
+    query: text("keyword filter (default: all events)") = None,
+    country: text("ISO country code (default: my)") = None,
+    city: text("city name (default: Kuala Lumpur)") = None,
+    state: text("state or province, e.g. Selangor") = None,
+    zip: text("postal code") = None,
+    lat: Annotated[Optional[float], Field(description="latitude")] = None,
+    lon: Annotated[Optional[float], Field(description="longitude")] = None,
+    radius: number("search radius in miles") = None,
+    event_type: choice("event type", "PHYSICAL", "ONLINE", "HYBRID") = None,
+    happening_now: flag("only events happening right now") = False,
+    start_date: text("start of the date range, YYYY-MM-DD or ISO datetime (local)") = None,
+    end_date: text("end of the date range, YYYY-MM-DD or ISO datetime (local)") = None,
+    max: number("max results") = None,
+) -> CallToolResult:
+    """Upcoming Meetup events near a place (default: Kuala Lumpur, 25 mile radius, 20 results)."""
+    return await result(build_meetup_events, locals())
+
+
+async def goodreads_shelf(
+    user_id: needed_text("the user's numeric Goodreads id", r"^\d+$"),
+    shelf: text("shelf name (default: read)", NOT_OPTION) = None,
+) -> CallToolResult:
+    """Every book on one shelf of a Goodreads user (also saved under out/)."""
+    return await result(build_goodreads_shelf, locals())
+
+
+async def youtube_rss(
+    url: needed_text("YouTube channel URL", NOT_OPTION),
+    fetch: flag("also fetch the feed and return its videos") = False,
+) -> CallToolResult:
+    """Turn a YouTube channel URL (@handle, /channel/UC..., /user/...) into its RSS feed URL, optionally with the channel's recent videos."""
+    return await result(build_youtube_rss, locals())
+
+
+async def hackernews_feed(page: number("front page number (default: 1)") = None) -> CallToolResult:
+    """Top stories on one page of the Hacker News front page."""
+    return await result(build_hackernews_feed, locals())
+
+
+async def hackernews_comments(item: needed_text("item URL or numeric item id", HN_ITEM)) -> CallToolResult:
+    """One Hacker News comment thread as a tree (trimmed to a depth and a comment count)."""
+    return await result(build_hackernews_comments, locals())
+
+
+async def rps_feed(
+    start: number("position to begin at, 1 is the newest (default: 1)") = None,
+    count: number("how many articles (default: all from start)") = None,
+) -> CallToolResult:
+    """Rock Paper Shotgun's article feed, newest first."""
+    return await result(build_rps_feed, locals())
+
+
+async def rps_article(url: needed_text("a rockpapershotgun.com article URL", RPS_URL)) -> CallToolResult:
+    """The text of one Rock Paper Shotgun article."""
+    return await result(build_rps_article, locals())
+
+
+TOOLS = [
+    ("cinema", cinema_list), ("cinema", cinema_showtimes), ("cinema", cinema_seat_map), ("cinema", gsc_films),
+    ("fourd", fourd_results), ("northport", northport_enquiry), ("meetup", meetup_events),
+    ("goodreads", goodreads_shelf), ("youtube", youtube_rss),
+    ("hackernews", hackernews_feed), ("hackernews", hackernews_comments),
+    ("rps", rps_feed), ("rps", rps_article),
+]
+GROUPS = sorted({group for group, _ in TOOLS})
+READ = ToolAnnotations(readOnlyHint=True, openWorldHint=True)
+
+
+def make_server(groups=None):
+    """An MCPServer with the tools of the named groups, or every tool."""
+    server = MCPServer(name=SERVER_NAME, version=SERVER_VERSION, instructions=INSTRUCTIONS)
+    for group, tool in TOOLS:
+        if groups is None or group in groups:
+            server.add_tool(tool, annotations=READ, structured_output=False)
+    return server
+
+
+def main(argv=None):
+    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument("--tools", help=f"comma-separated groups to serve: {','.join(GROUPS)} (default: all)")
+    parser.add_argument("--http", action="store_true", help="serve streamable HTTP at /mcp instead of stdio")
+    parser.add_argument("--host", default="127.0.0.1", help="HTTP host (default: 127.0.0.1); there is no auth")
+    parser.add_argument("--port", type=int, default=HTTP_PORT, help=f"HTTP port (default: {HTTP_PORT})")
+    args = parser.parse_args(argv)
+    groups = None
+    if args.tools:
+        groups = {g.strip() for g in args.tools.split(",") if g.strip()}
+        unknown = groups - set(GROUPS)
+        if unknown:
+            parser.error(f"unknown group(s): {', '.join(sorted(unknown))}; choose from {', '.join(GROUPS)}")
+    server = make_server(groups)
+    count = sum(1 for group, _ in TOOLS if groups is None or group in groups)
+    if args.http:
+        print(f"webber MCP server: {count} tools on http://{args.host}:{args.port}/mcp", file=sys.stderr, flush=True)
+        server.run("streamable-http", host=args.host, port=args.port)
+    else:
+        print(f"webber MCP server: {count} tools on stdio", file=sys.stderr, flush=True)
+        server.run("stdio")
+
+
+if __name__ == "__main__":
+    main()
