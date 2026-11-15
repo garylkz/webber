@@ -1,0 +1,64 @@
+{
+ "features": [
+  {
+   "attributes": {
+    "API": 55.0,
+    "CLASS": "Moderate",
+    "LATITUDE": 3.130875,
+    "LONGITUDE": 101.60868,
+    "STATION_LOCATION": "Petaling Jaya, SELANGOR",
+    "DATETIME": 1794787200000
+   }
+  },
+  {
+   "attributes": {
+    "API": 56.0,
+    "CLASS": "Moderate",
+    "LATITUDE": 3.10475,
+    "LONGITUDE": 101.556192,
+    "STATION_LOCATION": "Shah Alam, SELANGOR",
+    "DATETIME": 1794787200000
+   }
+  },
+  {
+   "attributes": {
+    "API": 57.0,
+    "CLASS": "Moderate",
+    "LATITUDE": 3.10626,
+    "LONGITUDE": 101.717931,
+    "STATION_LOCATION": "Cheras, W.P. KUALA LUMPUR",
+    "DATETIME": 1794787200000
+   }
+  },
+  {
+   "attributes": {
+    "API": 75.0,
+    "CLASS": "Moderate",
+    "LATITUDE": 3.212429,
+    "LONGITUDE": 101.682218,
+    "STATION_LOCATION": "Batu Muda, W.P. KUALA LUMPUR",
+    "DATETIME": 1794787200000
+   }
+  },
+  {
+   "attributes": {
+    "API": 25.0,
+    "CLASS": "Good",
+    "LATITUDE": 1.172556,
+    "LONGITUDE": 110.568164,
+    "STATION_LOCATION": "IPD Serian",
+    "DATETIME": 1794787200000
+   }
+  },
+  {
+   "attributes": {
+    "API": 37.0,
+    "CLASS": "Good",
+    "LATITUDE": 1.219718,
+    "LONGITUDE": 111.464871,
+    "STATION_LOCATION": "Sri Aman, SARAWAK",
+    "DATETIME": 1794787200000
+   }
+  }
+ ]
+}

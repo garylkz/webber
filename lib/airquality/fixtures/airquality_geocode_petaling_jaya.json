@@ -1,0 +1,22 @@
+{
+ "results": [
+  {
+   "id": 1735158,
+   "name": "Petaling Jaya",
+   "latitude": 3.10726,
+   "longitude": 101.60671,
+   "elevation": 45.0,
+   "feature_code": "PPLA2",
+   "country_code": "MY",
+   "admin1_id": 1733037,
+   "admin2_id": 1735156,
+   "timezone": "Asia/Kuala_Lumpur",
+   "population": 807879,
+   "country_id": 1733045,
+   "country": "Malaysia",
+   "admin1": "Selangor",
+   "admin2": "Petaling"
+  }
+ ],
+ "generationtime_ms": 0.13279915
+}
