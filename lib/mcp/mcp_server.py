@@ -184,6 +184,10 @@ def build_youtube_rss(args):
     return python("youtube/youtube_rss.py") + options(args, {"fetch": "--fetch"}) + [args["url"]]
 
 
+def build_youtube_channel(args):
+    return python("youtube/youtube_channel.py") + [args["name"]]
+
+
 def build_hacker_news_feed(args):
     return python("hacker-news/hacker_news_feed.py") + options(args, {"page": "--page"})
 
@@ -238,10 +242,57 @@ def run(argv):
     raise ToolError(reason)
 
 
-def outcome(build, args):
-    """Build and run one command. The text of an error is JSON, the script's own when it printed one."""
+def feed_lines(items, start=1):
+    """Three lines per item: the title, then the article and comments links on labelled lines.
+
+    Separate labelled lines keep a small model from folding the two links into
+    one, which it did when an RPS comments link was the article link plus
+    ?view=comments on the same line.
+    """
+    lines = []
+    for n, it in enumerate(items, start):
+        lines += [f"{n}. {it['title']}", f"   Article: {it['url']}", f"   Comments: {it['comments_url']}"]
+    return lines
+
+
+def render_hacker_news_feed(data):
+    """A ready-made list for a small model to repeat as is, or None for an unexpected shape."""
+    stories = data.get("stories") if isinstance(data, dict) else None
+    if not isinstance(stories, list):
+        return None
+    head = f"Hacker News, page {data.get('page', 1)}:"
+    return "\n".join([head, ""] + feed_lines(stories))
+
+
+def render_rps_feed(data):
+    """A ready-made list for a small model to repeat as is, or None for an unexpected shape."""
+    articles = data.get("articles") if isinstance(data, dict) else None
+    if not isinstance(articles, list):
+        return None
+    lines = ["Rock Paper Shotgun, newest first:", ""] + feed_lines(articles, int(data.get("start") or 1))
+    if data.get("next_start"):
+        lines += ["", f"More: start={data['next_start']}"]
+    return "\n".join(lines)
+
+
+def outcome(build, args, render=None):
+    """Build and run one command. The text of an error is JSON, the script's own when it printed one.
+
+    With render, a good result's text is the rendered Markdown and the script's
+    JSON travels as structured content, for clients that read it.
+    """
     try:
-        return CallToolResult(content=[TextContent(type="text", text=run(build(args)))], is_error=False)
+        text = run(build(args))
+        if render:
+            try:
+                data = json.loads(text)
+                shown = render(data)
+            except (ValueError, KeyError, TypeError):
+                shown = None
+            if shown:
+                return CallToolResult(content=[TextContent(type="text", text=shown)],
+                                      structured_content=data, is_error=False)
+        return CallToolResult(content=[TextContent(type="text", text=text)], is_error=False)
     except ToolError as exc:
         reason = str(exc)
         if not reason.startswith("{"):
@@ -249,9 +300,9 @@ def outcome(build, args):
         return CallToolResult(content=[TextContent(type="text", text=reason)], is_error=True)
 
 
-async def result(build, args):
+async def result(build, args, render=None):
     """Run off the event loop, so a slow price sweep does not hold up a ping or another call."""
-    return await anyio.to_thread.run_sync(outcome, build, dict(args))
+    return await anyio.to_thread.run_sync(outcome, build, dict(args), render)
 
 
 # --- the tools ---------------------------------------------------------------
@@ -354,17 +405,25 @@ async def youtube_rss(
     url: needed_text("YouTube channel URL", NOT_OPTION),
     fetch: flag("also fetch the feed and return its videos") = False,
 ) -> CallToolResult:
-    """Turn a YouTube channel URL (@handle, /channel/UC..., /user/...) into its RSS feed URL, optionally with the channel's recent videos."""
+    """Turn a YouTube channel URL (@handle, /channel/UC..., /user/...) into its RSS feed URL, optionally with the channel's recent videos. Reply with feed_url copied character for character; the channel id is case sensitive, so never retype or shorten it."""
     return await result(build_youtube_rss, locals())
 
 
+async def youtube_channel(
+    name: needed_text("the creator or channel name, in any language, without words like youtube or channel",
+                      NOT_OPTION),
+) -> CallToolResult:
+    """Find a YouTube channel by a creator's name. status found: reply with the url. status ambiguous: ask the user which one and never pick yourself; list every candidate as its channel, name and subscribers. Copy every handle and url character for character, even a long or repetitive one; never shorten or retype it."""
+    return await result(build_youtube_channel, locals())
+
+
 async def hacker_news_feed(page: number("front page number (default: 1)") = None) -> CallToolResult:
-    """Top stories on one page of the Hacker News front page."""
-    return await result(build_hacker_news_feed, locals())
+    """Top stories on one page of the Hacker News front page. Returns a ready-made list: each story's title, then its Article link and its Comments link on their own lines. Reply with that list exactly as returned, line for line: keep both links of every story, and do not reformat or shorten it."""
+    return await result(build_hacker_news_feed, locals(), render_hacker_news_feed)
 
 
 async def hacker_news_comments(item: needed_text("item URL or numeric item id", HN_ITEM)) -> CallToolResult:
-    """One Hacker News comment thread as a tree (trimmed to a depth and a comment count)."""
+    """One Hacker News comment thread as a tree (trimmed to a depth and a comment count). Summarise what commenters say in 1 to 6 bullets under the title and points; never name a commenter or quote a comment, and never state a commenter's claim as fact."""
     return await result(build_hacker_news_comments, locals())
 
 
@@ -372,8 +431,8 @@ async def rps_feed(
     start: number("position to begin at, 1 is the newest (default: 1)") = None,
     count: number("how many articles (default: all from start)") = None,
 ) -> CallToolResult:
-    """Rock Paper Shotgun's article feed, newest first."""
-    return await result(build_rps_feed, locals())
+    """Rock Paper Shotgun's article feed, newest first. Returns a ready-made list: each article's title, then its Article link and its Comments link on their own lines. Reply with that list exactly as returned, line for line: keep both links of every article, and do not reformat or shorten it."""
+    return await result(build_rps_feed, locals(), render_rps_feed)
 
 
 async def rps_article(url: needed_text("a rockpapershotgun.com article URL", RPS_URL)) -> CallToolResult:
@@ -389,14 +448,14 @@ async def air_quality_report(
     hours: Annotated[Optional[int], Field(description="also the US AQI of the next N hours", ge=1, le=48,
                                           strict=True)] = None,
 ) -> CallToolResult:
-    """Air quality of a place now: US and European AQI with bands, six pollutants and advice. Inside Malaysia it adds the official reading of the nearest DOE APIMS station (official_value, official_band). Quote the bands and advice as given."""
+    """Air quality of a place now: US and European AQI with bands, six pollutants and advice. Inside Malaysia it adds the official reading of the nearest DOE APIMS station (official_value, official_band); when present, show it first, as the MY API row of the index table. Use the band names as given, copy every number as given, and quote the advice word for word."""
     return await result(build_air_quality_report, locals())
 
 
 async def google_maps_link(
     url: needed_text("a short Google Maps link, such as https://maps.app.goo.gl/...", MAPS_SHORT),
 ) -> CallToolResult:
-    """Expand a short Google Maps link into a full google.com/maps/place link. kind is place, place_id, coordinates (the pin resolves to the nearest address), query, or redirect."""
+    """Expand a short Google Maps link into a full google.com/maps/place link. Reply with the url copied exactly. kind is place, place_id, coordinates (then say the pin resolves to the nearest address, not the exact place), query, or redirect."""
     return await result(build_google_maps_link, locals())
 
 
@@ -404,7 +463,7 @@ TOOLS = [
     ("air-quality", air_quality_report), ("google-maps", google_maps_link),
     ("cinema", cinema_list), ("cinema", cinema_showtimes), ("cinema", cinema_seat_map), ("cinema", gsc_films),
     ("fourd", fourd_results), ("northport", northport_enquiry), ("meetup", meetup_events),
-    ("goodreads", goodreads_shelf), ("youtube", youtube_rss),
+    ("goodreads", goodreads_shelf), ("youtube", youtube_rss), ("youtube", youtube_channel),
     ("hacker-news", hacker_news_feed), ("hacker-news", hacker_news_comments),
     ("rps", rps_feed), ("rps", rps_article),
 ]

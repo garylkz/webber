@@ -65,6 +65,12 @@ Use the venv's Python: the server needs `mcp` and the scripts it runs need
 - **Groups.** Each tool has a group (`cinema`, `fourd`, `northport`, `meetup`,
   `goodreads`, `youtube`, `hacker-news`, `rps`, `air-quality`, `google-maps`), and `--tools` serves only the
   named ones.
+- **Ready-made lists for the feeds.** `hacker_news_feed` and `rps_feed` return
+  their items as text a model can repeat as is: each title, then its Article
+  and Comments links on their own lines. The script's JSON travels as
+  structured content. Tested with LFM3 1.7B, which drops links when it
+  composes a list from JSON itself, and folds an RPS comments link into its
+  article link when the two share a line. With this layout it kept every link.
 - **Calls run on worker threads** (`anyio.to_thread`), so a slow price sweep
   does not hold up a ping or another call.
 - **Local HTTP.** `--http` serves the SDK's streamable HTTP transport at
@@ -85,6 +91,7 @@ Use the venv's Python: the server needs `mcp` and the scripts it runs need
 | `meetup_events` | `meetup` list mode |
 | `goodreads_shelf` | `goodreads` with a user id and shelf |
 | `youtube_rss` | `youtube_rss.py`, optionally `--fetch` |
+| `youtube_channel` | `youtube_channel.py` with a creator's name |
 | `hacker_news_feed` | `hacker_news_feed.py --page` |
 | `hacker_news_comments` | `hacker_news_comments.sh` |
 | `rps_feed` | `rps_feed.py --start --count` |

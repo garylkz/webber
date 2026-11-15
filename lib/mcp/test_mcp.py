@@ -26,9 +26,9 @@ SERVER = Path(m.__file__)
 REAL_RUN = m.run  # the no_scripts fixture replaces m.run in every test
 
 
-def argv(name, **args):
+def argv(tool, **args):
     """The command line a tool would run, with the script path relative to lib/."""
-    cmd = getattr(m, f"build_{name}")(args)
+    cmd = getattr(m, f"build_{tool}")(args)
     return [str(Path(cmd[1]).relative_to(m.LIB))] + cmd[2:]
 
 
@@ -40,8 +40,8 @@ def ask(coro_fn, server=None):
     return anyio.run(main)
 
 
-def call(name, **args):
-    return ask(lambda client: client.call_tool(name, args))
+def call(tool, **args):
+    return ask(lambda client: client.call_tool(tool, args))
 
 
 def listed(server=None):
@@ -54,9 +54,9 @@ def no_scripts(monkeypatch):
     monkeypatch.setattr(m, "run", lambda cmd: json.dumps({"ran": cmd[1:]}))
 
 
-def rejects(name, **args):
-    result = call(name, **args)
-    assert result.is_error, f"{name} {args} was accepted: {result.content[0].text}"
+def rejects(tool, **args):
+    result = call(tool, **args)
+    assert result.is_error, f"{tool} {args} was accepted: {result.content[0].text}"
     return result.content[0].text
 
 
@@ -67,7 +67,7 @@ def test_the_tool_names_are_pinned():
         "cinema_list", "cinema_showtimes", "cinema_seat_map", "gsc_films",
         "fourd_results", "northport_enquiry", "meetup_events", "goodreads_shelf",
         "youtube_rss", "hacker_news_feed", "hacker_news_comments", "rps_feed", "rps_article",
-        "air_quality_report", "google_maps_link",
+        "air_quality_report", "google_maps_link", "youtube_channel",
     ])
 
 
@@ -185,6 +185,8 @@ def test_the_small_tools():
     assert argv("goodreads_shelf", user_id="1123497") == ["goodreads/goodreads_shelf.py", "1123497", "read"]
     assert argv("youtube_rss", url="https://youtube.com/@x", fetch=True) == [
         "youtube/youtube_rss.py", "--fetch", "https://youtube.com/@x"]
+    assert argv("youtube_channel", name="科學漫聊") == ["youtube/youtube_channel.py", "科學漫聊"]
+    rejects("youtube_channel", name="--help")
     assert argv("hacker_news_feed", page=2) == ["hacker-news/hacker_news_feed.py", "--page=2"]
     assert argv("hacker_news_comments", item="https://news.ycombinator.com/item?id=42") == [
         "hacker-news/hacker_news_comments.sh", "https://news.ycombinator.com/item?id=42"]
@@ -268,3 +270,40 @@ def test_the_real_server_over_http():
     finally:
         proc.terminate()
         proc.wait(timeout=10)
+
+
+# --- ready-made Markdown for the feeds ---------------------------------------
+
+HN = {"page": 1, "count": 2, "stories": [
+    {"title": "One", "url": "https://a.example/1", "comments_url": "https://news.ycombinator.com/item?id=1"},
+    {"title": "Two", "url": "https://a.example/2", "comments_url": "https://news.ycombinator.com/item?id=2"}]}
+RPS = {"order": "newest", "start": 3, "next_start": 5, "total": 40, "articles": [
+    {"title": "Three", "url": "https://www.rockpapershotgun.com/three",
+     "comments_url": "https://www.rockpapershotgun.com/three?view=comments"},
+    {"title": "Four", "url": "https://www.rockpapershotgun.com/four",
+     "comments_url": "https://www.rockpapershotgun.com/four?view=comments"}]}
+
+
+def test_the_feeds_render_both_links_on_their_own_lines():
+    assert m.render_hacker_news_feed(HN).splitlines() == [
+        "Hacker News, page 1:", "",
+        "1. One", "   Article: https://a.example/1", "   Comments: https://news.ycombinator.com/item?id=1",
+        "2. Two", "   Article: https://a.example/2", "   Comments: https://news.ycombinator.com/item?id=2"]
+    lines = m.render_rps_feed(RPS).splitlines()
+    assert lines[2:5] == ["3. Three", "   Article: https://www.rockpapershotgun.com/three",
+                          "   Comments: https://www.rockpapershotgun.com/three?view=comments"]
+    assert lines[-1] == "More: start=5"
+
+
+def test_a_feed_call_returns_markdown_and_keeps_the_json(monkeypatch):
+    monkeypatch.setattr(m, "run", lambda cmd: json.dumps(HN))
+    result = call("hacker_news_feed")
+    assert not result.is_error
+    assert result.content[0].text == m.render_hacker_news_feed(HN)
+    assert result.structured_content == HN
+
+
+def test_an_unexpected_shape_falls_back_to_the_json(monkeypatch):
+    monkeypatch.setattr(m, "run", lambda cmd: '{"odd": true}')
+    result = call("rps_feed")
+    assert not result.is_error and result.content[0].text == '{"odd": true}'
