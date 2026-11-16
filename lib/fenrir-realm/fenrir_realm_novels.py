@@ -176,6 +176,14 @@ def _chapter_number(value, label, nullable=False):
     return value
 
 
+def _chapter_path(value):
+    if (not isinstance(value, str) or not value
+            or any(segment in ("", ".", "..") or not re.fullmatch(r"[A-Za-z0-9_.-]+", segment)
+                   for segment in value.split("/"))):
+        raise FenrirError("Unexpected chapter slug: expected a safe relative path")
+    return value
+
+
 def parse_chapters(data, slug):
     _slug(slug)
     result = []
@@ -183,9 +191,17 @@ def parse_chapters(data, slug):
         row = _object(row, "chapter")
         number = _chapter_number(row.get("number"), "number")
         part = _chapter_number(row.get("part"), "part", nullable=True)
-        group = row.get("group")
-        group_slug = _slug(_object(group, "chapter group").get("slug")) if group is not None else None
-        path = f"{number}" + (f".{part}" if part is not None else "")
+        canonical = row.get("slug")
+        if canonical is not None and not isinstance(canonical, str):
+            raise FenrirError("Unexpected chapter slug: expected text")
+        canonical = canonical.strip() if canonical else ""
+        if canonical:
+            path = _chapter_path(canonical)
+        else:
+            group = row.get("group")
+            group_slug = _slug(_object(group, "chapter group").get("slug")) if group is not None else None
+            fallback = f"{number}" + (f"-{part}" if part else "")
+            path = _chapter_path((group_slug + "/" if group_slug else "") + fallback)
         locked = row.get("locked")
         price = None
         read_only = None
@@ -201,7 +217,7 @@ def parse_chapters(data, slug):
         if not isinstance(title, str):
             raise FenrirError("Unexpected chapter title")
         result.append({"number": number, "part": part, "title": title.strip(),
-                       "url": f"{BASE_URL}/series/{slug}/" + (group_slug + "/" if group_slug else "") + path,
+                       "url": f"{BASE_URL}/series/{slug}/{path}",
                        "price": price, "is_read_only": read_only})
     return result
 

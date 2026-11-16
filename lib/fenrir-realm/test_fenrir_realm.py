@@ -110,14 +110,40 @@ def test_full_html_excludes_widgets(sample):
 
 def test_chapter_parts_groups_and_unknown_price(sample):
     chapter = deepcopy(sample["chapters"][0])
-    chapter.update(number=12, part=2, group={"slug": "volume-1"}, locked={"price": 5, "is_read_only": True})
+    chapter.update(number=12, part=2, slug="volume-1/12-2", group={"slug": "volume-1"},
+                   locked={"price": 5, "is_read_only": True})
     parsed = fr.parse_chapters([chapter], "novel")[0]
-    assert parsed["url"] == fr.BASE_URL + "/series/novel/volume-1/12.2"
+    assert parsed["url"] == fr.BASE_URL + "/series/novel/volume-1/12-2"
     assert parsed["price"] == 5 and parsed["is_read_only"] is True
     chapter["locked"] = None
     assert fr.parse_chapters([chapter], "novel")[0]["price"] is None
+    chapter["slug"] = None
     chapter["group"]["slug"] = "../../other"
     with pytest.raises(fr.FenrirError):
+        fr.parse_chapters([chapter], "novel")
+
+
+@pytest.mark.parametrize("canonical,group,expected", [
+    ("12-2", {"slug": "volume-1"}, "12-2"),
+    ("volume-1/12-2", {"slug": "volume-1"}, "volume-1/12-2"),
+    ("special-ending", None, "special-ending"),
+    (None, {"slug": "volume-1"}, "volume-1/12-2"),
+    ("", None, "12-2"),
+    ("   ", None, "12-2"),
+])
+def test_chapter_canonical_slug_precedes_group_and_number(sample, canonical, group, expected):
+    chapter = dict(sample["chapters"][0], number=12, part=2, slug=canonical, group=group)
+    assert fr.parse_chapters([chapter], "novel")[0]["url"] == fr.BASE_URL + "/series/novel/" + expected
+
+
+@pytest.mark.parametrize("canonical", [
+    "../secret", "volume/../secret", ".", "..", "/12-2", "//example.com/12",
+    "https://example.com/12", "12?redirect=evil", "12#fragment", "12//2",
+    "volume/%2e%2e/12", "volume\\12", "12\n2", 12,
+])
+def test_unsafe_chapter_slugs_rejected(sample, canonical):
+    chapter = dict(sample["chapters"][0], slug=canonical)
+    with pytest.raises(fr.FenrirError, match="chapter slug"):
         fr.parse_chapters([chapter], "novel")
 
 
