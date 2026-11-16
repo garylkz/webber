@@ -307,3 +307,19 @@ def test_an_unexpected_shape_falls_back_to_the_json(monkeypatch):
     monkeypatch.setattr(m, "run", lambda cmd: '{"odd": true}')
     result = call("rps_feed")
     assert not result.is_error and result.content[0].text == '{"odd": true}'
+
+
+def test_a_channel_renders_its_handle_and_url_on_their_own_lines():
+    long = "@Alexalexalexalexalexalexalex"
+    found = {"status": "found", "name": "Alex Meyers", "channel": "@AlexMeyersVids",
+             "subscribers": "3.92M subscribers", "url": "https://www.youtube.com/@AlexMeyersVids"}
+    assert m.render_youtube_channel(found).splitlines() == [
+        "Found: Alex Meyers", "   Handle: @AlexMeyersVids", "   Subscribers: 3.92M subscribers",
+        "   URL: https://www.youtube.com/@AlexMeyersVids"]
+    ambiguous = {"status": "ambiguous", "query": "alex", "candidates": [
+        {"name": "alex", "channel": long, "subscribers": "1.18M subscribers", "url": "https://www.youtube.com/" + long}]}
+    lines = m.render_youtube_channel(ambiguous).splitlines()
+    assert lines[0].startswith('More than one channel matches "alex"')
+    assert lines[2:] == ["1. alex", f"   Handle: {long}", "   Subscribers: 1.18M subscribers",
+                         f"   URL: https://www.youtube.com/{long}"]
+    assert m.render_youtube_channel({"status": "odd"}) is None

@@ -45,6 +45,8 @@ def test_a_close_rival_makes_it_ambiguous():
     result = y.choose("alex", channels)
     assert result["status"] == "ambiguous"
     assert [c["channel"] for c in result["candidates"]] == ["@Alexalex", "@alexwelford"]
+    assert [c["url"] for c in result["candidates"]] == ["https://www.youtube.com/@Alexalex",
+                                                       "https://www.youtube.com/@alexwelford"]
 
 
 def test_a_five_times_lead_is_clear():

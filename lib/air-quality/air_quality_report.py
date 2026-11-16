@@ -9,8 +9,9 @@ Usage:
 
 Prints one JSON object on stdout as its only output. The place is geocoded
 with Open-Meteo, and its readings come from the Open-Meteo air quality API.
-Inside Malaysia the official reading of the nearest DOE APIMS station is added
-as official_value and official_band. Errors go to stderr.
+Inside Malaysia the official reading of the nearest DOE APIMS station with a
+reading is added as official_value and official_band, with official_station
+and official_distance_km. Errors go to stderr.
 """
 
 import argparse
@@ -148,30 +149,40 @@ def in_malaysia(country, lat, lon):
 
 # --- the official Malaysian reading ------------------------------------------
 
+def api_value(attributes):
+    """A station's API as a float, or None when it has no reading yet."""
+    try:
+        return float(attributes.get("API"))
+    except (TypeError, ValueError):
+        return None
+
+
 def nearest_station(body, lat, lon):
-    """The API and CLASS of the APIMS station nearest the point, or None."""
+    """The reading of the nearest APIMS station that has one, or None.
+
+    Just after the hour a station can still be waiting for its reading, so a
+    station without one is passed over for the next nearest. The station's name
+    and distance go with the reading, so a farther station is plain to see.
+    """
     best, best_d = None, None
     for feature in (body or {}).get("features") or []:
         a = feature.get("attributes") or {}
-        if a.get("LATITUDE") is None or a.get("LONGITUDE") is None:
+        if a.get("LATITUDE") is None or a.get("LONGITUDE") is None or api_value(a) is None:
             continue
         dy = (a["LATITUDE"] - lat) * 111.32
         dx = (a["LONGITUDE"] - lon) * 111.32 * math.cos(math.radians((a["LATITUDE"] + lat) / 2))
-        d = dx * dx + dy * dy
+        d = math.hypot(dx, dy)
         if best_d is None or d < best_d:
             best, best_d = a, d
     if best is None:
         return None
-    value = best.get("API")
-    try:
-        value = float(value) if value is not None else None
-    except (TypeError, ValueError):
-        value = None
-    return {"official_value": value, "official_band": best.get("CLASS") or "n/a"}
+    return {"official_value": api_value(best), "official_band": best.get("CLASS") or "n/a",
+            "official_station": best.get("STATION_LOCATION") or best.get("STATION_ID") or "unknown",
+            "official_distance_km": round(best_d, 1)}
 
 
 def official_reading(lat, lon, timeout=20):
-    """The nearest station's reading, or None when APIMS does not answer."""
+    """The nearest station's reading, or None when APIMS does not answer or has no reading."""
     try:
         resp = requests.get(APIMS_URL, params=APIMS_PARAMS, timeout=timeout)
         resp.raise_for_status()

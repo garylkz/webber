@@ -70,6 +70,9 @@ Use the venv's Python: the server needs `mcp` and the scripts it runs need
   structured content. Tested with LFM3 1.7B, which drops links when it
   composes a list from JSON itself, and folds an RPS comments link into its
   article link when the two share a line. With this layout it kept every link.
+  `youtube_channel` does the same: each channel's name, then its Handle,
+  Subscribers and URL lines, because LFM shortened a long, repetitive handle
+  when it retyped it out of the JSON.
 - **Calls run on worker threads** (`anyio.to_thread`), so a slow price sweep
   does not hold up a ping or another call.
 - **Local HTTP.** `--http` serves the SDK's streamable HTTP transport at

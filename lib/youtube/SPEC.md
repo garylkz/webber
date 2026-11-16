@@ -169,11 +169,12 @@ lib/.venv/bin/python lib/youtube/youtube_channel.py "科學漫聊"
 {"status": "found", "name": "Alex Meyers", "channel": "@AlexMeyersVids",
  "subscribers": "3.92M subscribers", "url": "https://www.youtube.com/@AlexMeyersVids"}
 {"status": "ambiguous", "query": "alex",
- "candidates": [{"name": "alex ♡", "channel": "@Alexalexalexalexalexalexalex", "subscribers": "1.18M subscribers"}]}
+ "candidates": [{"name": "alex ♡", "channel": "@Alexalexalexalexalexalexalex", "subscribers": "1.18M subscribers",
+                 "url": "https://www.youtube.com/@Alexalexalexalexalexalexalex"}]}
 ```
 
 `channel` is the @handle, or the UC channel id when the channel has no handle,
-and `url` follows it. When nothing comes close the script prints
+and `url` follows it, for each candidate too. When nothing comes close the script prints
 `No channel found for "<name>".` on stderr and exits 1.
 
 ### The clear-match rule

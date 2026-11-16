@@ -275,6 +275,28 @@ def render_rps_feed(data):
     return "\n".join(lines)
 
 
+def channel_lines(c):
+    """A channel's labelled lines, so a small model copies the handle and url whole."""
+    return [f"   Handle: {c['channel']}", f"   Subscribers: {c['subscribers']}", f"   URL: {c['url']}"]
+
+
+def render_youtube_channel(data):
+    """A ready-made answer for a small model to repeat as is, or None for an unexpected shape.
+
+    LFM shortened a long, repetitive handle when it retyped one out of the JSON.
+    """
+    if not isinstance(data, dict):
+        return None
+    if data.get("status") == "found":
+        return "\n".join([f"Found: {data['name']}"] + channel_lines(data))
+    if data.get("status") == "ambiguous" and isinstance(data.get("candidates"), list):
+        lines = [f'More than one channel matches "{data["query"]}". Ask the user which one:', ""]
+        for n, c in enumerate(data["candidates"], 1):
+            lines += [f"{n}. {c['name']}"] + channel_lines(c)
+        return "\n".join(lines)
+    return None
+
+
 def outcome(build, args, render=None):
     """Build and run one command. The text of an error is JSON, the script's own when it printed one.
 
@@ -413,8 +435,8 @@ async def youtube_channel(
     name: needed_text("the creator or channel name, in any language, without words like youtube or channel",
                       NOT_OPTION),
 ) -> CallToolResult:
-    """Find a YouTube channel by a creator's name. status found: reply with the url. status ambiguous: ask the user which one and never pick yourself; list every candidate as its channel, name and subscribers. Copy every handle and url character for character, even a long or repetitive one; never shorten or retype it."""
-    return await result(build_youtube_channel, locals())
+    """Find a YouTube channel by a creator's name. Reply with the result exactly as given, line for line. When it lists more than one channel, ask the user which one and never pick yourself."""
+    return await result(build_youtube_channel, locals(), render_youtube_channel)
 
 
 async def hacker_news_feed(page: number("front page number (default: 1)") = None) -> CallToolResult:
@@ -448,7 +470,7 @@ async def air_quality_report(
     hours: Annotated[Optional[int], Field(description="also the US AQI of the next N hours", ge=1, le=48,
                                           strict=True)] = None,
 ) -> CallToolResult:
-    """Air quality of a place now: US and European AQI with bands, six pollutants and advice. Inside Malaysia it adds the official reading of the nearest DOE APIMS station (official_value, official_band); when present, show it first, as the MY API row of the index table. Use the band names as given, copy every number as given, and quote the advice word for word."""
+    """Air quality of a place now: US and European AQI with bands, six pollutants and advice. Inside Malaysia it adds the official reading of the nearest DOE APIMS station with a reading (official_value, official_band, official_station, official_distance_km); when present, show it first, as the MY API row of the index table, naming the station. Use the band names as given, copy every number as given, and quote the advice word for word."""
     return await result(build_air_quality_report, locals())
 
 

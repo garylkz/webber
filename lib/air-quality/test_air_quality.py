@@ -84,13 +84,24 @@ def test_the_nearest_station_is_petaling_jaya():
     reading = a.nearest_station(APIMS, point["latitude"], point["longitude"])
     nearest = APIMS["features"][0]["attributes"]
     assert nearest["STATION_LOCATION"].startswith("Petaling Jaya")
-    assert reading == {"official_value": float(nearest["API"]), "official_band": nearest["CLASS"]}
+    assert reading["official_value"] == float(nearest["API"]) and reading["official_band"] == nearest["CLASS"]
+    assert reading["official_station"] == nearest["STATION_LOCATION"] and reading["official_distance_km"] < 10
 
 
-def test_no_station_or_a_bad_value():
+def station(name, lat, api, band="Good"):
+    return {"attributes": {"STATION_LOCATION": name, "LATITUDE": lat, "LONGITUDE": 101.0, "API": api, "CLASS": band}}
+
+
+def test_a_station_without_a_reading_is_passed_over():
+    body = {"features": [station("near", 3.0, None, None), station("blank", 3.01, "n/a"), station("next", 3.1, 40)]}
+    reading = a.nearest_station(body, 3.0, 101.0)
+    assert reading == {"official_value": 40.0, "official_band": "Good", "official_station": "next",
+                       "official_distance_km": 11.1}
+
+
+def test_no_station_with_a_reading():
     assert a.nearest_station({"features": []}, 3, 101) is None
-    odd = {"features": [{"attributes": {"API": "n/a", "CLASS": None, "LATITUDE": 3, "LONGITUDE": 101}}]}
-    assert a.nearest_station(odd, 3, 101) == {"official_value": None, "official_band": "n/a"}
+    assert a.nearest_station({"features": [station("near", 3.0, None)]}, 3, 101) is None
 
 
 # --- the report --------------------------------------------------------------

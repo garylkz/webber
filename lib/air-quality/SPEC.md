@@ -37,8 +37,11 @@ to 48.
   Malaysia this is the whole report. It is a model value, not a street monitor.
 - **DOE APIMS** (the ground-monitor network behind
   https://eqms.doe.gov.my/APIMS/main) gives the current reading of every
-  Malaysian station in one public ArcGIS query. The nearest station's `API` and
-  `CLASS` become `official_value` and `official_band`. It is asked only when the
+  Malaysian station in one public ArcGIS query. The nearest station with a
+  reading gives `official_value` and `official_band` from its `API` and `CLASS`,
+  and its name and distance as `official_station` and `official_distance_km`.
+  Just after the hour a station can still be waiting for its reading, and it is
+  then passed over for the next nearest. It is asked only when the
   geocoder says the place is in Malaysia, or, for a raw point, when the point
   falls in a loose box over both peninsulas. If APIMS does not answer, the two
   keys are left out and the rest of the report stands.
@@ -54,10 +57,12 @@ to 48.
                 "nitrogen_dioxide": 14.3, "sulphur_dioxide": 6.1, "ozone": 52.0},
  "advice": "Air quality is acceptable. ...",
  "official_value": 55.0, "official_band": "Moderate",
+ "official_station": "Petaling Jaya, SELANGOR", "official_distance_km": 2.4,
  "hourly": [{"time": "2026-11-16T00:00", "us_aqi": 85, "us_aqi_band": "Moderate"}]}
 ```
 
-`official_value` and `official_band` appear only inside Malaysia. `hourly`
+The four `official_` keys appear only inside Malaysia, and only when some
+station has a reading. `hourly`
 appears only with `--hours`. Any reading may be `null`, and its band is then
 `no reading`.
 

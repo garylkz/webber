@@ -6,7 +6,7 @@ Usage:
 
 Prints one JSON object on stdout as its only output:
     {"status": "found", "name": ..., "channel": "@handle", "subscribers": ..., "url": ...}
-    {"status": "ambiguous", "query": ..., "candidates": [{"name": ..., "channel": ..., "subscribers": ...}]}
+    {"status": "ambiguous", "query": ..., "candidates": [{"name": ..., "channel": ..., "subscribers": ..., "url": ...}]}
 
 The name is searched on YouTube, channels only. A channel is picked only when
 the match is clear: its name or handle equals the name (ignoring case, spaces
@@ -120,7 +120,8 @@ def choose(query: str, channels: list[dict], simplified: dict | None = None) -> 
         if all(subscriber_count(top["subscribers"]) >= CLEAR_LEAD * max(n, 1) for n in others):
             return {"status": "found", **top, "url": channel_url(top["channel"])}
     if close:
-        return {"status": "ambiguous", "query": query, "candidates": close}
+        return {"status": "ambiguous", "query": query,
+                "candidates": [{**c, "url": channel_url(c["channel"])} for c in close]}
     return None
 
 
