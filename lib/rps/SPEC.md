@@ -56,12 +56,10 @@ Takes one article URL from the feed and prints it as one JSON object:
 
 Errors go to stderr with a non-zero exit, unlike the feed listers.
 
-### Departures from the shared conventions
+### History
 
-- **It fetches with `curl` through `subprocess`, not with `requests`,** and uses
-  only the standard library otherwise. It started as a copy of
-  `~/.agents/scripts/rps-article.py`, which the global `rps-article` agent skill
-  runs.
-- **The two copies are independent and already differ:** this one prints JSON
-  only (the global one also has a `--format text` mode). A fix made to one does
-  not reach the other.
+It started as a copy of `~/.agents/scripts/rps-article.py` and fetched with
+`curl` through `subprocess`. It now fetches with `requests` like every other
+tool, and printed the same JSON as the `curl` version on every live article it
+was checked against. The global copy is separate: it also has a
+`--format text` mode, and a fix made to one does not reach the other.

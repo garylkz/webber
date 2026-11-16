@@ -15,7 +15,7 @@ reads with --body-file. The note follows pages/Articles Conventions.md: the
 types articles and bookmarks, the site tags, the author, the publish time in
 GMT+8, and the url.
 
-Uses only the standard library and curl.
+Fetches the page with requests.
 """
 
 import argparse
@@ -23,11 +23,12 @@ import json
 import os
 import re
 import shlex
-import subprocess
 import sys
 from datetime import datetime, timedelta, timezone
 from html.parser import HTMLParser
 from urllib.parse import urljoin, urlsplit, urlunsplit
+
+import requests
 
 BODY_FILE = "/tmp/rps-article-body.md"
 TIMEOUT = 30
@@ -54,17 +55,13 @@ def clean_url(raw):
 
 
 def fetch(url):
-    """Fetch the page with curl, which uses the system certificates."""
+    """Fetch the page, following redirects. An HTTP error status is a failure."""
     try:
-        result = subprocess.run(
-            ["curl", "-sSL", "--fail", "-m", str(TIMEOUT), "-A", "Mozilla/5.0", url],
-            capture_output=True,
-        )
-    except OSError as error:
+        response = requests.get(url, headers={"User-Agent": "Mozilla/5.0"}, timeout=TIMEOUT)
+        response.raise_for_status()
+    except requests.RequestException as error:
         return None, f"Error fetching the article: {error}"
-    if result.returncode != 0:
-        return None, f"Error fetching the article: {result.stderr.decode().strip()}"
-    return result.stdout.decode("utf-8", errors="replace"), None
+    return response.content.decode("utf-8", errors="replace"), None
 
 
 class ArticleParser(HTMLParser):

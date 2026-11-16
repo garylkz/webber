@@ -26,8 +26,7 @@ python3 -m venv lib/.venv
 lib/.venv/bin/pip install requests "mcp==2.3.0"
 ```
 
-`requests` is the scrapers' only Python dependency; `mcp` is for the MCP server alone. `rps_article.py`
-also needs `curl`.
+`requests` is the scrapers' only Python dependency; `mcp` is for the MCP server alone.
 
 ## Run
 

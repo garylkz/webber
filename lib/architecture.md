@@ -73,8 +73,7 @@ The module specs describe only where a tool departs from them.
   third-party dependency. Nothing uses `urllib.request` or shells out to `curl`.
   One client means one way to handle errors and timeouts, and `requests` brings
   its own CA bundle, so HTTPS works on an install that has no system
-  certificate store. The exception is `rps_article.py`, which started as a copy
-  of the owner's global agent script and uses `curl` (see `rps`).
+  certificate store.
 - **Errors.** Bad arguments are rejected before any request is made. A source
   that can't be reached is reported as such, never shown as an empty result.
 
