@@ -1,0 +1,563 @@
+[
+  {
+    "id": "9aaa3eab-5377-4e50-a250-0ae6a0825711",
+    "slug": "the-demonic-cult-knows-how-to-communicate",
+    "title": "The Demonic Cult Knows How to Communicate",
+    "alternative_title": "마교의 대화수단이 훌륭함",
+    "description": "The story of a protagonist from South Korea's Defense Intelligence Command (HID) who, after an unexpected accident during their days as a mercenary, is cast into the world of the Murim \u2014 straight into the Sacred Moon Divine Cult, widely feared as the Demonic Cult \u2014 and must fight to survive. Armed with a deep understanding of gunpowder, chemistry, and modern martial arts, they put this knowledge to work battling the realm's greatest powerhouses, gradually forging a faction of their own.",
+    "author_id": "ebea1d67-27fd-4ea1-bc85-0c2c570062cb",
+    "original_author": "조비본",
+    "novel_type": "web_novel",
+    "type": "web_novel",
+    "country_of_origin": "Korea",
+    "year_of_release": 2026,
+    "status": "ongoing",
+    "translation_status": "in_progress",
+    "is_locked": false,
+    "is_nsfw": false,
+    "is_visible": true,
+    "approval_status": "approved",
+    "updated_at": "2026-11-08T17:45:36.892524+00:00",
+    "author": {
+      "username": "Yuha",
+      "display_name": "Yuha"
+    },
+    "novel_genres": [
+      {
+        "genres": {
+          "name": "Supernatural"
+        }
+      },
+      {
+        "genres": {
+          "name": "Wuxia"
+        }
+      },
+      {
+        "genres": {
+          "name": "Seinen"
+        }
+      },
+      {
+        "genres": {
+          "name": "Fantasy"
+        }
+      },
+      {
+        "genres": {
+          "name": "Action"
+        }
+      },
+      {
+        "genres": {
+          "name": "Mystery"
+        }
+      },
+      {
+        "genres": {
+          "name": "Martial Arts"
+        }
+      },
+      {
+        "genres": {
+          "name": "Adventure"
+        }
+      },
+      {
+        "genres": {
+          "name": "Comedy"
+        }
+      },
+      {
+        "genres": {
+          "name": "Drama"
+        }
+      },
+      {
+        "genres": {
+          "name": "Historical"
+        }
+      },
+      {
+        "genres": {
+          "name": "Psychological"
+        }
+      }
+    ],
+    "novel_tags": [
+      {
+        "tags": {
+          "name": "Familiars"
+        }
+      },
+      {
+        "tags": {
+          "name": "Secretive Protagonist"
+        }
+      },
+      {
+        "tags": {
+          "name": "Buddhism"
+        }
+      },
+      {
+        "tags": {
+          "name": "Herbalist"
+        }
+      },
+      {
+        "tags": {
+          "name": "Calm Protagonist"
+        }
+      },
+      {
+        "tags": {
+          "name": "Transmigration"
+        }
+      },
+      {
+        "tags": {
+          "name": "Cunning Protagonist"
+        }
+      },
+      {
+        "tags": {
+          "name": "Poisons"
+        }
+      },
+      {
+        "tags": {
+          "name": "Family Conflict"
+        }
+      },
+      {
+        "tags": {
+          "name": "Underestimated Protagonist"
+        }
+      },
+      {
+        "tags": {
+          "name": "Clever Protagonist"
+        }
+      },
+      {
+        "tags": {
+          "name": "Martial Spirits"
+        }
+      },
+      {
+        "tags": {
+          "name": "Army Building"
+        }
+      },
+      {
+        "tags": {
+          "name": "Drugs"
+        }
+      },
+      {
+        "tags": {
+          "name": "Politics"
+        }
+      },
+      {
+        "tags": {
+          "name": "Alchemy"
+        }
+      },
+      {
+        "tags": {
+          "name": "Special Abilities"
+        }
+      },
+      {
+        "tags": {
+          "name": "Male Protagonist"
+        }
+      },
+      {
+        "tags": {
+          "name": "Ruthless Protagonist"
+        }
+      },
+      {
+        "tags": {
+          "name": "Artifact Crafting"
+        }
+      },
+      {
+        "tags": {
+          "name": "Hidden Abilities"
+        }
+      },
+      {
+        "tags": {
+          "name": "Beast Companions"
+        }
+      },
+      {
+        "tags": {
+          "name": "Weak to Strong"
+        }
+      },
+      {
+        "tags": {
+          "name": "Management"
+        }
+      },
+      {
+        "tags": {
+          "name": "Near-Death Experience"
+        }
+      },
+      {
+        "tags": {
+          "name": "Sword Wielder"
+        }
+      },
+      {
+        "tags": {
+          "name": "Power Struggle"
+        }
+      },
+      {
+        "tags": {
+          "name": "Hard-Working Protagonist"
+        }
+      },
+      {
+        "tags": {
+          "name": "Schemes And Conspiracies"
+        }
+      },
+      {
+        "tags": {
+          "name": "Cultivation"
+        }
+      },
+      {
+        "tags": {
+          "name": "Transported to Another World"
+        }
+      },
+      {
+        "tags": {
+          "name": "Medical Knowledge"
+        }
+      },
+      {
+        "tags": {
+          "name": "Modern Knowledge"
+        }
+      },
+      {
+        "tags": {
+          "name": "Secret Identity"
+        }
+      },
+      {
+        "tags": {
+          "name": "Blacksmith"
+        }
+      },
+      {
+        "tags": {
+          "name": "Pragmatic Protagonist"
+        }
+      },
+      {
+        "tags": {
+          "name": "Wars"
+        }
+      },
+      {
+        "tags": {
+          "name": "Mercenaries"
+        }
+      },
+      {
+        "tags": {
+          "name": "Sibling Rivalry"
+        }
+      },
+      {
+        "tags": {
+          "name": "Business Management"
+        }
+      },
+      {
+        "tags": {
+          "name": "Assassins"
+        }
+      },
+      {
+        "tags": {
+          "name": "Military"
+        }
+      },
+      {
+        "tags": {
+          "name": "Daoism"
+        }
+      },
+      {
+        "tags": {
+          "name": "Artifacts"
+        }
+      }
+    ]
+  },
+  {
+    "id": "d47f5fbc-6964-41c0-b29b-4f450ff54272",
+    "slug": "an-ssr-spirit-beast-just-rolled-into-my-fish-farm",
+    "title": "An SSR Spirit Beast Just Rolled Into My Fish Farm",
+    "alternative_title": "물려받은 양식장에 SSR급 영물이 굴러옴",
+    "description": "At the fish farm I inherited from my father, I came across a tiny otter.\n\nWait... this little guy wasn't just any ordinary otter but a spiritual beast?!",
+    "author_id": "ebea1d67-27fd-4ea1-bc85-0c2c570062cb",
+    "original_author": "하얀카라",
+    "novel_type": "web_novel",
+    "type": "web_novel",
+    "country_of_origin": "Korea",
+    "year_of_release": 2026,
+    "status": "ongoing",
+    "translation_status": "in_progress",
+    "is_locked": false,
+    "is_nsfw": false,
+    "is_visible": true,
+    "approval_status": "approved",
+    "updated_at": "2026-11-08T17:39:23.18807+00:00",
+    "author": {
+      "username": "Yuha",
+      "display_name": "Yuha"
+    },
+    "novel_genres": [
+      {
+        "genres": {
+          "name": "Supernatural"
+        }
+      },
+      {
+        "genres": {
+          "name": "Fantasy"
+        }
+      },
+      {
+        "genres": {
+          "name": "Action"
+        }
+      },
+      {
+        "genres": {
+          "name": "Adventure"
+        }
+      },
+      {
+        "genres": {
+          "name": "Slice of Life"
+        }
+      },
+      {
+        "genres": {
+          "name": "Comedy"
+        }
+      }
+    ],
+    "novel_tags": [
+      {
+        "tags": {
+          "name": "Exorcism"
+        }
+      },
+      {
+        "tags": {
+          "name": "Curses"
+        }
+      },
+      {
+        "tags": {
+          "name": "Familiars"
+        }
+      },
+      {
+        "tags": {
+          "name": "Calm Protagonist"
+        }
+      },
+      {
+        "tags": {
+          "name": "Cute Story"
+        }
+      },
+      {
+        "tags": {
+          "name": "Found Family"
+        }
+      },
+      {
+        "tags": {
+          "name": "Magic Beasts"
+        }
+      },
+      {
+        "tags": {
+          "name": "Dragons"
+        }
+      },
+      {
+        "tags": {
+          "name": "Caring Protagonist"
+        }
+      },
+      {
+        "tags": {
+          "name": "Family Business"
+        }
+      },
+      {
+        "tags": {
+          "name": "Special Abilities"
+        }
+      },
+      {
+        "tags": {
+          "name": "Heartwarming"
+        }
+      },
+      {
+        "tags": {
+          "name": "Male Protagonist"
+        }
+      },
+      {
+        "tags": {
+          "name": "Gods"
+        }
+      },
+      {
+        "tags": {
+          "name": "Inheritance"
+        }
+      },
+      {
+        "tags": {
+          "name": "Beast Companions"
+        }
+      },
+      {
+        "tags": {
+          "name": "Store Owner"
+        }
+      },
+      {
+        "tags": {
+          "name": "Level System"
+        }
+      },
+      {
+        "tags": {
+          "name": "Livestreaming"
+        }
+      },
+      {
+        "tags": {
+          "name": "Game Elements"
+        }
+      },
+      {
+        "tags": {
+          "name": "Hard-Working Protagonist"
+        }
+      },
+      {
+        "tags": {
+          "name": "Guilds"
+        }
+      },
+      {
+        "tags": {
+          "name": "Modern Day"
+        }
+      },
+      {
+        "tags": {
+          "name": "Monster Tamer"
+        }
+      },
+      {
+        "tags": {
+          "name": "Schemes And Conspiracies"
+        }
+      },
+      {
+        "tags": {
+          "name": "Spirit Users"
+        }
+      },
+      {
+        "tags": {
+          "name": "Hunters"
+        }
+      },
+      {
+        "tags": {
+          "name": "Cooking"
+        }
+      },
+      {
+        "tags": {
+          "name": "Dungeons"
+        }
+      },
+      {
+        "tags": {
+          "name": "Friendship"
+        }
+      },
+      {
+        "tags": {
+          "name": "Farming"
+        }
+      },
+      {
+        "tags": {
+          "name": "Business Management"
+        }
+      },
+      {
+        "tags": {
+          "name": "Easy Going Life"
+        }
+      },
+      {
+        "tags": {
+          "name": "Pets"
+        }
+      },
+      {
+        "tags": {
+          "name": "Contracts"
+        }
+      },
+      {
+        "tags": {
+          "name": "Quirky Characters"
+        }
+      },
+      {
+        "tags": {
+          "name": "Healers"
+        }
+      },
+      {
+        "tags": {
+          "name": "Artifacts"
+        }
+      },
+      {
+        "tags": {
+          "name": "Spirits"
+        }
+      }
+    ]
+  }
+]
