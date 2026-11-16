@@ -12,7 +12,7 @@ Everything lives under `lib/`, one folder per tool (`lib/<tool>/`; the tools
 are this spec's children in the graph). A folder holds the tool's code, its `SPEC.md`, its tests and
 its `fixtures/`. A tool an agent runs directly may also carry a `SKILL.md`:
 the commands and how to read the output, with the design left to `SPEC.md`
-(today `gsc`, `tgv` and `youtube`).
+(today `gsc`, `tgv`, `youtube`, `fenrir-realm`, `sakuraze` and `novelight`).
 One folder is not a scraper: `lib/mcp/` serves the scripts as MCP tools by
 running them as subprocesses, so it imports none of them (see `mcp`). A folder holds one or more scripts, and each
 script is a single file that is both an importable module and a CLI

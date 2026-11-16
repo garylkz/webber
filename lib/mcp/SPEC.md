@@ -62,7 +62,7 @@ Use the venv's Python: the server needs `mcp` and the scripts it runs need
   `cinema_*` tools through a `chain` argument, which the cinema contract makes
   possible. Options that only one chain has are rejected for the other.
 - **Groups.** Each tool has a group (`cinema`, `fourd`, `northport`, `meetup`,
-  `goodreads`, `youtube`, `hacker-news`, `rps`, `air-quality`, `google-maps`), and `--tools` serves only the
+  `goodreads`, `youtube`, `hacker-news`, `rps`, `air-quality`, `google-maps`, `fenrir-realm`, `sakuraze`, `novelight`), and `--tools` serves only the
   named ones.
 - **Ready-made lists for the feeds.** `hacker_news_feed` and `rps_feed` return
   their items as text a model can repeat as is: each title, then its Article
@@ -100,10 +100,23 @@ Use the venv's Python: the server needs `mcp` and the scripts it runs need
 | `rps_article` | `rps_article.py` |
 | `air_quality_report` | `air_quality_report.py` with a place, an address or a point, optionally `--hours` |
 | `google_maps_link` | `google_maps_link.py` |
+| `fenrir_realm_novels` | `fenrir_realm_novels.py` search/browse, `--detail` or `--taxonomies`, optionally `--refresh` |
+| `sakuraze_novels` | `sakuraze_novels.py` snapshot discovery, `--detail`, `--taxonomies`, or `--chapter` with `--novel` |
+| `novelight_novels` | `novelight_novels.py` catalogue search, `--detail` with optional `--chapter-page`, `--taxonomies`, or `--chapter` |
 
 Left out on purpose: the bulk modes that write files and run for a long time
 (`fourd --all`/`--out`, `meetup --dump`), and the tuning flags (`--workers`,
 `--no-delay`), so the tools keep the scripts' polite defaults.
+
+Novel tools expose retrieval for assistant-led plot matching, not a semantic
+search engine. Their descriptions guide query refinement, full-summary and
+selected-chapter verification, source selection and uncertainty. They treat
+retrieved fiction as data rather than instructions. Each owning source spec
+(`fenrir-realm`, `sakuraze`, `novelight`) defines freshness, coverage and reading
+boundaries; the server passes those records through unchanged. Sakuraze's chapter
+argument is an ordinal number paired with a novel slug; Novelight's is the source's
+chapter ID. Both readers accept refresh; of these two, only Sakuraze has local
+results-per-page control. Source fallback is never automatic.
 
 ## Arguments and errors
 

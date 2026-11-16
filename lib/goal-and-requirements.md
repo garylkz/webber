@@ -37,7 +37,11 @@ relay).
   lookups (`northport`).
 - **Events:** Meetup event search near a city, or swept across a whole country
   (`meetup`).
-- **Books:** a Goodreads user's shelf (`goodreads`).
+- **Books:** a Goodreads user's shelf (`goodreads`), and novel discovery from
+  plot clues, keywords, genres and tags on Fenrir Realm, Sakuraze and Novelight
+  (`fenrir-realm`, `sakuraze`, `novelight`). Sakuraze and Novelight also provide
+  selected public chapter text for plot verification, with previews distinguished
+  from full chapters.
 - **YouTube:** a channel URL turned into its RSS feed URL (`youtube`).
 - **News:** the Hacker News front page and a story's comment thread, and the
   Rock Paper Shotgun feed and a full article, as JSON for an agent to relay
@@ -47,7 +51,9 @@ relay).
 
 - **JSON on stdout.** Every CLI's result is machine-readable JSON.
 - **Anonymous access only.** A scraper calls what a logged-out browser can call:
-  no API keys, no accounts, no login-gated data.
+  no accounts, user credentials, user-provided API keys or login-gated data.
+  The user-approved exception for Sakuraze's frontend-distributed anonymous key
+  is bounded by `sakuraze`; it grants no paid access or write operations.
 - **One file per tool.** Each tool is a single importable module that is also its
   own CLI, and runs on its own.
 

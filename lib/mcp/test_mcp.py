@@ -67,7 +67,8 @@ def test_the_tool_names_are_pinned():
         "cinema_list", "cinema_showtimes", "cinema_seat_map", "gsc_films",
         "fourd_results", "northport_enquiry", "meetup_events", "goodreads_shelf",
         "youtube_rss", "hacker_news_feed", "hacker_news_comments", "rps_feed", "rps_article",
-        "air_quality_report", "google_maps_link", "youtube_channel",
+        "air_quality_report", "google_maps_link", "youtube_channel", "fenrir_realm_novels",
+        "sakuraze_novels", "novelight_novels",
     ])
 
 
@@ -207,6 +208,76 @@ def test_air_quality():
     rejects("air_quality_report", lat=3.1)
     rejects("air_quality_report", hours=49)
     rejects("air_quality_report", place="--note")
+
+
+def test_fenrir_realm_novels():
+    assert argv("fenrir_realm_novels") == ["fenrir-realm/fenrir_realm_novels.py"]
+    assert argv("fenrir_realm_novels", search="--help", genres=["Fantasy", "Action"],
+                tags=["Demons"], page=2, per_page=5, refresh=True) == [
+        "fenrir-realm/fenrir_realm_novels.py", "--search=--help", "--page=2",
+        "--per-page=5", "--refresh", "--genre=Fantasy", "--genre=Action", "--tag=Demons"]
+    assert argv("fenrir_realm_novels", detail="a-novel", refresh=True) == [
+        "fenrir-realm/fenrir_realm_novels.py", "--detail=a-novel", "--refresh"]
+    assert argv("fenrir_realm_novels", taxonomies=True) == [
+        "fenrir-realm/fenrir_realm_novels.py", "--taxonomies"]
+    for args in [dict(detail="x", taxonomies=True), dict(detail="x", search="foo"),
+                 dict(taxonomies=True, page=1), dict(detail="x", genres=["Action"]),
+                 dict(taxonomies=True, tags=["Demons"]), dict(detail="x", per_page=20),
+                 dict(page=0), dict(page=True), dict(page="1"), dict(per_page=101),
+                 dict(per_page=1.5), dict(genres="Action"), dict(tags=[1]),
+                 dict(genres=[]), dict(tags=[""]), dict(detail="../secret"),
+                 dict(detail="https://example.com"), dict(refresh="yes")]:
+        rejects("fenrir_realm_novels", **args)
+    result = call("fenrir_realm_novels", search="demon hunter", tags=["Demons"])
+    assert not result.is_error
+    assert "--tag=Demons" in json.loads(result.content[0].text)["ran"]
+    assert [t.name for t in listed(m.make_server({"fenrir-realm"}))] == ["fenrir_realm_novels"]
+
+
+@pytest.mark.parametrize("source", ["sakuraze", "novelight"])
+def test_new_novel_source_commands_and_schema(source):
+    tool = source + "_novels"
+    script = source + "/" + tool + ".py"
+    assert argv(tool) == [script]
+    assert argv(tool, search="--help", genres=["Fantasy"], tags=["Revenge"], page=2, refresh=True) == [
+        script, "--search=--help", "--page=2", "--refresh", "--genre=Fantasy", "--tag=Revenge"]
+    assert argv(tool, detail="a-novel", refresh=True) == [script, "--detail=a-novel", "--refresh"]
+    assert argv(tool, taxonomies=True) == [script, "--taxonomies"]
+    for args in [dict(detail="x", chapter=1), dict(detail="x", taxonomies=True),
+                 dict(chapter=1, taxonomies=True), dict(taxonomies=True, page=1),
+                 dict(detail="x", search="x"), dict(detail="x", genres=["Fantasy"]),
+                 dict(taxonomies=True, tags=["Revenge"]), dict(page=0), dict(page=True),
+                 dict(page="2"), dict(chapter=0), dict(chapter="1"), dict(detail="../x"),
+                 dict(detail="https://evil.test/x"), dict(tags="Revenge"), dict(tags=[1]),
+                 dict(genres=[]), dict(tags=[""]), dict(refresh="true")]:
+        rejects(tool, **args)
+    result = call(tool, search="father", tags=["Revenge"])
+    assert not result.is_error
+    assert "--tag=Revenge" in json.loads(result.content[0].text)["ran"]
+    assert [t.name for t in listed(m.make_server({source}))] == [tool]
+
+
+def test_sakuraze_chapter_and_pagination():
+    assert argv("sakuraze_novels", chapter=51, novel="a-novel", refresh=True) == [
+        "sakuraze/sakuraze_novels.py", "--chapter=51", "--novel=a-novel", "--refresh"]
+    assert argv("sakuraze_novels", per_page=5) == ["sakuraze/sakuraze_novels.py", "--per-page=5"]
+    for args in [dict(chapter=1), dict(novel="x"), dict(novel="x", detail="x"),
+                 dict(novel="x", chapter=1, page=1), dict(detail="x", per_page=20),
+                 dict(per_page=101), dict(per_page=True), dict(per_page="5"),
+                 dict(novel="../x", chapter=1)]:
+        rejects("sakuraze_novels", **args)
+    assert not call("sakuraze_novels", novel="a-novel", chapter=1).is_error
+
+
+def test_novelight_chapter_and_chapter_page():
+    assert argv("novelight_novels", chapter=264593) == ["novelight/novelight_novels.py", "--chapter=264593"]
+    assert argv("novelight_novels", detail="a-novel", chapter_page=2) == [
+        "novelight/novelight_novels.py", "--detail=a-novel", "--chapter-page=2"]
+    for args in [dict(chapter_page=1), dict(chapter=1, chapter_page=2),
+                 dict(taxonomies=True, chapter_page=1), dict(detail="x", chapter_page=0),
+                 dict(detail="x", chapter_page=True), dict(chapter=1, search="foo")]:
+        rejects("novelight_novels", **args)
+    assert not call("novelight_novels", chapter=264593).is_error
 
 
 # --- results -----------------------------------------------------------------

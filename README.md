@@ -12,6 +12,9 @@ and for AI agents.
 | `lib/northport/` | `northport_enquiry.py` | Northport container, B/L, vessel and booking enquiries |
 | `lib/meetup/` | `meetup_events.py` | Meetup events near a city or across a country |
 | `lib/goodreads/` | `goodreads_shelf.py` | A Goodreads user's shelf |
+| `lib/fenrir-realm/` | `fenrir_realm_novels.py` | Novel search, summaries, tags and chapter lists, cached locally |
+| `lib/sakuraze/` | `sakuraze_novels.py` | Cached public catalogue search, metadata, free chapters and labelled previews |
+| `lib/novelight/` | `novelight_novels.py` | Whole-catalogue search, metadata, chapter-list pages and public chapters |
 | `lib/youtube/` | `youtube_rss.py`, `youtube_channel.py` | A YouTube channel's RSS feed URL, and a channel found by name |
 | `lib/hacker-news/` | `hacker_news_feed.py`, `hacker_news_comments.py` | Hacker News front page and comment threads |
 | `lib/rps/` | `rps_feed.py`, `rps_article.py` | Rock Paper Shotgun feed and articles |
@@ -38,6 +41,40 @@ lib/.venv/bin/python lib/youtube/youtube_rss.py "https://youtube.com/@handle"
 ```
 
 Every tool prints JSON on stdout; `--help` lists its options.
+
+### Find novels from a description
+
+Fenrir Realm's tool gives an AI assistant evidence to compare against your plot
+or genre clues. Search short keywords, then check a candidate's full summary:
+
+```bash
+lib/.venv/bin/python lib/fenrir-realm/fenrir_realm_novels.py --search 'demon hunter'
+lib/.venv/bin/python lib/fenrir-realm/fenrir_realm_novels.py --genre Fantasy --tag Demons
+lib/.venv/bin/python lib/fenrir-realm/fenrir_realm_novels.py --detail american-demon-hunting-idol
+```
+
+It reuses saved responses for 24 hours before fetching live; `--refresh` forces
+an update. This is a response cache, not an exhaustive local novel index.
+Fenrir's protected chapter text is not supported. See the
+[assistant usage guide](lib/fenrir-realm/SKILL.md) for the matching workflow.
+
+Sakuraze and Novelight have separate tools, so source selection remains explicit:
+
+```bash
+lib/.venv/bin/python lib/sakuraze/sakuraze_novels.py --search father
+lib/.venv/bin/python lib/sakuraze/sakuraze_novels.py --novel the-demonic-cult-knows-how-to-communicate --chapter 1
+lib/.venv/bin/python lib/novelight/novelight_novels.py --search destiny
+lib/.venv/bin/python lib/novelight/novelight_novels.py --chapter 264593
+```
+
+Both reuse saved responses for 24 hours and accept `--refresh`. Sakuraze filters
+an up-to-500-novel cached snapshot, including summaries and tags, while Novelight
+uses paginated full-page catalogue searches. Selected public chapters can supply
+plot evidence. Sakuraze's public previews are labelled separately from full text;
+login, payment and unlock operations are unsupported. The source-specific guides
+are [Sakuraze](lib/sakuraze/SKILL.md) and [Novelight](lib/novelight/SKILL.md).
+Sakuraze uses its website's publicly distributed anonymous API key, not personal
+credentials; no user configuration is needed.
 
 ## MCP
 
@@ -68,5 +105,5 @@ cd lib
 - [`lib/architecture.md`](lib/architecture.md): how the tools are built and the
   rules they share.
 - `lib/<tool>/SPEC.md`: each tool's design.
-- `lib/<tool>/SKILL.md` (gsc, tgv, youtube): how an agent runs the tool.
+- `lib/<tool>/SKILL.md` (gsc, tgv, youtube, fenrir-realm, sakuraze, novelight): how an agent runs the tool.
 - [`lib/mcp/SPEC.md`](lib/mcp/SPEC.md): the MCP server.
