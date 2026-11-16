@@ -1,0 +1,334 @@
+{
+  "catalogue": {
+    "data": [
+      {
+        "uuid": "e5e47bf7-6364-44dd-aa51-21a7c142454b",
+        "title": "[Criminal Investigation] Atypical Profiler",
+        "slug": "criminal-investigation-atypical-profiler",
+        "status": "Completed",
+        "description": "Si Zhen: Catching criminals is his mission; investigating cases and hunting killers is his life! Yin Guihu: Observing humans is his side job; flirting with Captain Si is his full-time career~",
+        "type": "web_novel",
+        "genres": [
+          {
+            "uuid": "5bcf53df-2e15-47c3-916f-b2cd34d0595d",
+            "name": "Action",
+            "slug": "action"
+          },
+          {
+            "uuid": "6a04c560-dcc6-4b49-9904-cbb34c041409",
+            "name": "Supernatural",
+            "slug": "supernatural"
+          },
+          {
+            "uuid": "1539669e-bb7a-4475-800f-2f52335d79fd",
+            "name": "Psychological",
+            "slug": "psychological"
+          }
+        ],
+        "cover": "storage/5375/86f25ff055b38ea3f270421c396b7330.png",
+        "cover_data_url": "data:image/webp;base64,UklGRoAAAABXRUJQVlA4IHQAAABQBQCdASogACAAPrVIoEsnI6MhsBgIAOAWiUAXBg0ngkgxZtQQqCXkwDBxf3WSFoxjTFAA/v63LO3OCoo2PZGzNTPDeTfWqyag8j+vSGBpdAYpQTpcvVS1+HW8CSWtGj8fB5XB7PuqmgrIO6zEO+Wy2eoAAA==",
+        "schedules": {
+          "days": [],
+          "values": [],
+          "time": [],
+          "amounts": [],
+          "timezone": "UTC"
+        },
+        "user": {
+          "username": "Septhis",
+          "name": "Septhis"
+        },
+        "subscribers": 17,
+        "stats": {
+          "total_views": 396,
+          "daily_views": 1,
+          "weekly_views": 1,
+          "monthly_views": 77,
+          "author_stats": {
+            "total_works": 27,
+            "total_followers": 134,
+            "total_views": 43397,
+            "member_since": 2026
+          },
+          "chapter_frequency": {
+            "chapters_per_week": 0,
+            "frequency_text": "No recent activity",
+            "last_chapter_days_ago": 31.771538230358797,
+            "latest_release_at": "2026-10-15T17:34:33.000000Z",
+            "previous_release_at": null,
+            "gap_between_last_releases_days": null,
+            "sample_size": 1,
+            "average_interval_hours": null
+          },
+          "series_age": {
+            "start_year": 2026,
+            "years_active": 0,
+            "age_text": "New this year"
+          }
+        }
+      }
+    ],
+    "meta": {
+      "current_page": 1,
+      "from": 1,
+      "last_page": 1,
+      "per_page": 1,
+      "to": 1,
+      "total": 1
+    }
+  },
+  "genres": [
+    {
+      "id": 1,
+      "uuid": "5bcf53df-2e15-47c3-916f-b2cd34d0595d",
+      "name": "Action",
+      "slug": "action",
+      "description": "A work typically depicting fighting, violence, chaos, and fast paced motion.",
+      "series_count": 1638
+    },
+    {
+      "id": 2,
+      "uuid": "80c5220e-5740-4a09-b510-8269f40457d1",
+      "name": "Adult",
+      "slug": "adult",
+      "description": "Contains mature content that is suitable only for adults. Titles in this category may include prolonged scenes of intense violence and/or graphic sexual content and nudity.",
+      "series_count": 111
+    }
+  ],
+  "tags": [
+    {
+      "id": 1,
+      "uuid": "63948c8a-b5ef-40f9-b454-0674b2de909f",
+      "name": "Abandoned Children",
+      "slug": "abandoned-children",
+      "description": "As the tag suggests, this is to be used ONLY when the protagonist is an abandoned child, meaning child who is thrown away at an early age, willingly or unwillingly. This should have some impact on the story, and it is preferable to use this tag if the protagonist being abandoned is known early on in the story. Please note that the child can only be the protagonist.",
+      "series_count": 28
+    },
+    {
+      "id": 2,
+      "uuid": "aa78948f-8318-47f8-8485-1d56357a7794",
+      "name": "Ability Steal",
+      "slug": "ability-steal",
+      "description": "Tag is to be used ONLY if the protagonist of the series has the ability to steal the 'skills' (definition may vary based on novel) of other characters/things. If the series has multiple protagonists, only use this tag if the stealing ability is a prominent ability of one of them.",
+      "series_count": 20
+    }
+  ],
+  "detail": {
+    "uuid": "e5e47bf7-6364-44dd-aa51-21a7c142454b",
+    "title": "[Criminal Investigation] Atypical Profiler",
+    "slug": "criminal-investigation-atypical-profiler",
+    "alt_title": null,
+    "status": "Completed",
+    "description": "Si Zhen: Catching criminals is his mission; investigating cases and hunting killers is his life!\nYin Guihu: Observing humans is his side job; flirting with Captain Si is his full-time career~",
+    "type": "web_novel",
+    "global_note": null,
+    "global_note_position": "top",
+    "global_note_color": null,
+    "content_rating": null,
+    "content_warning": null,
+    "genres": [
+      {
+        "uuid": "5bcf53df-2e15-47c3-916f-b2cd34d0595d",
+        "name": "Action",
+        "slug": "action"
+      },
+      {
+        "uuid": "6a04c560-dcc6-4b49-9904-cbb34c041409",
+        "name": "Supernatural",
+        "slug": "supernatural"
+      },
+      {
+        "uuid": "1539669e-bb7a-4475-800f-2f52335d79fd",
+        "name": "Psychological",
+        "slug": "psychological"
+      }
+    ],
+    "tags": [
+      {
+        "uuid": "07887f35-a572-48c6-acdb-2bf793650a3c",
+        "name": "Crime",
+        "slug": "crime"
+      },
+      {
+        "uuid": "12474cb0-b183-430a-b5ce-b31ffd12f19c",
+        "name": "Organized Crime",
+        "slug": "organized-crime"
+      },
+      {
+        "uuid": "7f558676-5439-4ea2-84d8-cf18cf24215b",
+        "name": "Criminals",
+        "slug": "criminals"
+      },
+      {
+        "uuid": "874796a0-35f7-44ed-a14c-1ca1133df01c",
+        "name": "Cultivation",
+        "slug": "cultivation"
+      },
+      {
+        "uuid": "75ccb035-1a92-409e-85d4-baef760af3fe",
+        "name": "Police",
+        "slug": "police"
+      }
+    ],
+    "sub_tags": [],
+    "cover": "storage/5375/86f25ff055b38ea3f270421c396b7330.png",
+    "cover_data_url": "data:image/webp;base64,UklGRoAAAABXRUJQVlA4IHQAAABQBQCdASogACAAPrVIoEsnI6MhsBgIAOAWiUAXBg0ngkgxZtQQqCXkwDBxf3WSFoxjTFAA/v63LO3OCoo2PZGzNTPDeTfWqyag8j+vSGBpdAYpQTpcvVS1+HW8CSWtGj8fB5XB7PuqmgrIO6zEO+Wy2eoAAA==",
+    "covers": [
+      {
+        "url": "storage/5375/86f25ff055b38ea3f270421c396b7330.png",
+        "data_url": "data:image/webp;base64,UklGRoAAAABXRUJQVlA4IHQAAABQBQCdASogACAAPrVIoEsnI6MhsBgIAOAWiUAXBg0ngkgxZtQQqCXkwDBxf3WSFoxjTFAA/v63LO3OCoo2PZGzNTPDeTfWqyag8j+vSGBpdAYpQTpcvVS1+HW8CSWtGj8fB5XB7PuqmgrIO6zEO+Wy2eoAAA==",
+        "alt_text": null,
+        "position": 0,
+        "is_primary": true,
+        "label": null
+      }
+    ],
+    "banner": null,
+    "banner_data_url": null,
+    "nu_link": null,
+    "schedules": {
+      "days": [],
+      "values": [],
+      "time": [],
+      "amounts": [],
+      "timezone": "UTC"
+    },
+    "user": {
+      "username": "Septhis",
+      "name": "Septhis"
+    },
+    "latest_chapter_note": null,
+    "subscribers": 17,
+    "stats": {
+      "total_views": 396,
+      "daily_views": 1,
+      "weekly_views": 1,
+      "monthly_views": 77,
+      "author_stats": {
+        "total_works": 27,
+        "total_followers": 134,
+        "total_views": 43397,
+        "member_since": 2026
+      },
+      "chapter_frequency": {
+        "chapters_per_week": 0,
+        "frequency_text": "No recent activity",
+        "last_chapter_days_ago": 31.771538230358797,
+        "latest_release_at": "2026-10-15T17:34:33.000000Z",
+        "previous_release_at": null,
+        "gap_between_last_releases_days": null,
+        "sample_size": 1,
+        "average_interval_hours": null
+      },
+      "series_age": {
+        "start_year": 2026,
+        "years_active": 0,
+        "age_text": "New this year"
+      }
+    },
+    "notices": [],
+    "description_html": "<p>Si Zhen: Catching criminals is his mission; investigating cases and hunting killers is his life!</p><p>Yin Guihu: Observing humans is his side job; flirting with Captain Si is his full-time career~</p>",
+    "global_note_html": null,
+    "content_exclusions": {
+      "excluded": false,
+      "genres": [],
+      "tags": [],
+      "adult_content": false
+    }
+  },
+  "chapters": [
+    {
+      "uuid": "c08406eb-7d68-4395-9f06-da3599e817d3",
+      "slug": "1",
+      "name": " Chapter 1",
+      "title": "Departure",
+      "number": 1,
+      "part": null,
+      "type": "text",
+      "content_rating": null,
+      "content_warning": null,
+      "has_illustration": false,
+      "index": 0,
+      "group": null,
+      "locked": {
+        "price": 0,
+        "unlocked_at": "2026-10-15T17:33:23.000000Z",
+        "is_read_only": false
+      },
+      "bought": {
+        "wallet_type": null,
+        "amount": 0,
+        "bought_at": null
+      },
+      "user": {
+        "username": "Septhis",
+        "name": "Septhis"
+      },
+      "bypass": false,
+      "created_at": "2026-10-15T17:33:23.000000Z",
+      "updated_at": "2026-10-15T17:34:33.000000Z"
+    },
+    {
+      "uuid": "1488d5c9-73c9-432a-b544-6bb47978ea83",
+      "slug": "2",
+      "name": " Chapter 2",
+      "title": "Canned Food",
+      "number": 2,
+      "part": null,
+      "type": "text",
+      "content_rating": null,
+      "content_warning": null,
+      "has_illustration": false,
+      "index": 1,
+      "group": null,
+      "locked": {
+        "price": 0,
+        "unlocked_at": "2026-10-15T17:33:23.000000Z",
+        "is_read_only": false
+      },
+      "bought": {
+        "wallet_type": null,
+        "amount": 0,
+        "bought_at": null
+      },
+      "user": {
+        "username": "Septhis",
+        "name": "Septhis"
+      },
+      "bypass": false,
+      "created_at": "2026-10-15T17:33:23.000000Z",
+      "updated_at": "2026-10-15T17:34:33.000000Z"
+    },
+    {
+      "uuid": "0dc89563-4c7b-457d-bce7-7b4fcb61d86b",
+      "slug": "3",
+      "name": " Chapter 3",
+      "title": "Anklet",
+      "number": 3,
+      "part": null,
+      "type": "text",
+      "content_rating": null,
+      "content_warning": null,
+      "has_illustration": false,
+      "index": 2,
+      "group": null,
+      "locked": {
+        "price": 0,
+        "unlocked_at": "2026-10-15T17:33:23.000000Z",
+        "is_read_only": false
+      },
+      "bought": {
+        "wallet_type": null,
+        "amount": 0,
+        "bought_at": null
+      },
+      "user": {
+        "username": "Septhis",
+        "name": "Septhis"
+      },
+      "bypass": false,
+      "created_at": "2026-10-15T17:33:23.000000Z",
+      "updated_at": "2026-10-15T17:34:33.000000Z"
+    }
+  ]
+}
