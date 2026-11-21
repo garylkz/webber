@@ -5,6 +5,8 @@ from datetime import datetime, timedelta, timezone
 import hashlib
 import json
 from pathlib import Path
+import shutil
+import tempfile
 
 import pytest
 import requests
@@ -53,7 +55,17 @@ class Session:
 
 
 @pytest.fixture
-def setup_client(tmp_path, sample):
+def cache_root():
+    # Keep test files inside the repo even when pytest's default temp root is not.
+    root = fr.REPO_ROOT / "out" / "pytest-fenrir-realm"
+    root.mkdir(parents=True, exist_ok=True)
+    path = Path(tempfile.mkdtemp(prefix="cache-", dir=root))
+    yield path
+    shutil.rmtree(path)
+
+
+@pytest.fixture
+def setup_client(cache_root, sample):
     slug = sample["detail"]["slug"]
     session = Session({"/series": sample["catalogue"],
                        "/taxonomies/genres": sample["genres"],
@@ -61,7 +73,7 @@ def setup_client(tmp_path, sample):
                        f"/series/{slug}": sample["detail"],
                        f"/series/{slug}/chapters": sample["chapters"]})
     now = [datetime(2026, 1, 1, tzinfo=timezone.utc)]
-    client = fr.Client(cache_dir=tmp_path / "cache", session=session, clock=lambda: now[0])
+    client = fr.Client(cache_dir=cache_root / "cache", session=session, clock=lambda: now[0])
     return client, session, now
 
 

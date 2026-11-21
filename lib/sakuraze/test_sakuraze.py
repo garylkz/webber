@@ -4,6 +4,8 @@ from copy import deepcopy
 from datetime import datetime, timedelta, timezone
 import json
 from pathlib import Path
+import shutil
+import tempfile
 
 import pytest
 import requests
@@ -106,11 +108,20 @@ def novels():
 
 
 @pytest.fixture
-def env(tmp_path, novels):
-    assert tmp_path.resolve().is_relative_to(s.REPO_ROOT), "Use --basetemp=out/pytest-sakuraze"
+def cache_root():
+    # Keep test files inside the repo even when pytest's default temp root is not.
+    root = s.REPO_ROOT / "out" / "pytest-sakuraze"
+    root.mkdir(parents=True, exist_ok=True)
+    path = Path(tempfile.mkdtemp(prefix="cache-", dir=root))
+    yield path
+    shutil.rmtree(path)
+
+
+@pytest.fixture
+def env(cache_root, novels):
     session = Session(novels)
     clock = [NOW]
-    client = s.Client(cache_dir=tmp_path / "cache", session=session, clock=lambda: clock[0])
+    client = s.Client(cache_dir=cache_root / "cache", session=session, clock=lambda: clock[0])
     return client, session, clock
 
 
