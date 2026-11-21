@@ -24,10 +24,10 @@ If the user gave only a vague mood ("something cozy"), ask one question that wou
 
 Unless the user names a source, search all three and keep each candidate's source label. Never silently substitute one source for another, and say which sources you did and did not search.
 
-1. Resolve exact genre and tag names with each tool's taxonomies first. Names differ between sources.
+1. Resolve exact genre and tag names with each tool's taxonomies when you do not already know them. Names differ between sources. Taxonomy lists can be huge (Fenrir's runs to hundreds of thousands of characters), so call it once per source, skip it when a tag name is already known from another result, and if the output is saved to a file, search that file for the names you need instead of reading all of it.
 2. Run several short keyword searches per source from the must-haves and their synonyms. The search is a keyword match, not semantic search, so a long description will miss candidates.
 3. Check each result's `coverage`. Sakuraze filters a capped snapshot, Novelight and Fenrir page through the live catalogue. A search with no matches is a normal empty result, not an error. A handful of queries is a sample, not a survey. Follow further pages when the first page is thin.
-4. Fetch `detail` for the few most promising candidates, not every hit. Catalogue rows are truncated and omit tags. Judge fit from the full synopsis and tags, not from the title or a single keyword hit. For the rest, say you relied on the truncated catalogue summary. Fenrir detail returns the first 20 chapters by default, so leave `chapter_limit` alone unless you need more.
+4. Fetch `detail` for the few most promising candidates, not every hit. Catalogue rows are truncated and omit tags. Judge fit from the full synopsis and tags, not from the title or a single keyword hit. For the rest, say you relied on the truncated catalogue summary. Fenrir and Novelight detail return the first 20 chapters by default, so leave `chapter_limit` alone unless you need more.
 5. Read a chapter only when a specific plot claim needs it, and only where the source allows. Respect each guide's reading limits, including Sakuraze preview labels and Fenrir's no chapter text rule.
 
 ## 3. Label every recommendation
@@ -37,6 +37,8 @@ Give each candidate one label and the evidence behind it:
 - **Strong match**: the synopsis or tags support every must-have. Name which clue each piece of evidence supports.
 - **Partial match**: supports some must-haves. State which are supported and which are missing or unverified.
 - **Worth a look**: only a loose or tag-level similarity. Say so plainly.
+
+Check every candidate's genres and tags for content the user did not ask for: adult or mature ratings (Adult, Mature, R-18), and romance orientation or themes (Yaoi, Yuri, Harem, Obsessive Love and similar). Sakuraze lists only non-NSFW novels, but Fenrir and Novelight carry adult titles, and catalogue rows may not show the flags, so read them from detail. A flag is not a reason to hide a good fit, so name it on the entry. Treat it as a conflict, and drop the candidate, only when it breaks something the user wants to avoid.
 
 Drop candidates that conflict with an avoid item. If nothing reaches Strong, say that and show the best Partial matches rather than inflating them. Offer a discriminating question or a broader search as the next step.
 

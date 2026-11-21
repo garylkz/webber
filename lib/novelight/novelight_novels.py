@@ -23,6 +23,7 @@ BASE_URL = "https://novelight.net"
 REPO_ROOT = Path(__file__).resolve().parents[2]
 CACHE_DIR = REPO_ROOT / "out" / "novelight"
 TTL_SECONDS = 86400
+DEFAULT_CHAPTER_LIMIT = 20
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
     "Accept-Language": "en-US,en;q=0.9",
@@ -420,9 +421,10 @@ def get_taxonomies(refresh=False, client=None):
     return {"source": "novelight", **data["taxonomies"], "provenance": [p]}
 
 
-def get_novel(slug, chapter_page=1, refresh=False, client=None):
+def get_novel(slug, chapter_page=1, refresh=False, client=None, chapter_limit=DEFAULT_CHAPTER_LIMIT):
     _slug(slug)
     _positive(chapter_page, "chapter_page")
+    _positive(chapter_limit, "chapter_limit")
     client = client or Client()
     url = BASE_URL + "/book/" + slug
     data, p = client.fetch("/book/" + slug, refresh=refresh, validate=parse_detail)
@@ -434,8 +436,11 @@ def get_novel(slug, chapter_page=1, refresh=False, client=None):
                                            ajax=True, referer=url, refresh=refresh, validate=parse_chapter_page)
         provenance.append(p)
     pages = data.pop("chapter_pages")
+    on_page = len(data["chapters"])
+    data["chapters"] = data["chapters"][:chapter_limit]
     data["chapter_coverage"] = {"current_page": chapter_page, "pages": pages, "next_page": chapter_page + 1 if chapter_page + 1 in pages else None,
-                                "returned": len(data["chapters"]), "scope": "One chapter-list page, not the whole book."}
+                                "on_page": on_page, "returned": len(data["chapters"]), "truncated": len(data["chapters"]) < on_page,
+                                "scope": "First chapters of one chapter-list page, not the whole book."}
     return {"source": "novelight", "slug": slug, "url": url, **data, "provenance": provenance}
 
 
@@ -459,15 +464,19 @@ def main(argv=None):
     parser.add_argument("--tag", action="append", default=[])
     parser.add_argument("--page", type=int, default=None)
     parser.add_argument("--chapter-page", type=int, default=None)
+    parser.add_argument("--chapter-limit", type=int, default=None)
     parser.add_argument("--refresh", action="store_true")
     args = parser.parse_args(argv)
     if (args.detail is not None or args.taxonomies or args.chapter is not None) and (args.search is not None or args.genre or args.tag or args.page is not None):
         parser.error("search, genre, tag and page are only allowed in browse mode")
     if args.chapter_page is not None and args.detail is None:
         parser.error("chapter-page is only allowed with detail")
+    if args.chapter_limit is not None and args.detail is None:
+        parser.error("chapter-limit is only allowed with detail")
     try:
         if args.detail is not None:
-            data = get_novel(args.detail, chapter_page=args.chapter_page if args.chapter_page is not None else 1, refresh=args.refresh)
+            data = get_novel(args.detail, chapter_page=args.chapter_page if args.chapter_page is not None else 1, refresh=args.refresh,
+                            chapter_limit=args.chapter_limit if args.chapter_limit is not None else DEFAULT_CHAPTER_LIMIT)
         elif args.taxonomies:
             data = get_taxonomies(refresh=args.refresh)
         elif args.chapter is not None:

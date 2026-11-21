@@ -228,6 +228,21 @@ def test_detail_pagination_and_cache(cache_dir):
     assert len(s.calls) == 2
 
 
+def test_detail_chapter_limit(cache_dir):
+    many = DETAIL.replace(CHAPTER, ''.join(CHAPTER.replace('264593', str(264593 + i)) for i in range(3)))
+    c, s = client(cache_dir, many)
+    shown = n.get_novel('a-destiny-that-must-die', client=c, chapter_limit=2)
+    assert [ch['id'] for ch in shown['chapters']] == [264593, 264594]
+    cov = shown['chapter_coverage']
+    assert (cov['on_page'], cov['returned'], cov['truncated']) == (3, 2, True)
+    full = n.get_novel('a-destiny-that-must-die', client=c)
+    assert len(full['chapters']) == 3 and full['chapter_coverage']['truncated'] is False
+    assert len(s.calls) == 1
+    for bad in (0, -1, True, '2'):
+        with pytest.raises(n.NovelightError, match='chapter_limit'):
+            n.get_novel('a-destiny-that-must-die', client=c, chapter_limit=bad)
+
+
 @pytest.mark.parametrize('invoke', [lambda c: n.search_novels(page=0, client=c), lambda c: n.search_novels(page=True, client=c),
     lambda c: n.search_novels(search='\n', client=c), lambda c: n.search_novels(tags='Magic', client=c),
     lambda c: n.search_novels(genres=[True], client=c), lambda c: n.get_novel('../bad', client=c),
@@ -241,7 +256,7 @@ def test_validation_before_network(cache_dir, invoke):
 
 
 @pytest.mark.parametrize('args', [['--detail', 'safe', '--search', 'x'], ['--taxonomies', '--page', '1'],
-    ['--chapter', '1', '--tag', 'Magic'], ['--chapter-page', '1'], ['--detail', 'x', '--chapter', '1'],
+    ['--chapter', '1', '--tag', 'Magic'], ['--chapter-page', '1'], ['--chapter-limit', '1'], ['--detail', 'x', '--chapter', '1'],
     ['--per-page', '2']])
 def test_cli_incompatible_arguments(args, capsys):
     with pytest.raises(SystemExit) as exc:

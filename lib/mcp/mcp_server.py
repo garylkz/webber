@@ -261,10 +261,13 @@ def build_novel_source(args, source):
         raise ToolError("novel is required for, and only permitted with, chapter")
     if args.get("chapter_page") is not None and not detail:
         raise ToolError("chapter_page requires detail")
+    if args.get("chapter_limit") is not None and not detail:
+        raise ToolError("chapter_limit requires detail")
     argv = python(f"{source}/{source}_novels.py") + options(args, {
         "search": "--search", "detail": "--detail", "taxonomies": "--taxonomies",
         "chapter": "--chapter", "novel": "--novel", "chapter_page": "--chapter-page",
         "page": "--page", "per_page": "--per-page", "refresh": "--refresh",
+        "chapter_limit": "--chapter-limit",
     })
     for key, option in (("genres", "--genre"), ("tags", "--tag")):
         argv.extend(f"{option}={value}" for value in args.get(key) or [])
@@ -577,6 +580,7 @@ async def novelight_novels(
     page: number("catalogue page, default 1; source page size is 30") = None,
     detail: text("novel slug: full summary, tags and selected chapter-list page", r"^[A-Za-z0-9_-]+$") = None,
     chapter_page: number("chapter-list page, only with detail; default 1") = None,
+    chapter_limit: Annotated[Optional[int], Field(description="with detail: first chapters of the chapter-list page to return, default 20 (the source page holds up to 50)", ge=1, strict=True)] = None,
     chapter: number("Novelight chapter ID from a chapter link, not the chapter's ordinal number") = None,
     taxonomies: flag("list catalogue genre and tag names/IDs instead of novels") = False,
     refresh: flag("fetch fresh public responses instead of reusing the 24-hour local cache") = False,

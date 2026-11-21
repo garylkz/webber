@@ -277,6 +277,11 @@ def test_novelight_chapter_and_chapter_page():
                  dict(taxonomies=True, chapter_page=1), dict(detail="x", chapter_page=0),
                  dict(detail="x", chapter_page=True), dict(chapter=1, search="foo")]:
         rejects("novelight_novels", **args)
+    assert argv("novelight_novels", detail="a-novel", chapter_limit=5) == [
+        "novelight/novelight_novels.py", "--detail=a-novel", "--chapter-limit=5"]
+    for args in [dict(chapter_limit=5), dict(chapter=1, chapter_limit=5), dict(detail="x", chapter_limit=0),
+                 dict(detail="x", chapter_limit=True)]:
+        rejects("novelight_novels", **args)
     assert not call("novelight_novels", chapter=264593).is_error
 
 

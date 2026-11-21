@@ -23,11 +23,11 @@ lib/.venv/bin/python lib/novelight/novelight_novels.py --chapter 264593
 1. Extract short distinctive keywords and genre/trope clues from the user's description. Try alternative phrasings; the source search is not semantic matching.
 2. Resolve exact genre/tag names or numeric ID strings using taxonomies. Do not infer that several source filters guarantee every requested trait; verify the candidates.
 3. Inspect catalogue coverage and follow `next_page` where useful. Pages contain at most the source-defined 30 items. Page links are not an exact total count, and a few searches are not an exhaustive survey.
-4. Fetch `detail` for likely slugs. Catalogue results contain titles and URLs; detail provides the full synopsis, tags, metadata, translators and one selected chapter-list page. Use `chapter_page` to inspect additional chapter-list pages.
+4. Fetch `detail` for likely slugs. Catalogue results contain titles and URLs; detail provides the full synopsis, tags, metadata, translators and one selected chapter-list page. Detail returns the first 20 chapters of the chosen page by default (`chapter_limit` raises or lowers that; the source page holds up to 50). Check `chapter_coverage.truncated`, and use `chapter_page` to inspect additional chapter-list pages.
 5. Read relevant individual chapters using their Novelight IDs, not ordinal chapter numbers. A link ending `/book/chapter/264593` means `chapter: 264593` in MCP. Do not bulk-download books or treat a loading wrapper as chapter prose.
 6. Return each candidate's title and exact novel URL. Explain supported clues, uncertainty and gaps, adding chapter URLs when text supports a plot claim. Never invent a match because a title or tag is vaguely similar.
 
-MCP selects one of search/browse, `detail`, `taxonomies: true`, or `chapter`. Only detail accepts `chapter_page`. The source has no configurable results-per-page option.
+MCP selects one of search/browse, `detail`, `taxonomies: true`, or `chapter`. Only detail accepts `chapter_page` and `chapter_limit`. The source has no configurable results-per-page option.
 
 ## Local first
 
