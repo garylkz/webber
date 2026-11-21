@@ -71,11 +71,13 @@ def channel_id_from_url(url: str) -> str | None:
     except requests.RequestException as e:
         raise SystemExit(f"Failed to fetch {page_url}: {e}") from e
 
+    # The canonical link and externalId describe only the page's own channel.
+    # "channelId" also appears for recommended channels, so it is the last resort.
+    for pattern in (CANONICAL_RE, EXTERNAL_ID_RE):
+        match = pattern.search(html)
+        if match:
+            return match.group(1)
     ids = CHANNEL_ID_RE.findall(html)
-    if not ids:
-        ids = EXTERNAL_ID_RE.findall(html)
-    if not ids:
-        ids = CANONICAL_RE.findall(html)
     if not ids:
         return None
     return max(set(ids), key=ids.count)
