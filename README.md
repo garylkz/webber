@@ -76,6 +76,10 @@ are [Sakuraze](lib/sakuraze/SKILL.md) and [Novelight](lib/novelight/SKILL.md).
 Sakuraze uses its website's publicly distributed anonymous API key, not personal
 credentials; no user configuration is needed.
 
+To get recommendations from your tastes rather than a remembered plot, see the
+[recommendations guide](lib/recommend/SKILL.md). It combines the three novel tools
+and labels how well each match is supported.
+
 ## MCP
 
 `lib/mcp/mcp_server.py` serves the tools to MCP clients over stdio, built on the
@@ -105,5 +109,5 @@ cd lib
 - [`lib/architecture.md`](lib/architecture.md): how the tools are built and the
   rules they share.
 - `lib/<tool>/SPEC.md`: each tool's design.
-- `lib/<tool>/SKILL.md` (gsc, tgv, youtube, fenrir-realm, sakuraze, novelight): how an agent runs the tool.
+- `lib/<tool>/SKILL.md` (gsc, tgv, youtube, fenrir-realm, sakuraze, novelight, recommend): how an agent runs the tool.
 - [`lib/mcp/SPEC.md`](lib/mcp/SPEC.md): the MCP server.
