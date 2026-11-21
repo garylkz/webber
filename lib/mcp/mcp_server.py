@@ -240,6 +240,7 @@ def build_fenrir_realm_novels(args):
     argv = python("fenrir-realm/fenrir_realm_novels.py") + options(args, {
         "search": "--search", "detail": "--detail", "taxonomies": "--taxonomies",
         "page": "--page", "per_page": "--per-page", "refresh": "--refresh",
+        "chapter_limit": "--chapter-limit",
     })
     for key, option in (("genres", "--genre"), ("tags", "--tag")):
         argv.extend(f"{option}={value}" for value in args.get(key) or [])
@@ -546,6 +547,7 @@ async def fenrir_realm_novels(
     per_page: Annotated[Optional[int], Field(description="results per page, default 20", ge=1, le=100, strict=True)] = None,
     detail: text("novel slug: full summary, tags and chapter list instead of search", r"^[A-Za-z0-9_-]+$") = None,
     taxonomies: flag("list valid genres and tags instead of novels") = False,
+    chapter_limit: Annotated[Optional[int], Field(description="with detail: first chapters to return, default 20; the latest chapter and total count are always included", ge=1, strict=True)] = None,
     refresh: flag("bypass the local 24-hour cache and save fresh public responses") = False,
 ) -> CallToolResult:
     """Find Fenrir Realm novels from a user's plot, genre or remembered clues. Translate clues into short keyword searches and genre/tag filters; try alternative queries, then use detail to check full summaries and tags. Explain matches from that evidence, link the novels and state uncertainty; keyword hits are not proof. Results are local-first, cached for 24 hours, with request timestamps and page coverage. Catalogue summaries are truncated; do not claim exhaustive matches from one page. Use taxonomies to discover exact filter names. detail and taxonomies cannot accompany search, filters or pagination. Chapter lists are available, but protected chapter text is unsupported and a zero price does not establish readability."""

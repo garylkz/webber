@@ -82,6 +82,14 @@ def test_real_catalogue_detail_and_no_reading(sample, setup_client):
     assert len(detail["requests"]) == 2
     assert detail["chapter_text_available"] is False
     assert "does not prove" in detail["chapter_text_unavailable_reason"]
+    total = detail["coverage"]["chapters_total"]
+    limited = fr.get_novel(novel["slug"], chapter_limit=1, client=client)
+    assert len(limited["chapters"]) == 1
+    assert limited["coverage"]["chapters_total"] == total
+    assert limited["coverage"]["chapters_truncated"] is (total > 1)
+    assert limited["latest_chapter"] == detail["latest_chapter"]
+    with pytest.raises(fr.FenrirError):
+        fr.get_novel(novel["slug"], chapter_limit=0, client=client)
     chapter = detail["chapters"][0]
     assert chapter["price"] == 0
     assert "is_locked" not in chapter

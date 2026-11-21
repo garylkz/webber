@@ -89,7 +89,9 @@ def test_catalogue_scope_and_taxonomies():
 def test_empty_and_malformed():
     for content in ['', '<p>No results found</p>']:
         assert n.parse_catalogue(FORM + '<div class="manga-grid-list">' + content + '</div>')['novels'] == []
-    for html in ['<html>Login</html>', FORM, FORM + '<div class="manga-grid-list">Unexpected markup</div>',
+    # A search with no matches omits the results grid but keeps the filter form.
+    assert n.parse_catalogue(FORM)['novels'] == []
+    for html in ['<html>Login</html>', FORM + '<div class="manga-grid-list">Unexpected markup</div>',
                  CAT.replace('class="title"', 'class="oops"'), CAT.replace('/book/a-destiny-that-must-die', 'https://evil.test/book/bad')]:
         with pytest.raises(n.NovelightError):
             n.parse_catalogue(html)

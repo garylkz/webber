@@ -164,6 +164,10 @@ def parse_taxonomies(html):
 
 def parse_catalogue(html, page=1):
     root = DOM(html).root
+    # The source omits the results grid when a search matches nothing. A page
+    # with the filter form is still a genuine catalogue page, so that is empty.
+    if not root.find(cls="manga-grid-list") and root.find("form", "filter-container"):
+        return _catalogue_result([], page, root)
     grid = _one(root.find(cls="manga-grid-list"), "catalogue results container")
     novels = []
     for n in grid.children:
@@ -173,6 +177,10 @@ def parse_catalogue(html, page=1):
         novels.append({"slug": urlsplit(url).path.split("/")[-1], "url": url, "title": _title(n)})
     if not novels and grid.text() and not re.search(r"no .*(?:found|results)|nothing|not found", grid.text(), re.I):
         raise NovelightError("Malformed empty catalogue")
+    return _catalogue_result(novels, page, root)
+
+
+def _catalogue_result(novels, page, root):
     pages = {page}
     for a in root.find("a"):
         href = a.attrs.get("href", "")

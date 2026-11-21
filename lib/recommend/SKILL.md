@@ -15,6 +15,7 @@ Write the profile out for yourself before searching, and keep it short:
 - **Nice to have**: tones, pacing, character types they lean towards.
 - **Avoid**: anything they said they dislike.
 - **Reference novels**: titles they loved. Fetch each one's detail from whichever source carries it and read its summary and tags. Describe what it has in common with the request, then search for those traits. Do not search for the title itself and call the results "similar".
+  If no source carries the reference novel, say so. Ask the user for a one-line description of it, or state clearly that you inferred its traits from the title, and treat those traits as unverified.
 - **Discovery preference**: whether they want well-known picks, hidden gems, or no preference.
 
 If the user gave only a vague mood ("something cozy"), ask one question that would sharpen the profile instead of guessing. Do not treat any example the user mentions as a fixed search template; it only illustrates their taste.
@@ -25,8 +26,8 @@ Unless the user names a source, search all three and keep each candidate's sourc
 
 1. Resolve exact genre and tag names with each tool's taxonomies first. Names differ between sources.
 2. Run several short keyword searches per source from the must-haves and their synonyms. The search is a keyword match, not semantic search, so a long description will miss candidates.
-3. Check each result's `coverage`. Sakuraze filters a capped snapshot, Novelight and Fenrir page through the live catalogue. A handful of queries is a sample, not a survey. Follow further pages when the first page is thin.
-4. Fetch `detail` for each promising candidate. Catalogue rows are truncated and omit tags. Judge fit from the full synopsis and tags, not from the title or a single keyword hit.
+3. Check each result's `coverage`. Sakuraze filters a capped snapshot, Novelight and Fenrir page through the live catalogue. A search with no matches is a normal empty result, not an error. A handful of queries is a sample, not a survey. Follow further pages when the first page is thin.
+4. Fetch `detail` for the few most promising candidates, not every hit. Catalogue rows are truncated and omit tags. Judge fit from the full synopsis and tags, not from the title or a single keyword hit. For the rest, say you relied on the truncated catalogue summary. Fenrir detail returns the first 20 chapters by default, so leave `chapter_limit` alone unless you need more.
 5. Read a chapter only when a specific plot claim needs it, and only where the source allows. Respect each guide's reading limits, including Sakuraze preview labels and Fenrir's no chapter text rule.
 
 ## 3. Label every recommendation

@@ -337,9 +337,16 @@ def search_novels(search=None, *, genres=(), tags=(), page=1, per_page=20, refre
     return result
 
 
-def get_novel(slug, *, refresh=False, client=None):
-    """Full public description and chapter metadata, not protected chapter text."""
+DEFAULT_CHAPTER_LIMIT = 20
+
+
+def get_novel(slug, *, refresh=False, chapter_limit=DEFAULT_CHAPTER_LIMIT, client=None):
+    """Full public description and chapter metadata, not protected chapter text.
+
+    Only the first chapter_limit chapters are returned, plus the latest one, so a
+    long novel does not flood the output; chapters_total gives the full count."""
     _slug(slug)
+    _integer(chapter_limit, "chapter_limit", 1)
     client = client if client is not None else Client()
     def validate_detail(data):
         novel = parse_novel(data, full=True)
@@ -349,9 +356,11 @@ def get_novel(slug, *, refresh=False, client=None):
     novel, detail_request = client._get(f"/series/{slug}", {}, validate_detail, refresh)
     chapters, chapter_request = client._get(f"/series/{slug}/chapters", {}, lambda data: parse_chapters(data, slug), refresh)
     result = _base_result("detail", [detail_request, chapter_request])
-    result.update({"novel": novel, "chapters": chapters,
-                   "coverage": {"scope": "One novel and its public chapter list; no chapter text.",
-                                "chapters_returned": len(chapters), "catalogue_exhaustive": False}})
+    shown = chapters[:chapter_limit]
+    result.update({"novel": novel, "chapters": shown, "latest_chapter": chapters[-1] if chapters else None,
+                   "coverage": {"scope": "One novel and its public chapter list, first chapters only; no chapter text.",
+                                "chapters_total": len(chapters), "chapters_returned": len(shown),
+                                "chapters_truncated": len(shown) < len(chapters), "catalogue_exhaustive": False}})
     return result
 
 
@@ -377,12 +386,13 @@ def main(argv=None):
     operation.add_argument("--detail", metavar="SLUG")
     operation.add_argument("--taxonomies", action="store_true")
     parser.add_argument("--refresh", action="store_true")
+    parser.add_argument("--chapter-limit", type=int, default=DEFAULT_CHAPTER_LIMIT)
     args = parser.parse_args(argv)
     try:
         if (args.detail is not None or args.taxonomies) and (args.search is not None or args.genre or args.tag or args.page is not None or args.per_page is not None):
             raise FenrirError("Search, genre, tag and pagination parameters cannot accompany detail or taxonomies")
         if args.detail is not None:
-            result = get_novel(args.detail, refresh=args.refresh)
+            result = get_novel(args.detail, refresh=args.refresh, chapter_limit=args.chapter_limit)
         elif args.taxonomies:
             result = get_taxonomies(refresh=args.refresh)
         else:

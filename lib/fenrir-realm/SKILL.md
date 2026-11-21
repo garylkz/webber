@@ -21,7 +21,7 @@ lib/.venv/bin/python lib/fenrir-realm/fenrir_realm_novels.py --detail american-d
 1. Extract distinctive clues from the user's description: setting, character roles, events, genres and tropes. Distinguish required clues from vague memories.
 2. Try short keyword searches and alternative phrasings. The site's search is not semantic search; pasting the entire description can miss candidates. Genre and tag filters use exact names, slugs or UUIDs; use taxonomies when unsure.
 3. Inspect `coverage` and request additional pages where useful. Broaden an unsuccessful query instead of declaring the novel absent. Do not assume that multiple source filters require all the requested traits; verify candidates' metadata.
-4. Fetch `detail` for promising slugs. Catalogue summaries are truncated and omit tags; detail supplies the full summary, tags and chapter list. Do not claim to have read chapters.
+4. Fetch `detail` for promising slugs. Catalogue summaries are truncated and omit tags; detail supplies the full summary, tags and the first 20 chapters (`chapter_limit` changes that), plus the latest chapter and the total count. Do not claim to have read chapters.
 5. Compare evidence against the clues. If none fits, explain the gaps and ask for a discriminating detail rather than inventing a match.
 
 MCP uses `search`, `genres` and `tags` arrays, `page` and `per_page`; select `detail` or `taxonomies: true` instead of search/filter/pagination parameters.
