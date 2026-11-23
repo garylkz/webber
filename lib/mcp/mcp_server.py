@@ -536,7 +536,7 @@ async def air_quality_report(
 async def google_maps_link(
     url: needed_text("a short Google Maps link, such as https://maps.app.goo.gl/...", MAPS_SHORT),
 ) -> CallToolResult:
-    """Expand a short Google Maps link into a full google.com/maps/place link. Reply with the url copied exactly. kind is place, place_id, coordinates (then say the pin resolves to the nearest address, not the exact place), query, or redirect."""
+    """Expand a short Google Maps link into a full google.com/maps/place link. Use it only when the user pastes a maps.app.goo.gl link; it cannot look up or find a url. Reply with the url copied exactly. kind is place, place_id, coordinates (then say the pin resolves to the nearest address, not the exact place), query, or redirect."""
     return await result(build_google_maps_link, locals())
 
 
