@@ -68,7 +68,7 @@ def test_the_tool_names_are_pinned():
         "fourd_results", "northport_enquiry", "meetup_events", "goodreads_shelf",
         "youtube_rss", "hacker_news_feed", "hacker_news_comments", "rps_feed", "rps_article",
         "air_quality_report", "google_maps_link", "youtube_channel", "fenrir_realm_novels",
-        "sakuraze_novels", "novelight_novels",
+        "sakuraze_novels", "novelight_novels", "rapidbus_buses",
     ])
 
 
@@ -92,7 +92,9 @@ def test_every_script_a_tool_runs_exists():
                 "user_id": "1", "item": "1", "time": "19:30",
                 "url": "https://www.rockpapershotgun.com/x" if tool.name == "rps_article" else "u",
             }.get(key, "x")
-        cmd = getattr(m, f"build_{tool.name}")(sample)
+        if tool.name == "rapidbus_buses":  # every argument is optional, but one mode must be picked
+            sample["route"] = "200"
+        cmd =getattr(m, f"build_{tool.name}")(sample)
         assert Path(cmd[1]).is_file(), cmd[1]
 
 
@@ -195,6 +197,32 @@ def test_the_small_tools():
     assert argv("google_maps_link", url="https://maps.app.goo.gl/AbC") == [
         "google-maps/google_maps_link.py", "https://maps.app.goo.gl/AbC"]
     rejects("google_maps_link", url="https://example.com/x")
+
+
+def test_rapidbus():
+    assert argv("rapidbus_buses", route="200") == ["rapidbus/rapidbus_buses.py", "200"]
+    assert argv("rapidbus_buses", route="T789", stops=True) == ["rapidbus/rapidbus_buses.py", "--stops", "T789"]
+    assert argv("rapidbus_buses", list_routes=True) == ["rapidbus/rapidbus_buses.py", "--routes"]
+    assert argv("rapidbus_buses", list_routes=True, search="kjl") == [
+        "rapidbus/rapidbus_buses.py", "--routes", "--search=kjl"]
+    rejects("rapidbus_buses")
+    rejects("rapidbus_buses", route="200", list_routes=True)
+    rejects("rapidbus_buses", route="200", search="kjl")
+    rejects("rapidbus_buses", route="--help")
+    assert argv("rapidbus_buses", route="T852", map=True) == ["rapidbus/rapidbus_buses.py", "--map", "T852"]
+    rejects("rapidbus_buses", route="T852", map=True, stops=True)
+    rejects("rapidbus_buses", list_routes=True, map=True)
+    assert argv("rapidbus_buses", route="T852", source="feed") == ["rapidbus/rapidbus_buses.py", "--source=feed", "T852"]
+    rejects("rapidbus_buses", route="T852", source="carrier-pigeon")
+    assert argv("rapidbus_buses", route="T852", format="svg") == [
+        "rapidbus/rapidbus_buses.py", "--format", "svg", "--save", "T852"]
+    assert argv("rapidbus_buses", route="T852", stops=True, format="svg") == [
+        "rapidbus/rapidbus_buses.py", "--format", "svg", "--save", "--stops", "T852"]
+    assert argv("rapidbus_buses", list_routes=True, format="svg") == [
+        "rapidbus/rapidbus_buses.py", "--format", "svg", "--save", "--routes"]
+    assert argv("rapidbus_buses", route="T852", format="json") == ["rapidbus/rapidbus_buses.py", "T852"]
+    rejects("rapidbus_buses", route="T852", format="svg", map=True)
+    rejects("rapidbus_buses", route="T852", format="pdf")
 
 
 def test_air_quality():

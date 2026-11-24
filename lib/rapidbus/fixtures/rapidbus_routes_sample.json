@@ -1,0 +1,18 @@
+{
+  "captured": "2026-11-23",
+  "source": "https://myrapidbus.prasarana.com.my/kiosk",
+  "routes": [
+    {"label": "200", "code": "U2000", "region": "RKL", "kiosk_ids": ["844"],
+     "stops": [["1003362", "1"], ["1001697", "1"], ["1003511", "2"], ["1000887", "2"], ["1003362", "2"]]},
+    {"label": "170 (OS)", "code": "U1708", "region": "RKL", "kiosk_ids": ["1475"], "stops": []},
+    {"label": "BAS1", "code": "H1200", "region": "RKL", "kiosk_ids": ["1459", "1466", "1468"], "stops": []},
+    {"label": "SEWA KHAS", "code": "SK", "region": "RKL", "kiosk_ids": ["1474"], "stops": []},
+    {"label": "SEWA KHAS", "code": "S0008", "region": "RKL", "kiosk_ids": ["1476"], "stops": []}
+  ],
+  "stops": {
+    "1003362": {"name": "SL163 KOLEJ VOKASIONAL GOMBAK", "street": "JLN SG PUSU", "lat": 3.246681237351, "lon": 101.72831266652},
+    "1001697": {"name": "SL164 KUARTERS GURU BATU 8", "street": "JLN SG PUSU", "lat": 3.244887, "lon": 101.725061},
+    "1003511": {"name": "KL899 BATU 4 GOMBAK", "street": "JLN GOMBAK", "lat": 3.2057185727971, "lon": 101.70167958187},
+    "1000887": {"name": "KL53 GRAND SEASONS HOTEL", "street": "JLN PAHANG", "lat": 3.1701675672584, "lon": 101.69824199219}
+  }
+}

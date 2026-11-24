@@ -62,7 +62,7 @@ Use the venv's Python: the server needs `mcp` and the scripts it runs need
   `cinema_*` tools through a `chain` argument, which the cinema contract makes
   possible. Options that only one chain has are rejected for the other.
 - **Groups.** Each tool has a group (`cinema`, `fourd`, `northport`, `meetup`,
-  `goodreads`, `youtube`, `hacker-news`, `rps`, `air-quality`, `google-maps`, `fenrir-realm`, `sakuraze`, `novelight`), and `--tools` serves only the
+  `goodreads`, `youtube`, `hacker-news`, `rps`, `air-quality`, `google-maps`, `rapidbus`, `fenrir-realm`, `sakuraze`, `novelight`), and `--tools` serves only the
   named ones.
 - **Ready-made lists for the feeds.** `hacker_news_feed` and `rps_feed` return
   their items as text a model can repeat as is: each title, then its Article
@@ -100,6 +100,7 @@ Use the venv's Python: the server needs `mcp` and the scripts it runs need
 | `rps_article` | `rps_article.py` |
 | `air_quality_report` | `air_quality_report.py` with a place, an address or a point, optionally `--hours` |
 | `google_maps_link` | `google_maps_link.py` |
+| `rapidbus_buses` | `rapidbus_buses.py` with a route (optional `--map`, `--source`, `--format svg --save`), `--stops`, or `--routes` with optional `--search` |
 | `fenrir_realm_novels` | `fenrir_realm_novels.py` search/browse, `--detail` or `--taxonomies`, optionally `--refresh` |
 | `sakuraze_novels` | `sakuraze_novels.py` snapshot discovery, `--detail`, `--taxonomies`, or `--chapter` with `--novel` |
 | `novelight_novels` | `novelight_novels.py` catalogue search, `--detail` with optional `--chapter-page`, `--taxonomies`, or `--chapter` |

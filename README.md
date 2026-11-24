@@ -20,6 +20,7 @@ and for AI agents.
 | `lib/rps/` | `rps_feed.py`, `rps_article.py` | Rock Paper Shotgun feed and articles |
 | `lib/air-quality/` | `air_quality_report.py` | Air quality of a place, with the official Malaysian reading |
 | `lib/google-maps/` | `google_maps_link.py` | A short Google Maps link expanded to a full place link |
+| `lib/rapidbus/` | `rapidbus_buses.py` | Live Rapid Bus positions on a route, with an estimated next stop, its stops, and a map |
 | `lib/mcp/` | `mcp_server.py` | Not a scraper: serves all of the above as MCP tools |
 
 ## Setup
